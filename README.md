@@ -15,4 +15,4 @@ A standalone static website concept with a regal editorial direction inspired by
 - Display type: Didot / Bodoni / Baskerville style serif fallbacks
 - Utility type: Courier-style monospace
 - Palette: electric royal blue, porcelain paper, gold accent
-- Imagery: original generated hero artwork saved at `assets/phokus-muse.png`, with the active transparent derivative at `assets/phokus-muse-cutout.png`
+- Imagery: original generated hero artwork saved in `assets/HeroImage/`, with the active transparent derivative at `assets/HeroImage/phokus-muse-cutout.png`
