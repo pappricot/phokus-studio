@@ -3,129 +3,332 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Phokus | Product & Image Systems Studio</title>
+    <title>Phokus | Studio index</title>
     <meta
       name="description"
-      content="Phokus is a studio practice for mobile product systems, AI campaign worlds, workflow engines, and visual production."
+      content="Phokus is a Los Angeles studio for mobile products and AI-generated campaigns. Bring a project into focus to enter it."
     >
     <link rel="stylesheet" href="styles.css">
   </head>
   <body data-page="home">
     <div class="site-shell">
-      <header class="site-header">
-        <nav class="nav-cluster" aria-label="Primary left">
+      <button
+        class="menu-toggle utility"
+        type="button"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="site-menu"
+      >
+        <span data-menu-label>Menu</span>
+        <span class="menu-toggle-rule" aria-hidden="true"></span>
+      </button>
+
+      <!-- Sits under Menu and shares its type, because both are the same kind of
+           control: a way to narrow what the page is showing. Homepage only, since
+           it drives the reel. -->
+      <div class="filter" data-filter>
+        <button
+          class="menu-toggle filter-toggle utility"
+          type="button"
+          data-filter-toggle
+          aria-expanded="false"
+          aria-controls="filter-options"
+        >
+          <span data-filter-label>Filter</span>
+          <span class="menu-toggle-rule" aria-hidden="true"></span>
+        </button>
+
+        <div
+          class="filter-options"
+          id="filter-options"
+          role="group"
+          aria-label="Show projects by kind"
+          data-filter-options
+        >
+          <button class="filter-option" type="button" data-kind="all" aria-pressed="true">
+            All
+          </button>
+          <button class="filter-option" type="button" data-kind="Image" aria-pressed="false">
+            Image
+          </button>
+          <button class="filter-option" type="button" data-kind="Product" aria-pressed="false">
+            Product
+          </button>
+        </div>
+      </div>
+
+      <nav class="site-menu" id="site-menu" aria-label="Primary" data-site-menu>
+        <div class="site-menu-inner">
+          <a class="nav-link" href="index.html" data-nav="home">Home</a>
           <a class="nav-link" href="work.html" data-nav="work">Work</a>
           <a class="nav-link" href="archive.html" data-nav="archive">Archive</a>
-        </nav>
-        <a class="brand-lockup" href="index.html" aria-label="Phokus home">
-          <span class="brand-name">Phokus</span>
-          <span class="brand-mark" aria-hidden="true">
-            <span class="brand-dot"></span>
-            <span class="brand-dot"></span>
-            <span class="brand-dot"></span>
-          </span>
-        </a>
-        <nav class="nav-cluster" aria-label="Primary right">
           <a class="nav-link" href="about.html" data-nav="about">About</a>
           <a class="nav-link" href="contact.html" data-nav="contact">Contact</a>
-        </nav>
-        <button
-          class="menu-toggle utility"
-          type="button"
-          data-menu-toggle
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          Menu <span aria-hidden="true"></span>
-        </button>
-      </header>
+        </div>
+      </nav>
 
       <main>
-        <section class="hero" aria-labelledby="hero-title">
-          <div class="hero-art" aria-hidden="true">
-            <img src="assets/HeroImage/phokus-muse-cutout.png" alt="">
-          </div>
-          <div class="hero-stage">
-            <div class="hero-copy">
-              <p class="eyebrow">Product * AI * production</p>
-              <h1 class="hero-title" id="hero-title">Phokus</h1>
-              <p class="hero-deck">Mobile products and cinematic AI systems built with regal precision.</p>
-              <div class="hero-actions">
-                <a class="button" href="work.html">View work</a>
-                <a class="button secondary" href="contact.html">Hire studio</a>
-              </div>
+        <!-- Focus reel. One index drives two layers: the full-bleed stage and
+             the filmstrip. Whichever cell sits inside the brackets is the
+             project the visitor is about to enter.
+
+             PLACEHOLDER IMAGES: every data-image currently points at a muse
+             master, matched to the project's declared frame. Replace each one
+             with the real project still; nothing else needs to change. -->
+        <section class="reel" aria-labelledby="reel-title" data-reel>
+          <div class="reel-stage" aria-hidden="true">
+            <div class="reel-stage-track" data-reel-stage>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-horizontal.png')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-vertical.png')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-vertical.png')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-vertical.png')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-square.png')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-horizontal.png')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/Projects/shes-back/shes-back-grid-posted.jpg')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-horizontal.png')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-square.png')"
+              ></div>
             </div>
-            <aside class="hero-ledger" aria-label="Current focus">
-              <p class="ledger-label">Studio index</p>
-              <p class="ledger-line">I: React Native product systems</p>
-              <p class="ledger-line">II: AI campaign worlds</p>
-              <p class="ledger-line">III: workflow engines</p>
-              <p class="ledger-line">IV: production and growth</p>
-            </aside>
           </div>
+
+          <div class="reel-veil" aria-hidden="true"></div>
+
+          <div class="reel-copy">
+            <p class="reel-copy-line">
+              <span class="reel-copy-prefix">Bring a project into</span>
+              <span class="reel-copy-brand" data-brand-target>PHOKUS.</span>
+            </p>
+          </div>
+
+          <div class="reel-viewport">
+            <ol class="reel-strip" data-reel-strip>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#campaign-worlds"
+                  data-name="Real Metal / Diesel-Land"
+                  data-kind="Image"
+                  data-year="2025"
+                  data-frame="16:9"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-horizontal.png" alt="Real Metal, Diesel-Land" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Real Metal</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#product-systems"
+                  data-name="Go It"
+                  data-kind="Product"
+                  data-year="2025"
+                  data-frame="9:16"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-vertical.png" alt="Go It" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Go It</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#campaign-worlds"
+                  data-name="Adidas Tokyo"
+                  data-kind="Image"
+                  data-year="2025"
+                  data-frame="9:16"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-vertical.png" alt="Adidas Tokyo" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Adidas Tokyo</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#product-systems"
+                  data-name="Cove"
+                  data-kind="Product"
+                  data-year="2024"
+                  data-frame="9:16"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-vertical.png" alt="Cove" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Cove</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#campaign-worlds"
+                  data-name="Gentle Monster x JoJo"
+                  data-kind="Image"
+                  data-year="2025"
+                  data-frame="1:1"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-square.png" alt="Gentle Monster x JoJo" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Gentle Monster</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#product-systems"
+                  data-name="Cipher"
+                  data-kind="Product"
+                  data-year="2025"
+                  data-frame="16:9"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-horizontal.png" alt="Cipher" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Cipher</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="project-shes-back.html"
+                  data-name="She's Back"
+                  data-kind="Image"
+                  data-year="2025"
+                  data-frame="9:16"
+                >
+                  <img src="assets/Projects/shes-back/shes-back-grid-posted.jpg" alt="She's Back" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">She's Back</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#product-systems"
+                  data-name="Client Systems"
+                  data-kind="Product"
+                  data-year="2020 to 2023"
+                  data-frame="16:9"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-horizontal.png" alt="Client Systems" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Client Systems</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="work.html#campaign-worlds"
+                  data-name="Muck Everyday Wash"
+                  data-kind="Image"
+                  data-year="2025"
+                  data-frame="1:1"
+                >
+                  <img src="assets/HeroImage/phokus-muse-main-blue-square.png" alt="Muck Everyday Wash" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Muck</span>
+                </a>
+              </li>
+            </ol>
+            <div class="reel-reticle" aria-hidden="true">
+              <span class="reticle-corner tl"></span>
+              <span class="reticle-corner tr"></span>
+              <span class="reticle-corner bl"></span>
+              <span class="reticle-corner br"></span>
+            </div>
+          </div>
+
+          <div class="reel-readout" data-reel-readout aria-live="polite">
+            <p class="readout-name" data-readout-name>Real Metal / Diesel-Land</p>
+            <p class="readout-meta">
+              <span data-readout-kind>Image</span>
+              <span data-readout-year>2025</span>
+              <span data-readout-frame>16:9</span>
+            </p>
+            <p class="readout-hint">Scroll to focus / click to enter</p>
+          </div>
+
+          <div class="reel-counter utility" data-reel-counter aria-hidden="true">01 / 09</div>
         </section>
 
         <section class="section-band paper" aria-labelledby="index-title">
           <div class="section-header">
             <div>
-              <p class="section-kicker">Selected chambers</p>
-              <h2 class="section-title" id="index-title">Four chambers, one operating house.</h2>
+              <p class="section-kicker">Two doors</p>
+              <h2 class="section-title" id="index-title">Things people watch, things people use.</h2>
             </div>
             <p class="section-note">
-              The studio turns engineering, AI production, visual direction, and growth work into one readable dossier.
+              If it has an audience it is image or product. If it only has an operator it is
+              a pipeline, and pipelines run underneath both.
             </p>
           </div>
           <div class="index-grid">
-            <a class="index-row" href="work.html#product-systems">
-              <span class="index-number">I</span>
-              <span class="index-title">Product Systems</span>
-              <span class="index-meta">React Native, Expo, Supabase, EAS, CI/CD</span>
-              <span class="index-command">Enter</span>
-            </a>
             <a class="index-row" href="work.html#campaign-worlds">
+              <span class="index-number">I</span>
+              <span class="index-title">Image</span>
+              <span class="index-meta">Campaigns, film, stills, generative production</span>
+              <span class="index-command">Real Metal, Adidas Tokyo</span>
+            </a>
+            <a class="index-row" href="work.html#product-systems">
               <span class="index-number">II</span>
-              <span class="index-title">AI Campaign Worlds</span>
-              <span class="index-meta">Video, stills, storytelling, social-first rollout</span>
-              <span class="index-command">Enter</span>
-            </a>
-            <a class="index-row" href="work.html#workflow-engines">
-              <span class="index-number">III</span>
-              <span class="index-title">Workflow Engines</span>
-              <span class="index-meta">ComfyUI, Runway, Weavy, LoRA, automation</span>
-              <span class="index-command">Enter</span>
-            </a>
-            <a class="index-row" href="archive.html#production-growth">
-              <span class="index-number">IV</span>
-              <span class="index-title">Production &amp; Growth</span>
-              <span class="index-meta">Analytics, paid social, release ops, asset pipelines</span>
-              <span class="index-command">Enter</span>
+              <span class="index-title">Product</span>
+              <span class="index-meta">Mobile apps, websites, internal tools</span>
+              <span class="index-command">Go It, Cove, Cipher</span>
             </a>
           </div>
+          <p class="index-substrate">
+            Underneath both: ComfyUI and Weavy graphs, LoRA training, structured prompting,
+            export matrices, Python, CI/CD, and release operations.
+            <a href="about.html">Read the method</a>
+          </p>
         </section>
 
         <section class="section-band blue" aria-labelledby="feature-title">
           <div class="split-feature">
             <div class="plate-image" aria-hidden="true"></div>
             <div class="feature-copy">
-              <p class="section-kicker">The house style</p>
-              <h2 class="section-title" id="feature-title">Engineering discipline, cinematic command.</h2>
+              <p class="section-kicker">The method</p>
+              <h2 class="section-title" id="feature-title">Composed, not cropped.</h2>
               <p>
-                Phokus works where shipped software meets directed imagery: mobile apps,
-                landing pages, AI workflows, campaign visuals, and production systems that
-                can move from prototype to release without losing taste.
+                A hero film gets cut for one screen, then someone squeezes it into a vertical
+                and the subject walks out of frame. Phokus works the other way around: the
+                frame is decided first, and every deliverable is composed for the shape it
+                will actually be seen in.
+              </p>
+              <p>
+                Five years of mobile engineering trained the eye for this &mdash; safe areas,
+                device classes, dynamic type &mdash; and the same discipline now runs the
+                generative side, where holding a composition and a character across ratios
+                is the hardest problem in the room.
               </p>
               <div class="stat-list">
                 <div class="stat-item">
-                  <span>05</span>
-                  <p>Years building product systems across mobile, startup, consumer, and client environments.</p>
+                  <span>16:9</span>
+                  <p>Horizontal for tv, laptop, monitor, pre-roll, and landing page film.</p>
                 </div>
                 <div class="stat-item">
-                  <span>RN</span>
-                  <p>React Native, Expo, TypeScript, Supabase, EAS, OTA updates, and release operations.</p>
+                  <span>9:16</span>
+                  <p>Vertical for phone, reels, stories, and paid social, safe areas respected.</p>
                 </div>
                 <div class="stat-item">
-                  <span>AI</span>
-                  <p>Runway, ComfyUI, Weavy, LoRA thinking, prompt systems, and generative production pipelines.</p>
+                  <span>1:1</span>
+                  <p>Square and round for feed, thumbnail, avatar, app mark, and watch face.</p>
                 </div>
               </div>
             </div>
@@ -135,7 +338,8 @@
 
       <footer class="footer">
         <p>Phokus / Product and image systems</p>
-        <a href="contact.html">Begin a commission</a>
+        <p class="footer-ratio utility" data-viewport-ratio aria-hidden="true"></p>
+        <a href="contact.html">Get in touch</a>
       </footer>
     </div>
     <script src="script.js"></script>

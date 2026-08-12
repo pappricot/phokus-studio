@@ -12,33 +12,26 @@
   </head>
   <body data-page="archive">
     <div class="site-shell">
-      <header class="site-header">
-        <nav class="nav-cluster" aria-label="Primary left">
+      <button
+        class="menu-toggle utility"
+        type="button"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="site-menu"
+      >
+        <span data-menu-label>Menu</span>
+        <span class="menu-toggle-rule" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-menu" id="site-menu" aria-label="Primary" data-site-menu>
+        <div class="site-menu-inner">
+          <a class="nav-link" href="index.html" data-nav="home">Home</a>
           <a class="nav-link" href="work.html" data-nav="work">Work</a>
           <a class="nav-link" href="archive.html" data-nav="archive">Archive</a>
-        </nav>
-        <a class="brand-lockup" href="index.html" aria-label="Phokus home">
-          <span class="brand-name">Phokus</span>
-          <span class="brand-mark" aria-hidden="true">
-            <span class="brand-dot"></span>
-            <span class="brand-dot"></span>
-            <span class="brand-dot"></span>
-          </span>
-        </a>
-        <nav class="nav-cluster" aria-label="Primary right">
           <a class="nav-link" href="about.html" data-nav="about">About</a>
           <a class="nav-link" href="contact.html" data-nav="contact">Contact</a>
-        </nav>
-        <button
-          class="menu-toggle utility"
-          type="button"
-          data-menu-toggle
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          Menu <span aria-hidden="true"></span>
-        </button>
-      </header>
+        </div>
+      </nav>
 
       <main>
         <section class="page-hero" aria-labelledby="archive-title">

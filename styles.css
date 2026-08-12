@@ -1,5 +1,6 @@
 :root {
-  --blue: #0800f5;
+  --main-blue: #0009cc;
+  --blue: var(--main-blue);
   --blue-deep: #03005f;
   --blue-soft: #2b27ff;
   --paper: #fbf8ec;
@@ -8,13 +9,19 @@
   --gold: #d7bd67;
   --ink: #060018;
   --line: rgba(251, 248, 236, 0.42);
-  --paper-line: rgba(8, 0, 245, 0.18);
+  --paper-line: rgba(0, 9, 204, 0.18);
   --shadow: rgba(2, 0, 54, 0.28);
   --display: Didot, "Bodoni 72", "Bodoni 72 Smallcaps", "Baskerville",
     "Times New Roman", serif;
   --utility: "Courier New", Courier, ui-monospace, monospace;
   --body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
+
+  /* The top line of the page. The menu key and the hero copy are separate
+     fixed/absolute elements, so they share a band and each centres inside it
+     rather than trying to match baselines across two stacking contexts. */
+  --head-top: 5rem;
+  --head-band: 2.4rem;
 }
 
 * {
@@ -53,12 +60,17 @@ body.intro-loading {
 }
 
 .intro-loader {
+  --intro-size: clamp(11rem, 28vmin, 20rem);
   align-items: center;
-  background: #0009cc;
+  background: var(--main-blue);
   display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
   inset: 0;
   justify-content: center;
   opacity: 1;
+  overflow-y: auto;
+  padding: 3rem 6vw;
   pointer-events: auto;
   position: fixed;
   perspective: 900px;
@@ -66,6 +78,7 @@ body.intro-loading {
     opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
     visibility 420ms cubic-bezier(0.16, 1, 0.3, 1);
   visibility: visible;
+  width: 100vw;
   z-index: 200;
 }
 
@@ -75,23 +88,253 @@ body.intro-loading {
   visibility: hidden;
 }
 
+/* The wheel yields room when it has a briefing to sit above. */
+.intro-loader.has-brief {
+  --intro-size: clamp(6.5rem, 15vmin, 10rem);
+}
+
 .intro-loader-wheel {
-  animation: astrolabeSpin 3000ms linear infinite;
   display: grid;
+  flex: none;
   place-items: center;
   transform-style: preserve-3d;
-  width: clamp(11rem, 32vmin, 22rem);
+  width: var(--intro-size);
+}
+
+/* ==========================================================================
+   Intro briefing. The categorisation is taught while the wheel turns, and the
+   last card asks a question the visitor has to answer to get in.
+   ========================================================================== */
+
+.intro-brief {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+  max-width: min(40rem, 86vw);
+  text-align: center;
+}
+
+/* The rotating steps and the closing question share one cell, so the question
+   lands exactly where the terms were and the block never resizes. */
+.intro-slot {
+  display: grid;
+  place-items: center;
+}
+
+.intro-steps,
+.intro-question {
+  grid-area: 1 / 1;
+}
+
+.intro-steps {
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.intro-step {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(0.6rem);
+  transition: opacity 360ms ease, transform 360ms ease;
+}
+
+.intro-step.is-current {
+  opacity: 1;
+  transform: none;
+}
+
+.intro-rule,
+.intro-gloss {
+  display: block;
+  font-family: var(--utility);
+  text-transform: uppercase;
+}
+
+.intro-rule {
+  color: var(--mist);
+  font-size: 0.78rem;
+  margin-bottom: 0.75rem;
+}
+
+.intro-term {
+  color: var(--paper);
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 7vw, 4.2rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.intro-gloss {
+  color: var(--mist);
+  font-size: 0.75rem;
+  margin-top: 0.75rem;
+  opacity: 0.82;
+}
+
+/* Reduced motion gets the whole rule at once instead of a rotation, so nothing
+   shares a cell and everything simply stacks. */
+.intro-loader.is-static .intro-slot {
+  gap: 1.8rem;
+}
+
+.intro-loader.is-static .intro-steps {
+  gap: 1.6rem;
+}
+
+.intro-loader.is-static .intro-step,
+.intro-loader.is-static .intro-steps,
+.intro-loader.is-static .intro-question {
+  grid-area: auto;
+}
+
+/* Type comes from the shared .intro-rule and .intro-term inside it, so the
+   question matches a card exactly. */
+.intro-question {
+  margin: 0;
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+
+.intro-question.is-current {
+  opacity: 1;
+}
+
+/* Progress through the briefing: one dot per card, so the visitor can see how
+   much is left before they commit to reading it. */
+.intro-dots {
+  display: flex;
+  gap: 0.55rem;
+  opacity: 1;
+  transition: opacity 380ms ease;
+}
+
+.intro-dots.is-spent {
+  opacity: 0;
+}
+
+.intro-dot {
+  background: none;
+  border: 1px solid var(--mist);
+  border-radius: 50%;
+  height: 0.42rem;
+  opacity: 0.45;
+  transition: background 300ms ease, border-color 300ms ease, opacity 300ms ease;
+  width: 0.42rem;
+}
+
+.intro-dot.is-done {
+  background: var(--mist);
+  opacity: 0.55;
+}
+
+.intro-dot.is-current {
+  background: var(--gold);
+  border-color: var(--gold);
+  opacity: 1;
+}
+
+/* One control carries the whole briefing, relabelled from Next to Yes, so the
+   visitor's hand and the keyboard focus never have to move. Bare type
+   throughout; the closing key takes a rule under the word as its only mark of
+   being the door. */
+.intro-key {
+  background: none;
+  border: 0;
+  color: var(--gold);
+  cursor: pointer;
+  font-family: var(--utility);
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  padding: 0.25rem 0.4rem;
+  pointer-events: none;
+  text-transform: uppercase;
+  transition: color 200ms ease, opacity 320ms ease, visibility 320ms ease;
+  visibility: hidden;
+}
+
+.intro-key.is-current {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.intro-key.is-final.is-current {
+  border-bottom: 1px solid currentColor;
+}
+
+.intro-key:hover,
+.intro-key:focus-visible {
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.intro-key:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* ==========================================================================
+   Handover. On Yes, everything but the word PHOKUS is withdrawn and the veil
+   clears, while a clone of that word travels to the homepage lockup over two
+   seconds. The visitor never sees the word arrive; it was already there.
+   ========================================================================== */
+
+.intro-loader.is-merging {
+  background: transparent;
+  pointer-events: none;
+  transition: background 1100ms ease;
+}
+
+.intro-loader.is-merging .intro-loader-wheel,
+.intro-loader.is-merging .intro-steps,
+.intro-loader.is-merging .intro-dots,
+.intro-loader.is-merging .intro-key,
+.intro-loader.is-merging .intro-question .intro-rule {
+  opacity: 0;
+  transition: opacity 520ms ease;
+}
+
+/* The question mark is dropped in place; the word itself is handed to the
+   flying clone, so the original is hidden without a beat of overlap. */
+.intro-term-mark {
+  transition: opacity 700ms ease;
+}
+
+.intro-loader.is-merging .intro-term-mark {
+  opacity: 0;
+}
+
+.intro-loader.is-merging .intro-term-word {
+  opacity: 0;
+  transition: none;
+}
+
+.brand-flier {
+  pointer-events: none;
+  position: fixed;
+  transform-origin: 0 0;
+  transition: transform 2000ms cubic-bezier(0.65, 0, 0.35, 1);
+  white-space: nowrap;
+  z-index: 220;
 }
 
 .intro-loader-image {
-  animation: astrolabeGlow 3000ms ease-in-out infinite;
+  animation:
+    astrolabeCoinSpin 3000ms linear infinite,
+    astrolabeGlow 3000ms ease-in-out infinite;
   backface-visibility: visible;
   filter: drop-shadow(0 0 1.1rem rgba(251, 248, 236, 0.38));
   transform-origin: center;
   width: 100%;
+  will-change: opacity, transform;
 }
 
-@keyframes astrolabeSpin {
+@keyframes astrolabeCoinSpin {
   from {
     transform: rotateY(0deg);
   }
@@ -148,6 +391,17 @@ button {
   text-transform: uppercase;
 }
 
+.sr-only {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .site-shell {
   max-width: 100%;
   min-height: 100vh;
@@ -156,51 +410,161 @@ button {
   width: 100%;
 }
 
-.site-header {
+/* The only persistent chrome: a single key floating over the page, so the
+   wordmark is never duplicated against the page's own title. */
+/* Bare type, no plate and no border, so it reads as part of the top line
+   instead of as a floating control. Its label matches the hero prefix size and
+   both centre in --head-band, which is what puts them on one line. */
+.menu-toggle {
   align-items: center;
-  background: rgba(8, 0, 245, 0.88);
-  border-bottom: 1px solid rgba(251, 248, 236, 0.2);
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 1fr auto 1fr;
-  left: 0;
-  padding: 2.1rem 7vw 1.4rem;
-  position: sticky;
-  right: 0;
-  top: 0;
-  z-index: 50;
-}
-
-.site-header::after {
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  bottom: -1px;
-  content: "";
-  height: 1px;
-  left: 10vw;
-  opacity: 0.75;
-  position: absolute;
-  right: 10vw;
-}
-
-.nav-cluster {
-  align-items: center;
-  display: flex;
-  gap: 3.3rem;
-}
-
-.site-header > .nav-cluster:first-of-type {
-  justify-content: flex-start;
-}
-
-.site-header > .nav-cluster:last-of-type {
+  background: none;
+  border: 0;
+  color: var(--mist);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.84rem;
+  gap: 0.6rem;
+  height: var(--head-band);
   justify-content: flex-end;
+  padding: 0;
+  position: fixed;
+  right: 7vw;
+  text-shadow: 0 1px 10px rgba(6, 0, 24, 0.9), 0 0 3px rgba(6, 0, 24, 0.7);
+  text-transform: uppercase;
+  top: var(--head-top);
+  transition: color 180ms ease, opacity 180ms ease;
+  z-index: 90;
+}
+
+.menu-toggle:hover {
+  color: var(--gold);
+}
+
+.menu-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.menu-toggle-rule {
+  background: currentColor;
+  display: block;
+  height: 1px;
+  transition: transform 220ms ease;
+  width: 1.1rem;
+}
+
+/* Each hairline answers to its own disclosure, not to the other one's. */
+.menu-open [data-menu-toggle] .menu-toggle-rule,
+.filter-toggle[aria-expanded="true"] .menu-toggle-rule {
+  transform: rotate(90deg);
+}
+
+/* ==========================================================================
+   Reel filter. Borrows the Menu button wholesale, one band lower, so the two
+   read as one stack of controls rather than as two inventions.
+   ========================================================================== */
+
+.filter-toggle {
+  top: calc(var(--head-top) + var(--head-band));
+}
+
+.filter-options {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: end;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 7vw;
+  top: calc(var(--head-top) + var(--head-band) * 2);
+  transform: translateY(-0.4rem);
+  transition: opacity 240ms ease, transform 240ms ease, visibility 240ms ease;
+  visibility: hidden;
+  z-index: 90;
+}
+
+.filter.is-open .filter-options {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  visibility: visible;
+}
+
+/* The whole cluster stands down when the menu takes the screen. */
+.menu-open .filter {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.filter-option {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  color: var(--mist);
+  cursor: pointer;
+  font-family: var(--utility);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  padding: 0.05rem 0;
+  text-shadow: 0 1px 10px rgba(6, 0, 24, 0.9), 0 0 3px rgba(6, 0, 24, 0.7);
+  text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.filter-option:hover {
+  color: var(--paper);
+}
+
+/* The rule under the word marks the live one, the same mark the intro's closing
+   key uses. */
+.filter-option[aria-pressed="true"] {
+  border-bottom-color: currentColor;
+  color: var(--gold);
+}
+
+.filter-option:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.site-menu {
+  background: var(--main-blue);
+  inset: 0;
+  opacity: 0;
+  overflow-y: auto;
+  padding: 7rem 7vw 4rem;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: hidden;
+  z-index: 85;
+}
+
+.menu-open .site-menu {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.site-menu-inner {
+  display: grid;
+  gap: 0.2rem;
+  justify-items: start;
+  margin: 0 auto;
+  max-width: 60rem;
 }
 
 .nav-link {
+  border-bottom: 1px solid rgba(251, 248, 236, 0.16);
+  color: var(--mist);
+  display: block;
   font-family: var(--display);
-  font-size: 1.13rem;
-  line-height: 1;
+  font-size: clamp(2.4rem, 7vw, 4.6rem);
+  line-height: 1.18;
+  padding: 0.5rem 0;
   text-transform: uppercase;
+  width: 100%;
 }
 
 .nav-link:hover,
@@ -208,13 +572,18 @@ button {
   color: var(--gold);
 }
 
+.nav-link:focus-visible {
+  color: var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: 4px;
+}
+
 .brand-lockup {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-  justify-self: center;
-  text-align: center;
+  gap: 0.5rem;
+  margin: 0 0 2.6rem;
 }
 
 .brand-name {
@@ -231,91 +600,326 @@ button {
 }
 
 .brand-dot {
-  background: var(--paper);
+  background: var(--gold);
   border-radius: 50%;
   height: 0.34rem;
   width: 0.34rem;
 }
 
-.menu-toggle {
-  align-items: center;
-  background: transparent;
-  border: 1px solid rgba(251, 248, 236, 0.5);
-  color: var(--paper);
-  display: none;
-  gap: 0.55rem;
-  height: 2.65rem;
-  justify-content: center;
-  padding: 0 0.8rem;
-  text-transform: uppercase;
-}
+/* ==========================================================================
+   Focus reel
+   One index drives two layers: the full-bleed stage behind and the filmstrip
+   in front. The cell inside the brackets is the project about to be entered.
+   ========================================================================== */
 
-.menu-toggle span {
-  background: currentColor;
-  display: block;
-  height: 1px;
-  width: 1.1rem;
-}
-
-.hero {
-  min-height: 88svh;
+/* The focus area is 9:16 because most project stills are vertical. Height is
+   the input and width is derived, so the ratio holds at every breakpoint. */
+.reel {
+  --reel-height: 92svh;
+  --cell-height: clamp(14rem, 44svh, 24rem);
+  --cell-gap: 0.55rem;
+  --strip-width: calc(var(--cell-height) * 9 / 16);
+  --focus-line: 50%;
+  background: var(--main-blue);
+  height: var(--reel-height);
   overflow: hidden;
   position: relative;
 }
 
-.hero-stage {
-  align-items: end;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  min-height: calc(88svh - 7rem);
-  padding: 3.2rem 7vw 5.4rem;
-  position: relative;
-}
-
-.hero-art {
-  bottom: 0;
-  overflow: hidden;
-  pointer-events: none;
+.reel-stage {
+  inset: 0;
   position: absolute;
-  right: -4vw;
-  top: 3rem;
-  width: 70vw;
   z-index: 0;
 }
 
-.hero-art::after {
-  background: linear-gradient(
-    90deg,
-    var(--blue) 0%,
-    rgba(8, 0, 245, 0.88) 18%,
-    rgba(8, 0, 245, 0) 48%
-  );
-  content: "";
-  inset: 0;
-  position: absolute;
+.reel-stage-track {
+  height: 100%;
+  transform: translate3d(0, calc(var(--reel-offset, 0) * -100%), 0);
+  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
-.hero-art img {
+/* The stage is blurred so it reads as depth behind the strip rather than as a
+   second image competing with it. The slight scale hides the soft edge that a
+   blur leaves at the bounds of the element. */
+.reel-plate {
+  background-color: var(--main-blue);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(5px);
   height: 100%;
-  mix-blend-mode: screen;
-  object-fit: cover;
-  object-position: right bottom;
-  opacity: 0.9;
-  transform: translate3d(
-      var(--muse-scroll-x, 0),
-      var(--muse-scroll-y, 0),
-      0
-    )
-    scale(var(--muse-scroll-scale, 1.012));
-  transform-origin: 68% 55%;
-  will-change: transform;
+  transform: scale(1.1);
+}
+
+/* No blue cast: the stills are shown at their own colour. Two soft neutral
+   gradients sit only where type lands, top-left and bottom, so the copy stays
+   legible without tinting the image. */
+.reel-veil {
+  background:
+    linear-gradient(
+      160deg,
+      rgba(6, 0, 24, 0.52) 0%,
+      rgba(6, 0, 24, 0.18) 34%,
+      transparent 58%
+    ),
+    linear-gradient(transparent 62%, rgba(6, 0, 24, 0.58) 100%);
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.reel-copy {
+  inset-inline: 0;
+  max-width: none;
+  padding-inline: 7vw;
+  position: absolute;
+  top: var(--head-top);
+  z-index: 3;
+}
+
+/* Centred in the band, not baseline-aligned, so the small prefix sits on the
+   same line as both the brand and the menu key. */
+.reel-copy-line {
+  align-items: center;
+  display: flex;
+  margin: 0;
+  min-height: var(--head-band);
+  position: relative;
   width: 100%;
 }
 
-.hero-copy {
-  max-width: 45rem;
-  position: relative;
+.reel-copy-prefix {
+  color: var(--mist);
+  font-family: var(--utility);
+  font-size: 0.84rem;
+  text-transform: uppercase;
+}
+
+.reel-copy-brand {
+  color: var(--paper);
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  left: 50%;
+  line-height: 1.05;
+  position: absolute;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.reel-title {
+  font-family: var(--display);
+  font-size: clamp(3.6rem, 9vw, 7.6rem);
+  font-weight: 400;
+  line-height: 0.84;
+  margin: 0 0 1.1rem;
+  text-transform: uppercase;
+}
+
+.reel-deck {
+  color: var(--paper);
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  line-height: 1.05;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.reel-viewport {
+  height: 100%;
+  inset-inline-start: 50%;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: var(--strip-width);
   z-index: 2;
+}
+
+.reel-strip {
+  display: grid;
+  gap: var(--cell-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  transform: translate3d(0, var(--strip-shift, 0px), 0);
+  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
+  will-change: transform;
+}
+
+/* A filter change relays out the strip, which would otherwise be seen as a jump.
+   The strip goes out, the set changes, the strip comes back. */
+.reel.is-refiltering .reel-strip {
+  opacity: 0;
+}
+
+.reel-cell {
+  height: var(--cell-height);
+  margin: 0;
+  position: relative;
+}
+
+.reel-cell[hidden] {
+  display: none;
+}
+
+/* The hairline keeps the strip legible as a strip even when neighbouring
+   stills are tonally close to each other and to the stage behind. */
+.reel-link {
+  border: 1px solid rgba(251, 248, 236, 0.3);
+  display: block;
+  filter: saturate(0.65) brightness(0.72);
+  height: 100%;
+  opacity: 0.72;
+  overflow: hidden;
+  position: relative;
+  transition: opacity 320ms ease, filter 320ms ease, border-color 320ms ease;
+}
+
+.reel-link img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.reel-cell-name {
+  bottom: 0.3rem;
+  color: var(--paper);
+  font-family: var(--utility);
+  font-size: 0.58rem;
+  left: 0.4rem;
+  opacity: 0;
+  position: absolute;
+  text-transform: uppercase;
+  transition: opacity 240ms ease;
+}
+
+/* The focused cell fills the brackets exactly, so emphasis comes from tone and
+   the hairline rather than from any change of size that would break 9:16. */
+.reel-cell.is-active .reel-link {
+  border-color: var(--paper);
+  filter: none;
+  opacity: 1;
+}
+
+.reel-cell.is-active .reel-cell-name {
+  opacity: 0.85;
+}
+
+.reel-link:hover,
+.reel-link:focus-visible {
+  filter: none;
+  opacity: 0.92;
+}
+
+.reel-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.reel-reticle {
+  height: var(--cell-height);
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: var(--focus-line);
+  transform: translate(-50%, -50%);
+  width: var(--strip-width);
+  z-index: 4;
+}
+
+.reticle-corner {
+  border: 1px solid var(--gold);
+  height: 0.85rem;
+  position: absolute;
+  width: 0.85rem;
+}
+
+.reticle-corner.tl {
+  border-bottom: 0;
+  border-right: 0;
+  left: -0.35rem;
+  top: -0.35rem;
+}
+
+.reticle-corner.tr {
+  border-bottom: 0;
+  border-left: 0;
+  right: -0.35rem;
+  top: -0.35rem;
+}
+
+.reticle-corner.bl {
+  border-right: 0;
+  border-top: 0;
+  bottom: -0.35rem;
+  left: -0.35rem;
+}
+
+.reticle-corner.br {
+  border-left: 0;
+  border-top: 0;
+  bottom: -0.35rem;
+  right: -0.35rem;
+}
+
+/* The strip sits above the scrim, so where the readout crosses a cell the type
+   is carried by its own shadow rather than by the gradient behind it. */
+.reel-readout {
+  bottom: 3.2rem;
+  left: 7vw;
+  max-width: 22rem;
+  position: absolute;
+  text-shadow: 0 1px 12px rgba(6, 0, 24, 0.85), 0 0 3px rgba(6, 0, 24, 0.6);
+  z-index: 3;
+}
+
+.reel-counter,
+.reel-copy {
+  text-shadow: 0 1px 12px rgba(6, 0, 24, 0.7);
+}
+
+.readout-name {
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1;
+  margin: 0 0 0.6rem;
+  text-transform: uppercase;
+}
+
+.readout-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  margin: 0 0 0.7rem;
+}
+
+.readout-meta span {
+  color: var(--gold);
+  font-family: var(--utility);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+
+.readout-hint {
+  color: var(--mist);
+  font-family: var(--utility);
+  font-size: 0.7rem;
+  margin: 0;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+.reel-counter {
+  bottom: 3.2rem;
+  color: var(--mist);
+  font-size: 0.76rem;
+  position: absolute;
+  right: 7vw;
+  z-index: 3;
 }
 
 .eyebrow {
@@ -329,27 +933,6 @@ button {
   text-transform: uppercase;
 }
 
-.hero-title {
-  font-family: var(--display);
-  font-size: 7.6rem;
-  font-weight: 400;
-  line-height: 0.84;
-  margin: 0 0 1.8rem;
-  max-width: 11ch;
-  text-transform: uppercase;
-}
-
-.hero-deck {
-  color: var(--paper);
-  font-family: var(--display);
-  font-size: 2rem;
-  line-height: 1.05;
-  margin: 0 0 2rem;
-  max-width: 16ch;
-  text-transform: uppercase;
-}
-
-.hero-actions,
 .page-actions,
 .contact-actions {
   align-items: center;
@@ -394,33 +977,6 @@ button {
   background: var(--paper);
   border-color: var(--paper);
   color: var(--blue);
-}
-
-.hero-ledger {
-  align-self: end;
-  border-left: 1px solid var(--line);
-  justify-self: end;
-  max-width: 24rem;
-  padding: 0 0 0 1.4rem;
-  position: relative;
-  z-index: 2;
-}
-
-.ledger-label {
-  color: var(--gold);
-  font-family: var(--utility);
-  font-size: 0.8rem;
-  margin: 0 0 0.7rem;
-  text-transform: uppercase;
-}
-
-.ledger-line {
-  color: var(--mist);
-  font-family: var(--utility);
-  font-size: 0.78rem;
-  margin: 0.18rem 0;
-  overflow-wrap: anywhere;
-  text-transform: uppercase;
 }
 
 .section-band {
@@ -496,6 +1052,28 @@ button {
   color: var(--gold);
 }
 
+.index-substrate {
+  border-top: 1px solid currentColor;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--utility);
+  font-size: 0.82rem;
+  gap: 0.9rem;
+  margin: 0;
+  opacity: 0.78;
+  padding: 1.2rem 0 0;
+  text-transform: uppercase;
+}
+
+.index-substrate a {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.index-substrate a:hover {
+  color: var(--gold);
+}
+
 .index-number,
 .index-meta,
 .index-command {
@@ -518,11 +1096,12 @@ button {
 }
 
 .plate-image {
-  aspect-ratio: 1 / 1.12;
+  aspect-ratio: 9 / 16;
   background:
-    radial-gradient(circle at 68% 34%, rgba(215, 189, 103, 0.28), transparent 18rem),
-    linear-gradient(135deg, rgba(251, 248, 236, 0.12), rgba(251, 248, 236, 0.02));
+    linear-gradient(rgba(0, 9, 204, 0.1), rgba(0, 9, 204, 0.1)),
+    url("assets/HeroImage/phokus-muse-main-blue-vertical.png") center / cover no-repeat;
   border: 1px solid currentColor;
+  max-height: 40rem;
   min-height: 26rem;
   position: relative;
 }
@@ -603,8 +1182,17 @@ button {
   grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 0.45fr);
   min-height: 58svh;
   overflow: hidden;
-  padding: 7rem 7vw 5rem;
+  padding: var(--head-top) 7vw 5rem;
   position: relative;
+}
+
+/* Interior pages put their eyebrow in the same band as the menu key, so the top
+   line of the site holds at one height on every page. */
+.page-hero .eyebrow,
+.project-hero .eyebrow {
+  align-items: center;
+  display: flex;
+  min-height: var(--head-band);
 }
 
 .page-hero::after {
@@ -638,8 +1226,8 @@ button {
   background: linear-gradient(
     90deg,
     var(--blue) 0%,
-    rgba(8, 0, 245, 0.82) 24%,
-    rgba(8, 0, 245, 0) 56%
+    rgba(0, 9, 204, 0.82) 24%,
+    rgba(0, 9, 204, 0) 56%
   );
   content: "";
   inset: 0;
@@ -869,7 +1457,7 @@ button {
 }
 
 .portrait-plate::after {
-  border: 1px solid rgba(8, 0, 245, 0.38);
+  border: 1px solid rgba(0, 9, 204, 0.38);
   content: "";
   inset: 1rem;
   position: absolute;
@@ -1005,17 +1593,231 @@ button {
   text-transform: uppercase;
 }
 
+.footer-ratio {
+  color: var(--mist);
+  opacity: 0.72;
+}
+
+.footer-ratio:empty {
+  display: none;
+}
+
+/* Project pages. Narrower hero than the section landings because a single
+   project leads with its title and spec, not with art. */
+.project-hero {
+  padding: var(--head-top) 7vw 4.5rem;
+}
+
+/* A project deck is a sentence, not a headline, so it gets a wider measure
+   than the section landings allow. */
+.project-hero .page-deck {
+  font-size: 1.7rem;
+  max-width: 38ch;
+}
+
+.project-spec {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0 2rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 3rem 0 0;
+  padding-top: 1.1rem;
+}
+
+.project-spec dt {
+  color: var(--gold);
+  font-family: var(--utility);
+  font-size: 0.78rem;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+}
+
+.project-spec dd {
+  font-family: var(--utility);
+  font-size: 0.88rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.project-proof {
+  margin: 0;
+}
+
+.proof-pair {
+  display: grid;
+  gap: 1.4rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 46rem;
+}
+
+.proof-shot {
+  min-inline-size: 0;
+}
+
+.proof-shot img {
+  border: 1px solid var(--paper-line);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.proof-shot figcaption {
+  font-size: 0.76rem;
+  margin-top: 0.7rem;
+  opacity: 0.7;
+}
+
+.proof-note {
+  font-family: var(--utility);
+  font-size: 0.86rem;
+  margin: 2.2rem 0 0;
+  max-width: 42rem;
+  text-transform: uppercase;
+}
+
+.project-acts {
+  counter-reset: act;
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project-acts li {
+  border: 1px solid currentColor;
+  min-inline-size: 0;
+  padding: 1.2rem;
+}
+
+.act-number {
+  color: var(--gold);
+  font-family: var(--utility);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.project-acts h3 {
+  font-family: var(--display);
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 1.6rem 0 0.8rem;
+  text-transform: uppercase;
+}
+
+.project-acts p {
+  font-family: var(--utility);
+  font-size: 0.84rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.project-stack {
+  border-top: 1px solid currentColor;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stack-item {
+  border-bottom: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  min-inline-size: 0;
+  padding: 1.3rem 1.2rem;
+}
+
+.stack-item:last-child {
+  border-right: 0;
+}
+
+.stack-item span {
+  color: var(--blue);
+  display: block;
+  font-size: 0.78rem;
+  margin: 0 0 0.9rem;
+}
+
+.blue .stack-item span {
+  color: var(--gold);
+}
+
+.stack-item p {
+  font-family: var(--utility);
+  font-size: 0.84rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.project-links {
+  border-top: 1px solid currentColor;
+}
+
+.project-link {
+  align-items: baseline;
+  border-bottom: 1px solid currentColor;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.32fr);
+  padding: 1.4rem 0;
+  text-decoration: none;
+  transition: padding-left 260ms ease, opacity 260ms ease;
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  padding-left: 1rem;
+}
+
+.link-label {
+  font-family: var(--display);
+  font-size: 2.4rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.link-meta {
+  font-family: var(--utility);
+  font-size: 0.82rem;
+  opacity: 0.76;
+  text-transform: uppercase;
+}
+
+.project-next {
+  border-top: 1px solid var(--line);
+  padding: 2.6rem 7vw;
+}
+
+.project-next a {
+  display: grid;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.project-next .utility {
+  color: var(--gold);
+  font-size: 0.78rem;
+}
+
+.next-title {
+  font-family: var(--display);
+  font-size: 2.6rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 @media (max-width: 1120px) {
-  .site-header {
+  .menu-toggle,
+  .filter-options {
+    right: 5vw;
+  }
+
+  .project-hero,
+  .project-next {
     padding-left: 5vw;
     padding-right: 5vw;
   }
 
-  .nav-cluster {
-    gap: 1.8rem;
-  }
-
-  .hero-title,
   .page-title {
     font-size: 6rem;
   }
@@ -1028,79 +1830,19 @@ button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .hero-stage,
   .section-band,
   .page-hero,
   .footer {
     padding-left: 5vw;
     padding-right: 5vw;
   }
-
-  .hero-art {
-    width: 76vw;
-  }
 }
 
 @media (max-width: 860px) {
-  .site-header {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    padding-top: 1.1rem;
+  .site-menu {
+    padding: 5.5rem 5vw 3rem;
   }
 
-  .brand-lockup {
-    flex: 0 1 auto;
-    justify-self: start;
-    order: 1;
-  }
-
-  .menu-toggle {
-    display: inline-flex;
-    flex: 0 0 auto;
-    justify-self: end;
-    left: min(58vw, calc(100vw - 8rem));
-    min-width: 6.75rem;
-    order: 2;
-    position: fixed;
-    right: auto;
-    top: 1.1rem;
-    z-index: 80;
-  }
-
-  .nav-cluster {
-    background: var(--blue);
-    border-bottom: 1px solid var(--line);
-    display: none;
-    gap: 0;
-    grid-column: 1 / -1;
-    grid-template-columns: 1fr;
-    left: 0;
-    padding: 1rem 5vw 1.4rem;
-    position: fixed;
-    right: 0;
-    top: 6.5rem;
-  }
-
-  .site-header > .nav-cluster:first-of-type,
-  .site-header > .nav-cluster:last-of-type {
-    justify-content: stretch;
-  }
-
-  .menu-open .nav-cluster {
-    display: grid;
-  }
-
-  .site-header > .nav-cluster:last-of-type {
-    transform: translateY(100%);
-  }
-
-  .nav-link {
-    border-bottom: 1px solid rgba(251, 248, 236, 0.2);
-    padding: 1rem 0;
-  }
-
-  .hero-stage,
   .page-hero,
   .section-header,
   .split-feature,
@@ -1109,35 +1851,9 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .hero-stage {
-    align-items: start;
-    min-height: 84svh;
-    padding-top: 4rem;
-    width: 100%;
-  }
-
-  .hero-copy {
-    max-width: 100%;
-  }
-
   .eyebrow {
     font-size: 0.76rem;
     white-space: normal;
-  }
-
-  .hero-art {
-    bottom: -4rem;
-    left: 0;
-    opacity: 0.68;
-    right: auto;
-    top: 10rem;
-    transform: scale(1.32);
-    transform-origin: 72% bottom;
-    width: 100%;
-  }
-
-  .hero-art img {
-    object-position: 70% bottom;
   }
 
   .page-hero-art {
@@ -1155,20 +1871,35 @@ button {
     object-position: 68% bottom;
   }
 
-  .hero-ledger {
-    justify-self: start;
-    margin-top: 2.6rem;
-    max-width: 100%;
-  }
-
-  .hero-title,
   .page-title {
     font-size: 4.8rem;
   }
 
-  .hero-deck,
   .page-deck {
     font-size: 1.55rem;
+  }
+
+  /* The reel keeps its centred strip on narrow screens but gives the readout
+     the full width beneath it, so the brand and the metadata never collide.
+     Only the height is set; the 9:16 width follows from it. */
+  .reel {
+    --cell-height: clamp(11rem, 34svh, 17rem);
+    --focus-line: 46%;
+  }
+
+  .reel-copy {
+    padding-inline: 5vw;
+  }
+
+  .reel-readout {
+    bottom: 2.2rem;
+    left: 5vw;
+    max-width: calc(100% - 10vw);
+  }
+
+  .reel-counter {
+    bottom: 2.2rem;
+    right: 5vw;
   }
 
   .section-title {
@@ -1176,8 +1907,19 @@ button {
   }
 
   .index-row,
-  .case-item {
+  .case-item,
+  .project-link {
     grid-template-columns: 1fr;
+  }
+
+  .project-spec,
+  .project-acts,
+  .project-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stack-item:nth-child(2n) {
+    border-right: 0;
   }
 
   .index-title,
@@ -1212,17 +1954,50 @@ button {
     background-size: 36px 36px, 36px 36px, auto;
   }
 
+  /* Phone staggers the top line instead of running it as one row. The menu key
+     holds the band, the prefix drops a little below it, and the brand drops
+     further still, which frees it to sit centred on the axis without landing on
+     the prefix. */
+  :root {
+    --head-top: 3.4rem;
+    --head-band: 1rem;
+  }
+
+  .reel-copy-line {
+    gap: 0.5rem;
+    padding-right: 4.2rem;
+  }
+
+  .reel-copy-prefix {
+    font-size: 0.72rem;
+    transform: translateY(0.45rem);
+  }
+
+  .reel-copy-brand {
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, 1.7rem);
+  }
+
+  .menu-toggle {
+    font-size: 0.72rem;
+    gap: 0.4rem;
+  }
+
+  .menu-toggle-rule {
+    width: 0.8rem;
+  }
+
   .brand-name {
     font-size: 1.65rem;
   }
 
-  .hero-title,
   .page-title {
     font-size: 3.45rem;
     max-width: 9ch;
   }
 
-  .hero-deck,
   .page-deck {
     font-size: 1.25rem;
   }
@@ -1244,7 +2019,6 @@ button {
     width: 100%;
   }
 
-  .hero-actions,
   .page-actions,
   .contact-actions {
     align-items: stretch;
@@ -1259,6 +2033,26 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .project-spec,
+  .project-acts,
+  .project-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .project-spec > div {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.9rem;
+  }
+
+  .stack-item {
+    border-right: 0;
+  }
+
+  .link-label,
+  .next-title {
+    font-size: 2rem;
+  }
+
   .gallery-item {
     min-height: 18rem;
   }
@@ -1270,7 +2064,21 @@ button {
     animation: none !important;
   }
 
-  .hero-art img {
-    transform: none !important;
+  .intro-step,
+  .intro-question,
+  .intro-key,
+  .intro-dots,
+  .intro-term-mark,
+  .brand-flier {
+    transition: none !important;
+  }
+
+  .reel-stage-track,
+  .reel-strip,
+  .reel-link,
+  .site-menu,
+  .filter-options,
+  .menu-toggle-rule {
+    transition: none !important;
   }
 }
