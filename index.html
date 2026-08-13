@@ -12,6 +12,12 @@
   </head>
   <body data-page="home">
     <div class="site-shell">
+      <!-- MENU PARKED. Held here rather than deleted, because the key and the
+           overlay come back as one piece; the overlay itself is further down.
+           The script guards on the toggle being present, so restoring these two
+           blocks is the whole job. Home needs no index link in its place, being
+           the index, so the filter moves up into the band this left empty.
+
       <button
         class="menu-toggle utility"
         type="button"
@@ -22,11 +28,13 @@
         <span data-menu-label>Menu</span>
         <span class="menu-toggle-rule" aria-hidden="true"></span>
       </button>
+      -->
 
-      <!-- Sits under Menu and shares its type, because both are the same kind of
-           control: a way to choose what the page is showing. There is no "all",
-           so the reel always holds one of the two doors and opens on Image.
-           Homepage only, since it drives the reel. -->
+      <!-- Shares the Menu key's type, because both are the same kind of control:
+           a way to choose what the page is showing. There is no "all", so the
+           reel always holds one of the two doors and opens on Image. Homepage
+           only, since it drives the reel. While the menu is parked this holds the
+           top band on its own; see the filter block in styles.css. -->
       <div class="filter" data-filter>
         <button
           class="menu-toggle filter-toggle utility"
@@ -55,6 +63,8 @@
         </div>
       </div>
 
+      <!-- MENU PARKED, second half. Restore alongside the key above.
+
       <nav class="site-menu" id="site-menu" aria-label="Primary" data-site-menu>
         <div class="site-menu-inner">
           <a class="nav-link" href="index.html" data-nav="home">Home</a>
@@ -64,6 +74,7 @@
           <a class="nav-link" href="contact.html" data-nav="contact">Contact</a>
         </div>
       </nav>
+      -->
 
       <main>
         <!-- Focus reel. One index drives two layers: the full-bleed stage and

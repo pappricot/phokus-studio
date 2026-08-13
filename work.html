@@ -12,6 +12,11 @@
   </head>
   <body data-page="work">
     <div class="site-shell">
+      <!-- MENU PARKED. The key and the overlay are held here rather than deleted,
+           because they come back as one piece. The script guards on the toggle
+           being present, so nothing needs changing there to restore them; put the
+           markup back and remove the index link below.
+
       <button
         class="menu-toggle utility"
         type="button"
@@ -32,6 +37,16 @@
           <a class="nav-link" href="contact.html" data-nav="contact">Contact</a>
         </div>
       </nav>
+      -->
+
+      <!-- The one piece of chrome while the menu is parked: without it this page
+           is a dead end, since every route out used to live in the overlay. It
+           takes the slot and the type the menu key had, so the page gains a way
+           back without gaining a new visual element. -->
+      <a class="back-link utility" href="index.html">
+        <span class="back-link-rule" aria-hidden="true"></span>
+        <span>Index</span>
+      </a>
 
       <main>
         <section class="page-hero page-hero-with-art" aria-labelledby="work-title">

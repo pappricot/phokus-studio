@@ -495,6 +495,47 @@ body[data-page="home"] .footer {
   width: 1.1rem;
 }
 
+/* Stands in for the parked menu key: same slot, same type, same hairline, so a
+   project page keeps one route out without reading as new chrome. The hairline
+   leads the label here rather than trailing it, which is the only thing marking
+   it as a way back rather than a way in. Delete this pair when the menu returns. */
+.back-link {
+  align-items: center;
+  color: var(--mist);
+  display: inline-flex;
+  font-size: 0.84rem;
+  gap: 0.6rem;
+  height: var(--head-band);
+  position: fixed;
+  right: 7vw;
+  text-decoration: none;
+  text-shadow: 0 1px 10px rgba(6, 0, 24, 0.9), 0 0 3px rgba(6, 0, 24, 0.7);
+  top: var(--head-top);
+  transition: color 180ms ease;
+  z-index: 90;
+}
+
+.back-link:hover {
+  color: var(--gold);
+}
+
+.back-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.back-link-rule {
+  background: currentColor;
+  display: block;
+  height: 1px;
+  transition: width 220ms ease;
+  width: 1.1rem;
+}
+
+.back-link:hover .back-link-rule {
+  width: 1.7rem;
+}
+
 /* Each hairline answers to its own disclosure, not to the other one's. */
 .menu-open [data-menu-toggle] .menu-toggle-rule,
 .filter-toggle[aria-expanded="true"] .menu-toggle-rule {
@@ -502,12 +543,18 @@ body[data-page="home"] .footer {
 }
 
 /* ==========================================================================
-   Reel filter. Borrows the Menu button wholesale, one band lower, so the two
-   read as one stack of controls rather than as two inventions.
+   Reel filter. Borrows the Menu button wholesale so the two read as one stack
+   of controls rather than as two inventions.
+
+   MENU PARKED: the filter normally sits one band lower than the Menu key. With
+   that key commented out it takes the top band instead, or it would hang below
+   an empty slot. To restore, put the band back on both offsets below:
+     .filter-toggle  { top: calc(var(--head-top) + var(--head-band)); }
+     .filter-options { top: calc(var(--head-top) + var(--head-band) * 2); }
    ========================================================================== */
 
 .filter-toggle {
-  top: calc(var(--head-top) + var(--head-band));
+  top: var(--head-top);
 }
 
 .filter-options {
@@ -518,7 +565,7 @@ body[data-page="home"] .footer {
   pointer-events: none;
   position: fixed;
   right: 7vw;
-  top: calc(var(--head-top) + var(--head-band) * 2);
+  top: calc(var(--head-top) + var(--head-band));
   transform: translateY(-0.4rem);
   transition: opacity 240ms ease, transform 240ms ease, visibility 240ms ease;
   visibility: hidden;
@@ -2147,6 +2194,15 @@ body[data-page="home"] .footer {
   }
 
   .menu-toggle-rule {
+    width: 0.8rem;
+  }
+
+  .back-link {
+    font-size: 0.72rem;
+    gap: 0.4rem;
+  }
+
+  .back-link-rule {
     width: 0.8rem;
   }
 
