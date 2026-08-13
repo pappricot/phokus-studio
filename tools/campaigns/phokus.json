@@ -17,14 +17,14 @@
     "note": "A portfolio grid asks a visitor to compare thumbnails. This one asks them to look at one project at a time, so the index behaves like a viewfinder: whatever sits inside the brackets is the thing about to be entered.",
     "shots": [
       {
-        "src": "assets/Projects/phokus/phokus-01.jpg",
+        "src": "assets/Projects/phokus/phokus-01.webp",
         "width": 1440,
         "height": 1400,
         "alt": "The intro briefing on a royal blue field, teaching one rule at a time: if it has an audience, Image, with campaigns, film, stills and generative production listed beneath.",
         "caption": "The briefing"
       },
       {
-        "src": "assets/Projects/phokus/phokus-02.jpg",
+        "src": "assets/Projects/phokus/phokus-02.webp",
         "width": 1440,
         "height": 1000,
         "alt": "The homepage reel with a campaign still held inside gold reticle brackets, a blurred plate of the same still filling the background, and a readout naming the project, kind, year and frame.",
@@ -61,21 +61,21 @@
     "note": "The artwork is a single engraved scene — an astrolabe whose centre is a camera iris, held up out of the clouds past ruined columns. It is re-framed rather than redrawn, which is what lets any project declare a native frame and still sit inside the same world.",
     "items": [
       {
-        "src": "assets/Projects/phokus/phokus-frame-16x9.jpg",
+        "src": "assets/Projects/phokus/phokus-frame-16x9.webp",
         "width": 720,
         "height": 405,
         "alt": "Landscape engraving in electric blue of a robed goddess holding an astrolabe whose centre is a camera aperture, with ruined Corinthian columns and clouds beneath a star field.",
         "caption": "16:9 master"
       },
       {
-        "src": "assets/Projects/phokus/phokus-frame-9x16.jpg",
+        "src": "assets/Projects/phokus/phokus-frame-9x16.webp",
         "width": 405,
         "height": 720,
         "alt": "The same engraving composed vertically, the astrolabe high in the frame and the goddess rising from the clouds below it.",
         "caption": "9:16 master"
       },
       {
-        "src": "assets/Projects/phokus/phokus-frame-1x1.jpg",
+        "src": "assets/Projects/phokus/phokus-frame-1x1.webp",
         "width": 720,
         "height": 720,
         "alt": "The same engraving in a square frame, cropped close on the astrolabe and the goddess reaching up to it.",
@@ -146,7 +146,7 @@
   "reel": {
     "name": "Phokus",
     "label": "Phokus",
-    "thumb": "assets/Projects/phokus/phokus-muse-gate.jpg",
+    "thumb": "assets/Projects/phokus/phokus-muse-gate.webp",
     "thumb_note": "The muse master rather than a screenshot of the site. A screenshot of the reel inside the reel read as a glitch at cell size, and the other vertical master is already the placeholder for Go It and Cove."
   }
 }

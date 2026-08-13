@@ -16,14 +16,14 @@
     "note": "A shoe campaign normally opens on the shoe. Here the sneaker is written into the brief as critical and not to be revealed explicitly until the final scene, so every beat before it is spent building the tension the product has to occupy. The most memorable frame in the film is the one it spends the whole film refusing to show.",
     "shots": [
       {
-        "src": "assets/Projects/adidas-tokyo/adidas-tokyo-01.jpg",
+        "src": "assets/Projects/adidas-tokyo/adidas-tokyo-01.webp",
         "width": 1200,
         "height": 896,
         "alt": "Night street seen from behind a figure in a navy adidas jacket, the trefoil across the back, facing a lit corner building with parked cars.",
         "caption": "Stripe 1 / the approach"
       },
       {
-        "src": "assets/Projects/adidas-tokyo/adidas-tokyo-02.jpg",
+        "src": "assets/Projects/adidas-tokyo/adidas-tokyo-02.webp",
         "width": 1200,
         "height": 896,
         "alt": "The same figure turning back toward the camera on the same street, a plaster on one cheek, the three stripes running down the sleeve.",
@@ -109,6 +109,6 @@
   "reel": {
     "name": "Adidas Tokyo",
     "label": "Adidas Tokyo",
-    "thumb": "assets/Projects/adidas-tokyo/adidas-tokyo-thumb.jpg"
+    "thumb": "assets/Projects/adidas-tokyo/adidas-tokyo-thumb.webp"
   }
 }

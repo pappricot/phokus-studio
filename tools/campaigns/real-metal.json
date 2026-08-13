@@ -16,14 +16,14 @@
     "note": "Diesel-Land screens everyone at the door, and the detector reads exactly one thing: hardware. It has nothing to say about how a person carries it, which is the only part that decides whether they belong.",
     "shots": [
       {
-        "src": "assets/Projects/real-metal/real-metal-01.jpg",
+        "src": "assets/Projects/real-metal/real-metal-01.webp",
         "width": 700,
         "height": 990,
         "alt": "Overhead security-camera frame of a woman in denim looking up at an illuminated DIESEL-LAND sign above a metal detector, with REC and CAM 84 overlaid on the image.",
         "caption": "Cam 84 / entry"
       },
       {
-        "src": "assets/Projects/real-metal/real-metal-02.jpg",
+        "src": "assets/Projects/real-metal/real-metal-02.webp",
         "width": 714,
         "height": 990,
         "alt": "The same overhead camera angle as two men pass through the DIESEL-LAND gate, one pointing at the lens, the frame timestamped 2026-04-27.",
@@ -97,6 +97,6 @@
   "reel": {
     "name": "Real Metal / Diesel-Land",
     "label": "Real Metal",
-    "thumb": "assets/Projects/real-metal/real-metal-01.jpg"
+    "thumb": "assets/Projects/real-metal/real-metal-01.webp"
   }
 }

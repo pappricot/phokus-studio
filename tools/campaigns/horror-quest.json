@@ -16,28 +16,28 @@
     "note": "The whole set is lit like a birthday. Holographic vinyl, sequin walls, sugar-pink light through every door. The horror is not introduced by a change of grade, it simply walks into a room that stays exactly as sweet as it was.",
     "shots": [
       {
-        "src": "assets/Projects/horror-quest/horror-quest-04.jpg",
+        "src": "assets/Projects/horror-quest/horror-quest-04.webp",
         "width": 902,
         "height": 1600,
         "alt": "A two-storey house wrapped entirely in glittering pink foil and sequin curtains, with pink steps, pink planters and flowers, under a clear blue sky.",
         "caption": "Location / the house"
       },
       {
-        "src": "assets/Projects/horror-quest/horror-quest-01.jpg",
+        "src": "assets/Projects/horror-quest/horror-quest-01.webp",
         "width": 900,
         "height": 1600,
         "alt": "A young woman with a black blunt fringe standing in a mint-green floral kitchen wearing a glitter crop top and iridescent silver flared trousers, a pink glowing doorway behind her.",
         "caption": "Part 1 / before"
       },
       {
-        "src": "assets/Projects/horror-quest/horror-quest-03.jpg",
+        "src": "assets/Projects/horror-quest/horror-quest-03.webp",
         "width": 897,
         "height": 1600,
         "alt": "Close portrait of the masked figure, pale seamed face with blacked-out eyes and antler-like horns, against a rose-tinted kitchen.",
         "caption": "Part 1 / the reveal"
       },
       {
-        "src": "assets/Projects/horror-quest/horror-quest-02.jpg",
+        "src": "assets/Projects/horror-quest/horror-quest-02.webp",
         "width": 903,
         "height": 1600,
         "alt": "The doorway shot blurred behind a game-style overlay reading What was THAT with two numbered options offering to leave or to continue, a mouse cursor hovering.",
@@ -111,6 +111,6 @@
   "reel": {
     "name": "You\u2019re Late, Rabbit / horror quest",
     "label": "You\u2019re Late, Rabbit",
-    "thumb": "assets/Projects/horror-quest/horror-quest-05.jpg"
+    "thumb": "assets/Projects/horror-quest/horror-quest-05.webp"
   }
 }

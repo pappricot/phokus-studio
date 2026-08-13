@@ -16,42 +16,42 @@
     "note": "Every product in this category sells a dog that smells like dessert. Muck sells the mud instead, which means the packaging has to survive being photographed inside it.",
     "shots": [
       {
-        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-03.jpg",
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-03.webp",
         "width": 864,
         "height": 1184,
         "alt": "The Muck Everyday Wash bottle photographed head-on inside a symmetrical crown of brown mud splashing outward against a black background.",
         "caption": "Hero / impact"
       },
       {
-        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-06.jpg",
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-06.webp",
         "width": 864,
         "height": 1184,
         "alt": "The same bottle half-buried at an angle in a shallow pool of mud, lit from above against black.",
         "caption": "Hero / landing"
       },
       {
-        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-02.jpg",
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-02.webp",
         "width": 864,
         "height": 1184,
         "alt": "A muddy dog's paw pressed against the mud-covered bottle as it tips over into a puddle.",
         "caption": "Paw / endorsement"
       },
       {
-        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-05.jpg",
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-05.webp",
         "width": 864,
         "height": 1184,
         "alt": "The bottle standing in mud with a set of wet paw prints running down the front label.",
         "caption": "Label / paw prints"
       },
       {
-        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-01.jpg",
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-01.webp",
         "width": 864,
         "height": 1184,
         "alt": "Front label of the bottle under thick mud, reading Everyday Wash, muck, and For dirty-free dogs with dirty-free struck through.",
         "caption": "Front label"
       },
       {
-        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-04.jpg",
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-04.webp",
         "width": 864,
         "height": 1184,
         "alt": "Back label of the bottle, mud-flecked, carrying the product copy and the line Tested on animals. They love it.",
@@ -125,6 +125,6 @@
   "reel": {
     "name": "Muck Everyday Wash",
     "label": "Muck",
-    "thumb": "assets/Projects/muck-everyday-wash/muck-everyday-wash-03.jpg"
+    "thumb": "assets/Projects/muck-everyday-wash/muck-everyday-wash-03.webp"
   }
 }

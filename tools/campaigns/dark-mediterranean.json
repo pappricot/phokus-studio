@@ -16,28 +16,28 @@
     "note": "Everything in the set is the same lime-washed blue at the same blue hour. The only variable allowed to move is how close the camera stands, so the sequence reads as one evening rather than a collection of renders.",
     "shots": [
       {
-        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-01.jpg",
+        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-01.webp",
         "width": 900,
         "height": 1600,
         "alt": "Dusk view through dark foliage of a stepped blue lime-washed resort building on a forested hillside, one warm-lit doorway reflected in a narrow lap pool.",
         "caption": "Establishing / the approach"
       },
       {
-        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-02.jpg",
+        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-02.webp",
         "width": 900,
         "height": 1600,
         "alt": "Blue corridor of receding portals framing a candlelit lounge with white cushions, terracotta vessels and a low carved table at the far end.",
         "caption": "Interior / the arrival"
       },
       {
-        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-03.jpg",
+        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-03.webp",
         "width": 1026,
         "height": 1026,
         "alt": "Three-by-three grid of blue-hour resort frames moving from the hillside approach and pool terrace to lit windows, a laid dinner table and a single lantern.",
         "caption": "Curated grid / establishing to intimate"
       },
       {
-        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-04.jpg",
+        "src": "assets/Projects/dark-mediterranean/dark-mediterranean-04.webp",
         "width": 1024,
         "height": 1024,
         "alt": "Alternate three-by-three grid of the same blue resort with sea-facing terraces, a table set against a blank wall, and a parasol standing in still water.",
@@ -107,6 +107,6 @@
   "reel": {
     "name": "Dark Mediterranean / blue hour",
     "label": "Dark Mediterranean",
-    "thumb": "assets/Projects/dark-mediterranean/dark-mediterranean-01.jpg"
+    "thumb": "assets/Projects/dark-mediterranean/dark-mediterranean-01.webp"
   }
 }
