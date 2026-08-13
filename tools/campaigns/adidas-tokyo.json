@@ -3,77 +3,77 @@
   "notion_title": "Shoe campaign - Adidas TOKYO",
   "title": "Adidas Tokyo",
   "eyebrow": "Image / concept film",
-  "meta_description": "Adidas Tokyo is a concept film cut into three stripes and released as three separate posts, each a night on the same street.",
+  "meta_description": "Adidas Tokyo is a neo-noir concept film told from the victim's point of view, where the sneaker is withheld until it is the last image left on screen.",
   "year": "2026",
   "kind": "Image",
   "frame": "9:16 reel, three-part release",
   "role": "Concept, art direction, generative production",
-  "deck": "A concept film cut into three stripes and released as three, so the campaign arrives the way the mark does: one line at a time.",
+  "deck": "A neo-noir concept film told from the point of view of the person being walked toward. A hired assassin called Tokyo arrives, the tension builds, the shot is fired — and the last thing the victim sees is the sneaker \u201cTokyo\u201d.",
   "draft": true,
   "proof": {
-    "kicker": "The format problem",
-    "title": "Three stripes, three drops.",
-    "note": "This is not one film chopped into parts. Each stripe is a complete night on the same street, and the three only resolve into a campaign once they have all been posted.",
+    "kicker": "The premise",
+    "title": "The last shoe you\u2019ll see.",
+    "note": "A shoe campaign normally opens on the shoe. Here the sneaker is written into the brief as critical and not to be revealed explicitly until the final scene, so every beat before it is spent building the tension the product has to occupy. The most memorable frame in the film is the one it spends the whole film refusing to show.",
     "shots": [
       {
         "src": "assets/Projects/adidas-tokyo/adidas-tokyo-01.jpg",
         "width": 1200,
         "height": 896,
         "alt": "Night street seen from behind a figure in a navy adidas jacket, the trefoil across the back, facing a lit corner building with parked cars.",
-        "caption": "Stripe 1 / away"
+        "caption": "Stripe 1 / the approach"
       },
       {
         "src": "assets/Projects/adidas-tokyo/adidas-tokyo-02.jpg",
         "width": 1200,
         "height": 896,
         "alt": "The same figure turning back toward the camera on the same street, a plaster on one cheek, the three stripes running down the sleeve.",
-        "caption": "Stripe 3 / turn"
+        "caption": "Stripe 3 / the turn"
       }
     ],
-    "caption": "The camera holds one position across the release. Only the figure turns, so three separate posts build a single gesture over a week of feed."
+    "caption": "Neo-noir shot as surveillance: high contrast, subtle desaturation, clean composition, and the camera moved only where the movement is meant to be felt. Park Chan-wook's atmosphere and Fincher's precision, with Tarantino's cult of footwear held back for the last frame."
   },
   "acts": {
     "kicker": "Structure",
-    "title": "Stripes.",
-    "note": "Numbered like the mark itself, and released out of order on purpose.",
+    "title": "Build-up, then payoff.",
+    "note": "Nine boarded beats on one rising line, every one of them shot through a lens or from below, so the audience never gets to be the one doing the approaching.",
     "items": [
       {
-        "number": "Stripe 1",
-        "title": "Walk",
-        "copy": "A point-of-view ending on an empty street, shot to feel carried rather than composed."
+        "number": "Scene I",
+        "title": "The elevator",
+        "copy": "CCTV, top-down, cold. Tokyo stands still, then looks up into the lens: \u201cMy name is Tokyo.\u201d"
       },
       {
-        "number": "Stripe 2",
-        "title": "Street",
-        "copy": "The city closes in. Neon, parked cars, and nothing else moving."
+        "number": "Scene II",
+        "title": "The door",
+        "copy": "A corridor at a Dutch angle, a doorbell pressed into a fisheye lens, the signal tearing. \u201cYou ask why?\u201d"
       },
       {
-        "number": "Stripe 3",
-        "title": "Turn",
-        "copy": "The last shoe you will see, and the only moment the face is given."
+        "number": "Scene III",
+        "title": "The floor",
+        "copy": "Fragments \u2014 steps, aiming, the fall. \u201cBecause\u2026\u201d, delivered with pauses. Then ground level, a figure standing over, and the shoe."
       }
     ]
   },
   "pipeline": {
     "kicker": "How it was built",
     "title": "Pipeline.",
-    "note": "Boarded in Figma, generated through Higgsfield for continuity, then held to one camera position so the location reads as real.",
+    "note": "The character was locked before the film was, because a generative shoot drifts. A face, a tracksuit, and a sneaker all had to survive nine scenes without quietly redesigning themselves.",
     "items": [
       {
-        "label": "Board",
-        "copy": "Three-stripe structure and shot order fixed on one Figma board before generation."
+        "label": "Reference",
+        "copy": "Pinterest crossed with Midjourney portraits until one face held: fine features, uneven shoulder-length hair, a bandage on the cheek."
+      },
+      {
+        "label": "Contract",
+        "copy": "The result written down as keywords and marked critical \u2014 the guarded eyes, the navy tracksuit, the sneaker's exact proportions. None of them free to change."
       },
       {
         "label": "Generate",
-        "copy": "Higgsfield carrying character and wardrobe continuity across all three nights."
+        "copy": "A character sheet built first, then every scene and product frame generated from it, with Higgsfield carrying the motion."
       },
       {
-        "label": "Compose",
-        "copy": "One camera position held across the set, so the street reads as a place rather than a backdrop."
-      },
-      {
-        "label": "Export",
-        "copy": "Vertical masters cut for feed and released as separate posts rather than one film."
+        "label": "Release",
+        "copy": "Cut vertical and posted as numbered stripes rather than one film, so the payoff arrives on its own."
       }
     ]
   },
@@ -84,17 +84,17 @@
       {
         "href": "https://www.figma.com/board/5lABPcO7EVNVkaSAx8zI2k/Tokyo",
         "label": "Case study board",
-        "meta": "Figma / mood and storyboard"
+        "meta": "Figma / character, keywords, storyboard"
       },
       {
         "href": "https://www.instagram.com/reel/DW9mCFzicGM/",
         "label": "Stripe 1",
-        "meta": "Instagram / 9:16"
+        "meta": "Instagram / POV ending"
       },
       {
         "href": "https://www.instagram.com/reel/DW4d3K-Abv3/",
         "label": "Stripe 3",
-        "meta": "Instagram / 9:16"
+        "meta": "Instagram / the last shoe you\u2019ll see"
       }
     ]
   },

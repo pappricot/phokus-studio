@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>She&rsquo;s Back | Phokus</title>
+    <title>She&rsquo;s | Phokus</title>
     <meta
       name="description"
-      content="She's Back is an artist reveal built as a three-act trailer, with a single vertical figure composed across nine Instagram feed tiles."
+      content="An artist reveal built as a three-act trailer, with a single vertical figure composed across nine Instagram feed tiles."
     >
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -38,16 +38,20 @@
              Copy this file for each campaign. Six blocks, in order:
              1. project-hero      title, deck, spec table
              2. project-proof     the format argument, told with real screenshots
-             3. project-acts      narrative beats
-             4. project-pipeline  how it was actually made
-             5. project-links     outbound case study / workflow / published work
+             3. project-links     outbound case study / workflow / published work
+             4. project-acts      narrative beats
+             5. project-pipeline  how it was actually made
              6. project-next      pager to the following project
+
+             The links sit third so the way out to the campaign itself is reachable
+             without reading the whole case. Bands alternate paper and blue down
+             the page, so moving a block means re-banding everything after it.
 
              Copy marked DRAFT is written from the artifacts, not from the brief.
              Replace it with the real language before this goes public. -->
         <section class="project-hero" aria-labelledby="project-title">
           <p class="eyebrow">Image / artist reveal</p>
-          <h1 class="page-title" id="project-title">She&rsquo;s Back</h1>
+          <h1 class="page-title" id="project-title">She&rsquo;s</h1>
           <!-- DRAFT -->
           <p class="page-deck">
             A comeback announced as a three-act trailer, then folded into the one surface
@@ -122,7 +126,39 @@
           </figure>
         </section>
 
-        <section class="section-band blue" aria-labelledby="acts-title">
+        <section class="section-band blue" aria-labelledby="links-title">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Open the work</p>
+              <h2 class="section-title" id="links-title">Primary sources.</h2>
+            </div>
+          </div>
+          <div class="project-links">
+            <a
+              class="project-link"
+              href="https://www.instagram.com/reels/DWCZgZUEnCE/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="link-label">Published reel</span>
+              <span class="link-meta">Instagram / 9:16</span>
+            </a>
+            <a
+              class="project-link"
+              href="https://www.figma.com/board/zFiBKmCTtlUkyFiMVNDk2g/3-Act-Trailer---She-s-Back"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="link-label">Case study board</span>
+              <span class="link-meta">Figma / three-act trailer</span>
+            </a>
+            <!-- The Runway workflow is a private team editor URL and will not open for a
+                 visitor. Kept out of the markup on purpose. Swap in a screenshot or a
+                 short screen recording of the workflow graph when one exists. -->
+          </div>
+        </section>
+
+        <section class="section-band paper" aria-labelledby="acts-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">Structure</p>
@@ -154,7 +190,7 @@
           </ol>
         </section>
 
-        <section class="section-band paper" aria-labelledby="pipeline-title">
+        <section class="section-band blue" aria-labelledby="pipeline-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">How it was built</p>
@@ -190,38 +226,6 @@
           </div>
         </section>
 
-        <section class="section-band blue" aria-labelledby="links-title">
-          <div class="section-header">
-            <div>
-              <p class="section-kicker">Open the work</p>
-              <h2 class="section-title" id="links-title">Primary sources.</h2>
-            </div>
-          </div>
-          <div class="project-links">
-            <a
-              class="project-link"
-              href="https://www.instagram.com/reels/DWCZgZUEnCE/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="link-label">Published reel</span>
-              <span class="link-meta">Instagram / 9:16</span>
-            </a>
-            <a
-              class="project-link"
-              href="https://www.figma.com/board/zFiBKmCTtlUkyFiMVNDk2g/3-Act-Trailer---She-s-Back"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="link-label">Case study board</span>
-              <span class="link-meta">Figma / three-act trailer</span>
-            </a>
-            <!-- The Runway workflow is a private team editor URL and will not open for a
-                 visitor. Kept out of the markup on purpose. Swap in a screenshot or a
-                 short screen recording of the workflow graph when one exists. -->
-          </div>
-        </section>
-
         <nav class="project-next" aria-label="Project pager">
           <a href="work.html#campaign-worlds">
             <span class="utility">Back to</span>
@@ -231,7 +235,7 @@
       </main>
 
       <footer class="footer">
-        <p>Phokus / She&rsquo;s Back</p>
+        <p>Phokus / She&rsquo;s</p>
         <p class="footer-ratio utility" data-viewport-ratio aria-hidden="true"></p>
         <a href="contact.html">Get in touch</a>
       </footer>

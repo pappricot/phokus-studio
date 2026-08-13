@@ -1691,11 +1691,18 @@ button {
   padding: 1.2rem;
 }
 
+/* The accent reads blue on paper and gold on blue, the same way the pipeline
+   labels do, because the acts sit on either band depending on which optional
+   sections a page carries. */
 .act-number {
-  color: var(--gold);
+  color: var(--blue);
   font-family: var(--utility);
   font-size: 0.78rem;
   text-transform: uppercase;
+}
+
+.blue .act-number {
+  color: var(--gold);
 }
 
 .project-acts h3 {

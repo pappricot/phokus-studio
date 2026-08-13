@@ -16,6 +16,7 @@ The CAMPAIGNS workspace is not reachable through the Notion API integration,
 so this reads the public page API of the published site instead.
 """
 
+import itertools
 import json
 import os
 import re
@@ -462,6 +463,11 @@ def render(brief):
     def mark(indent="          "):
         return f"{indent}<!-- DRAFT -->\n" if draft else ""
 
+    # Sections alternate paper and blue down the page, and which ones are present
+    # varies by brief, so the band is handed out in order of appearance rather
+    # than fixed per section. Anything styled per band needs a rule for both.
+    bands = itertools.cycle(("paper", "blue"))
+
     parts = [
         f"""<!doctype html>
 <html lang="en">
@@ -545,7 +551,7 @@ def render(brief):
     )
     parts.append(
         f"""
-        <section class="section-band paper" aria-labelledby="proof-title">
+        <section class="section-band {next(bands)}" aria-labelledby="proof-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">{esc(proof['kicker'])}</p>
@@ -567,6 +573,39 @@ def render(brief):
 """
     )
 
+    # The sources sit directly under the proof, because a visitor who wants to
+    # see the campaign itself should not have to read the whole case study to
+    # find the way out to it.
+    links = brief["links"]
+    if links["items"]:
+        items = "".join(
+            f"""            <a
+              class="project-link"
+              href="{attr(item['href'])}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="link-label">{esc(item['label'])}</span>
+              <span class="link-meta">{esc(item['meta'])}</span>
+            </a>
+"""
+            for item in links["items"]
+        )
+        parts.append(
+            f"""
+        <section class="section-band {next(bands)}" aria-labelledby="links-title">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">{esc(links['kicker'])}</p>
+              <h2 class="section-title" id="links-title">{esc(links['title'])}</h2>
+            </div>
+          </div>
+          <div class="project-links">
+{items}          </div>
+        </section>
+"""
+        )
+
     acts = brief["acts"]
     if acts["items"]:
         items = "".join(
@@ -580,7 +619,7 @@ def render(brief):
         )
         parts.append(
             f"""
-        <section class="section-band blue" aria-labelledby="acts-title">
+        <section class="section-band {next(bands)}" aria-labelledby="acts-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">{esc(acts['kicker'])}</p>
@@ -598,7 +637,7 @@ def render(brief):
 
     # Optional blocks. A website case study has to show its identity and its
     # type stack, which a campaign never needs. Both sit between the acts and
-    # the pipeline so the paper/blue banding keeps alternating.
+    # the pipeline, and take whichever band falls to them.
     plates = brief.get("plates") or {}
     if plates.get("items"):
         items = "".join(
@@ -618,7 +657,7 @@ def render(brief):
         )
         parts.append(
             f"""
-        <section class="section-band paper" aria-labelledby="plates-title">
+        <section class="section-band {next(bands)}" aria-labelledby="plates-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">{esc(plates['kicker'])}</p>
@@ -649,7 +688,7 @@ def render(brief):
         )
         parts.append(
             f"""
-        <section class="section-band blue" aria-labelledby="type-title">
+        <section class="section-band {next(bands)}" aria-labelledby="type-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">{esc(type_block['kicker'])}</p>
@@ -677,7 +716,7 @@ def render(brief):
         )
         parts.append(
             f"""
-        <section class="section-band paper" aria-labelledby="pipeline-title">
+        <section class="section-band {next(bands)}" aria-labelledby="pipeline-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">{esc(pipeline['kicker'])}</p>
@@ -688,36 +727,6 @@ def render(brief):
             </p>
           </div>
           <div class="project-stack">
-{items}          </div>
-        </section>
-"""
-        )
-
-    links = brief["links"]
-    if links["items"]:
-        items = "".join(
-            f"""            <a
-              class="project-link"
-              href="{attr(item['href'])}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="link-label">{esc(item['label'])}</span>
-              <span class="link-meta">{esc(item['meta'])}</span>
-            </a>
-"""
-            for item in links["items"]
-        )
-        parts.append(
-            f"""
-        <section class="section-band blue" aria-labelledby="links-title">
-          <div class="section-header">
-            <div>
-              <p class="section-kicker">{esc(links['kicker'])}</p>
-              <h2 class="section-title" id="links-title">{esc(links['title'])}</h2>
-            </div>
-          </div>
-          <div class="project-links">
 {items}          </div>
         </section>
 """

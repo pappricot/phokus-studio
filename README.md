@@ -70,9 +70,16 @@ Percentages are of the file's real pixel dimensions, not of a preview.
 
 ### Optional blocks
 
-A campaign page is six blocks. A website case study needs two more, so the
-renderer emits them only when the brief carries them, between the acts and the
-pipeline — which keeps the paper/blue banding alternating.
+A campaign page is six blocks, in order: hero, proof, links, acts, pipeline,
+pager. The links sit third so a visitor who came to see the campaign itself does
+not have to read the whole case study to find the way out to it. A website case
+study needs two more blocks, so the renderer emits them only when the brief
+carries them, between the acts and the pipeline.
+
+Bands are not fixed per section. They alternate paper and blue in order of
+appearance, because which sections exist varies by brief, so anything styled per
+band needs a rule for both — `.act-number`, `.stack-item span`, `.type-role`, and
+`.plate-item img` each carry a paper value and a `.blue` override.
 
 | Key | Block | Use |
 | --- | --- | --- |
@@ -116,6 +123,57 @@ does; there is no separate WIP state to maintain. It is marked in copy only:
 built". Dark Mediterranean, Airport Checkpoint, and You're Late, Rabbit are the
 three currently carrying that marking, and they sit at the tail of the reel after
 the finished work.
+
+## Editing by Hand
+
+One rule governs everything else: for the eight projects that have a brief, the
+`project-<slug>.html` file is **generated output**. Edit the brief, not the page.
+`project-shes-back.html` is the single exception — it was hand-written as the
+original template and has no brief, so it is edited directly and forever.
+
+| To change | Edit | Then run |
+| --- | --- | --- |
+| Any copy on a project page: deck, headings, notes, captions, act and pipeline items, link labels | `tools/campaigns/<slug>.json` | `phokus.py scaffold <slug> --force` |
+| Copy on the She's page | `project-shes-back.html` | nothing |
+| A project's reel name, kind, year, frame, thumbnail, or position | `index.html` | nothing |
+| Homepage copy, the intro briefing cards, or the Work / About / Archive / Contact pages | those files, or `introSteps` in `script.js` | nothing |
+| Anything visual | `styles.css` | nothing |
+| The template or section order for **every** project page | `render()` in `tools/phokus.py` | re-scaffold every slug with `--force` |
+
+Finish with `python3 tools/phokus.py check`. It is the safety net for exactly the
+mistakes that are invisible in a browser: a missing image file, an `<img>` with no
+alt text, a `data-kind` that is not exactly `Image` or `Product`, a reel counter
+whose total is wrong, a thumbnail out of step with its background plate, and a
+brief whose page was never scaffolded or never linked from the homepage.
+
+### When an edit looks like it did nothing
+
+- **A brief edit needs a re-scaffold.** Nothing on the site reads the JSON at
+  runtime; it is only consulted when the page is generated.
+- **`scaffold` refuses to overwrite without `--force`**, and `--force` discards
+  hand edits to that page. This is the reason for the rule above: a page with a
+  brief should never be edited directly, because the next regeneration is silent
+  about what it destroyed.
+- **A project name appears three times in its own reel cell.** See [Adding or
+  changing a project](#adding-or-changing-a-project) — changing the visible label
+  alone leaves the readout showing the old name.
+- **Each project is two DOM entries**, a `.reel-plate` and a `.reel-cell`, matched
+  by position. `check` catches them drifting apart.
+- **Bands alternate** paper, blue, paper, blue down a project page. Moving a
+  section means re-banding everything after it, and any accent styled per band
+  needs a value for both.
+- **`.page-deck` is uppercased in CSS**, so writing a word in caps in the brief
+  changes nothing on screen. Emphasis in a deck has to come from punctuation or
+  word order.
+
+### Conventions
+
+Write entities rather than raw characters — `&rsquo;`, `&mdash;`, `&ldquo;` — to
+match the rest of the markup; the difference is visible in the display serif.
+
+`"draft": true` in a brief is what emits the `<!-- DRAFT -->` comments and the
+checker's warnings. Flip it to `false` once the language is signed off, as
+`real-metal.json` is.
 
 ## Visual System
 
@@ -255,6 +313,21 @@ Each project needs two things kept in the same order:
 
 The reel reads cell positions from the DOM, so cell height and gap can change in
 CSS without touching the script.
+
+A project's name is written three times inside its own cell, and renaming one is
+not renaming the project:
+
+| Where | Shows up as |
+| --- | --- |
+| `data-name` on `.reel-link` | the large name in the readout under the strip |
+| `.reel-cell-name` | the small label printed on the thumbnail |
+| `alt` on the `<img>` | screen readers only |
+
+The label is deliberately a short form of a longer `data-name` in several cells —
+`Muck` for `Muck Everyday Wash`, `Real Metal` for `Real Metal / Diesel-Land` — so
+the two disagreeing is normal and cannot be checked automatically. A real rename
+also reaches the project page's `<title>`, `<h1>`, meta description, and footer,
+plus the link in `work.html`.
 
 `data-kind` must read exactly `Image` or `Product`, because the filter matches on
 it. There is no combined view, so a cell with any other kind is unreachable.
