@@ -636,31 +636,115 @@
       stopAutoplay();
     };
 
-    let wheelLock = false;
+    // One cell per gesture, whatever the gesture is made of. A trackpad flick
+    // emits wheel events for as long as its momentum decays, which is longer
+    // than the strip takes to settle, so a cooldown short enough to feel
+    // responsive reopened two or three times inside a single physical flick and
+    // the reel appeared to skip cells. A gesture is instead spent on its first
+    // step and stays spent until the input goes quiet.
+    // How long the strip takes to arrive: the transform transition in CSS, which
+    // reduced motion removes entirely, leaving only enough of a gap to keep one
+    // gesture from reading as several.
+    const settleTime = () => (reducedMotion.matches ? 140 : 620);
+    const gestureGap = 140; // Longer than the gap between momentum events.
+    const wheelThreshold = 24;
+
+    let gestureSpent = false;
+    let gestureDelta = 0;
+    let gesturePeak = 0;
+    let gestureTimer = null;
+    let steppedAt = 0;
+
+    const endGesture = () => {
+      if (gestureTimer !== null) {
+        window.clearTimeout(gestureTimer);
+      }
+      gestureTimer = null;
+      gestureSpent = false;
+      gestureDelta = 0;
+      gesturePeak = 0;
+    };
+
+    const holdGesture = () => {
+      if (gestureTimer !== null) {
+        window.clearTimeout(gestureTimer);
+      }
+      gestureTimer = window.setTimeout(endGesture, gestureGap);
+    };
+
+    const spendGesture = () => {
+      gestureSpent = true;
+      gestureDelta = 0;
+      steppedAt = performance.now();
+    };
+
     reel.addEventListener(
       "wheel",
       (event) => {
-        const step = event.deltaY > 0 ? 1 : -1;
+        // Wheel deltas arrive in pixels, lines or pages depending on the device,
+        // so they are brought to one scale before being measured against a
+        // threshold.
+        const travel =
+          event.deltaMode === 1
+            ? event.deltaY * 16
+            : event.deltaMode === 2
+            ? event.deltaY * reel.clientHeight
+            : event.deltaY;
+        const reach = Math.abs(travel);
+        const step = travel > 0 ? 1 : -1;
         const next = seek(index + step, step);
 
         // At either end the page keeps its own scroll, so the reel never traps
-        // the visitor.
+        // the visitor. Checked before the gesture is touched, so the scroll that
+        // carries on into the footer is not swallowed by a spent gesture.
         if (next === null) {
           return;
         }
 
         event.preventDefault();
+        holdGesture();
+        // Handed over on the first claimed event rather than on the first step,
+        // so the autoplay clock cannot fire a step of its own inside the gesture
+        // and turn one flick into two cells.
         engage();
 
-        if (wheelLock) {
+        if (gestureSpent) {
+          // Momentum only decays. A push that rises above the gesture's own peak
+          // is a fresh one from the hand, and once the strip has arrived it is
+          // allowed its own step rather than being held to the first flick.
+          if (
+            reach > gesturePeak * 1.4 &&
+            performance.now() - steppedAt > settleTime()
+          ) {
+            gestureSpent = false;
+            gestureDelta = 0;
+          } else {
+            gesturePeak = Math.max(gesturePeak, reach);
+            return;
+          }
+        }
+
+        gesturePeak = Math.max(gesturePeak, reach);
+        gestureDelta += travel;
+
+        // Below the threshold nothing moves yet, which keeps a high-resolution
+        // trackpad from stepping on a nudge.
+        if (Math.abs(gestureDelta) < wheelThreshold) {
           return;
         }
-        wheelLock = true;
-        window.setTimeout(() => {
-          wheelLock = false;
-        }, 260);
 
-        goTo(next);
+        // The step is taken in the direction the gesture has travelled overall,
+        // which is not always the direction of the event that crossed the line.
+        const heading = gestureDelta > 0 ? 1 : -1;
+        const landing = heading === step ? next : seek(index + heading, heading);
+
+        if (landing === null) {
+          gestureDelta = 0;
+          return;
+        }
+
+        spendGesture();
+        goTo(landing);
       },
       { passive: false }
     );
@@ -756,6 +840,10 @@
       "touchstart",
       (event) => {
         touchOrigin = event.touches[0].clientY;
+        // There is no pointer to leave the reel on a touch screen, so the reel
+        // has to be told by the touch itself to stop moving on its own.
+        stopAutoplay();
+        endGesture();
       },
       { passive: true }
     );
@@ -770,6 +858,17 @@
         if (Math.abs(delta) < 42) {
           return;
         }
+
+        // A swipe is one step, for the same reason a flick is. A finger still
+        // travelling once the strip has arrived carries on stepping, so a long
+        // drag is not cut off after its first cell.
+        if (gestureSpent) {
+          if (performance.now() - steppedAt < settleTime()) {
+            return;
+          }
+          gestureSpent = false;
+        }
+
         const step = delta > 0 ? 1 : -1;
         const next = seek(index + step, step);
         touchOrigin = event.touches[0].clientY;
@@ -777,10 +876,21 @@
           return;
         }
         engage();
+        spendGesture();
         goTo(next);
       },
       { passive: true }
     );
+
+    reel.addEventListener("touchend", () => {
+      touchOrigin = null;
+      endGesture();
+    });
+
+    reel.addEventListener("touchcancel", () => {
+      touchOrigin = null;
+      endGesture();
+    });
 
     // A cell is an <img> inside an <a>, which the browser treats as draggable
     // content. The reel does not take drag as an input, and without this a
@@ -939,12 +1049,52 @@
 
   const form = document.querySelector("[data-contact-form]");
   if (form) {
+    // Nothing serves this site but a static host, so the form has nowhere to
+    // post. It used to take a message, drop it, and report "Signal drafted",
+    // which is the one failure worth ruling out on a contact page: a visitor
+    // who believes they have written to you and has not. So the form composes
+    // the mail instead and hands it to whatever the visitor sends mail with.
+    // Their own address rides along with it, which is why this never needed a
+    // field asking for one, and why a reply is possible at all.
+    const ADDRESS = "anya.p.nguyen@gmail.com";
+    const status = form.querySelector("[data-form-status]");
+    const field = (name) =>
+      (form.querySelector(`[name="${name}"]`)?.value || "").trim();
+
+    const say = (text) => {
+      if (status) {
+        status.textContent = text;
+      }
+    };
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const status = form.querySelector("[data-form-status]");
-      if (status) {
-        status.textContent = "Signal drafted. Use the email link to send it.";
+
+      const name = field("name");
+      const project = field("project");
+      const message = field("message");
+
+      // The subject carries the project, because that is what makes the mail
+      // findable later in a thread that is otherwise all one word.
+      const subject = project ? `Phokus — ${project}` : "Phokus — signal";
+      const body = name ? `${message}\n\n— ${name}` : message;
+      const href = `mailto:${ADDRESS}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+
+      // Mail clients begin truncating or refusing mailto links somewhere above
+      // two thousand characters, and silently cutting someone's brief in half
+      // is the same failure in a quieter form. Better to say so and point at
+      // the button that always works.
+      if (href.length > 1900) {
+        say(
+          "That is longer than a mail link can carry. Use Copy email and paste it instead, so none of it is lost."
+        );
+        return;
       }
+
+      say("Opening your mail app with this drafted. If nothing happens, use Copy email.");
+      window.location.href = href;
     });
   }
 })();

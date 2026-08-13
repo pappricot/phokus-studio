@@ -84,7 +84,7 @@
               <form class="contact-form" data-contact-form>
                 <div class="field">
                   <label for="name">Name</label>
-                  <input id="name" name="name" autocomplete="name" placeholder="Your name">
+                  <input id="name" name="name" autocomplete="name" placeholder="Your name" required>
                 </div>
                 <div class="field">
                   <label for="project">Project</label>
@@ -92,10 +92,10 @@
                 </div>
                 <div class="field">
                   <label for="message">Signal</label>
-                  <textarea id="message" name="message" placeholder="What should the system do, ship, automate, or reveal?"></textarea>
+                  <textarea id="message" name="message" placeholder="What should the system do, ship, automate, or reveal?" required></textarea>
                 </div>
                 <button class="button" type="submit">Draft signal</button>
-                <p class="contact-note" data-form-status>Awaiting brief.</p>
+                <p class="contact-note" data-form-status aria-live="polite">Awaiting brief. This opens in your mail app.</p>
               </form>
             </div>
           </div>
