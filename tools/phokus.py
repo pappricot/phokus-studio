@@ -527,6 +527,11 @@ def render(brief):
     title = esc(brief["title"])
     draft = brief.get("draft")
 
+    # The studio's own site is a project like any other, which left its tab
+    # reading "Phokus | Phokus". The suffix exists to say which site a page
+    # belongs to, so it is dropped when the title already says it.
+    tab_title = title if title == "Phokus" else f"{title} | Phokus"
+
     def mark(indent="          "):
         return f"{indent}<!-- DRAFT -->\n" if draft else ""
 
@@ -541,7 +546,7 @@ def render(brief):
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{title} | Phokus</title>
+    <title>{tab_title}</title>
     <meta
       name="description"
       content="{attr(brief['meta_description'])}"

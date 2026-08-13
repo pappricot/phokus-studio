@@ -9,7 +9,7 @@
   "kind": "Product",
   "frame": "Responsive, 9:16 focus area",
   "role": "Design, front-end, tooling",
-  "deck": "The studio site is the first case in it. It has to argue its own method before it is trusted to argue anyone else's, so it teaches the rule first and makes the index a viewfinder rather than a grid.",
+  "deck": "The studio site is the first case in it. It has to argue its own method before it is trusted to argue anyone else’s, so it teaches the rule first and makes the index a viewfinder rather than a grid.",
   "draft": true,
   "proof": {
     "kicker": "The format problem",
@@ -86,7 +86,7 @@
   "type": {
     "kicker": "Type",
     "title": "Three voices, no webfonts.",
-    "note": "Every family is a system stack, so nothing is downloaded and nothing shifts on load. Each does one job and never borrows another's: titles are set, data is printed, and prose is read. The palette is as tight — electric royal blue, porcelain paper, and gold used only to mark focus.",
+    "note": "Every family is a system stack, so nothing is downloaded and nothing shifts on load. Each does one job and never borrows another’s: titles are set, data is printed, and prose is read. The palette is as tight — electric royal blue, porcelain paper, and gold used only to mark focus.",
     "items": [
       {
         "class": "is-display",
