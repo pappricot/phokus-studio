@@ -410,6 +410,48 @@ button {
   width: 100%;
 }
 
+/* Home is exactly one viewport, and deliberately cannot scroll.
+   The reel is not a scroll container: it moves its filmstrip by transform in
+   response to a swipe, and its touch listener is passive, so it cannot cancel
+   the browser's own scroll. Any document height left over therefore means one
+   swipe drives the strip and the page together. Removing the scroll rather
+   than fighting for the gesture is what keeps the two from competing.
+   svh, not vh, so the reel is not cropped by mobile browser chrome. */
+body[data-page="home"] {
+  height: 100svh;
+  overflow: hidden;
+}
+
+body[data-page="home"] .site-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+/* The reel takes the room the footer does not, so the split adapts on its own
+   when the footer restacks on narrow screens. */
+body[data-page="home"] main {
+  flex: 1;
+  min-height: 0;
+}
+
+body[data-page="home"] .footer {
+  flex: none;
+}
+
+/* Elsewhere the footer is a destination reached by scrolling, so it can afford
+   its full padding. On home it is permanently on screen and every pixel it
+   takes comes out of the reel, where a stacked column would cost roughly a
+   third of a small phone. It keeps stacking, since the lines will not fit on
+   one row at this width, but loses the generous spacing. */
+@media (max-width: 860px) {
+  body[data-page="home"] .footer {
+    gap: 0.45rem;
+    padding-block: 1.2rem;
+  }
+}
+
 /* The only persistent chrome: a single key floating over the page, so the
    wordmark is never duplicated against the page's own title. */
 /* Bare type, no plate and no border, so it reads as part of the top line
@@ -615,13 +657,12 @@ button {
 /* The focus area is 9:16 because most project stills are vertical. Height is
    the input and width is derived, so the ratio holds at every breakpoint. */
 .reel {
-  --reel-height: 92svh;
   --cell-height: clamp(14rem, 44svh, 24rem);
   --cell-gap: 0.55rem;
   --strip-width: calc(var(--cell-height) * 9 / 16);
   --focus-line: 50%;
   background: var(--main-blue);
-  height: var(--reel-height);
+  height: 100%;
   overflow: hidden;
   position: relative;
 }

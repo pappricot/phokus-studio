@@ -74,6 +74,11 @@
              master, matched to the project's declared frame. Replace each one
              with the real project still; nothing else needs to change. -->
         <section class="reel" aria-labelledby="reel-title" data-reel>
+          <!-- The reel is the whole homepage, so this carries its heading. It is
+               hidden because the visible brand line already says it to the eye,
+               and it is the id the section has always claimed to be labelled by. -->
+          <h1 class="sr-only" id="reel-title">Phokus, selected projects</h1>
+
           <div class="reel-stage" aria-hidden="true">
             <div class="reel-stage-track" data-reel-stage>
               <div
@@ -333,73 +338,11 @@
           <div class="reel-counter utility" data-reel-counter aria-hidden="true">01 / 08</div>
         </section>
 
-        <section class="section-band paper" aria-labelledby="index-title">
-          <div class="section-header">
-            <div>
-              <p class="section-kicker">Two doors</p>
-              <h2 class="section-title" id="index-title">Things people watch, things people use.</h2>
-            </div>
-            <p class="section-note">
-              If it has an audience it is image or product. If it only has an operator it is
-              a pipeline, and pipelines run underneath both.
-            </p>
-          </div>
-          <div class="index-grid">
-            <a class="index-row" href="work.html#campaign-worlds">
-              <span class="index-number">I</span>
-              <span class="index-title">Image</span>
-              <span class="index-meta">Campaigns, film, stills, generative production</span>
-              <span class="index-command">Real Metal, Adidas Tokyo</span>
-            </a>
-            <a class="index-row" href="work.html#product-systems">
-              <span class="index-number">II</span>
-              <span class="index-title">Product</span>
-              <span class="index-meta">Mobile apps, websites, internal tools</span>
-              <span class="index-command">Go It, Cove, Cipher</span>
-            </a>
-          </div>
-          <p class="index-substrate">
-            Underneath both: ComfyUI and Weavy graphs, LoRA training, structured prompting,
-            export matrices, Python, CI/CD, and release operations.
-            <a href="about.html">Read the method</a>
-          </p>
-        </section>
-
-        <section class="section-band blue" aria-labelledby="feature-title">
-          <div class="split-feature">
-            <div class="plate-image" aria-hidden="true"></div>
-            <div class="feature-copy">
-              <p class="section-kicker">The method</p>
-              <h2 class="section-title" id="feature-title">Composed, not cropped.</h2>
-              <p>
-                A hero film gets cut for one screen, then someone squeezes it into a vertical
-                and the subject walks out of frame. Phokus works the other way around: the
-                frame is decided first, and every deliverable is composed for the shape it
-                will actually be seen in.
-              </p>
-              <p>
-                Five years of mobile engineering trained the eye for this &mdash; safe areas,
-                device classes, dynamic type &mdash; and the same discipline now runs the
-                generative side, where holding a composition and a character across ratios
-                is the hardest problem in the room.
-              </p>
-              <div class="stat-list">
-                <div class="stat-item">
-                  <span>16:9</span>
-                  <p>Horizontal for tv, laptop, monitor, pre-roll, and landing page film.</p>
-                </div>
-                <div class="stat-item">
-                  <span>9:16</span>
-                  <p>Vertical for phone, reels, stories, and paid social, safe areas respected.</p>
-                </div>
-                <div class="stat-item">
-                  <span>1:1</span>
-                  <p>Square and round for feed, thumbnail, avatar, app mark, and watch face.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <!-- The two editorial bands that used to sit here (Two doors, The method)
+             were cut so the homepage fits one viewport exactly. The reel drives
+             itself by transform, so any document scroll left underneath it makes
+             a single swipe move both surfaces at once. That copy now lives only
+             in git history and on work.html and about.html. -->
       </main>
 
       <footer class="footer">
