@@ -35,6 +35,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BRIEFS = os.path.join(ROOT, "tools", "campaigns")
 RAW = os.path.join(BRIEFS, "_raw")
 
+# Open Graph images and URLs have to be absolute — a relay reading the page
+# has no notion of "relative to this site" — so every page needs the domain
+# once, here, rather than typed at each call site.
+SITE_URL = "https://phokus.space"
+
 # Long edge for harvested stills. The reel thumbnails and proof shots never
 # render larger than this, and the muse masters at 2-3MB are already too heavy.
 MAX_EDGE = 1600
@@ -491,6 +496,36 @@ def attr(text):
     return esc(text).replace('"', "&quot;")
 
 
+def og_tags(url, title, description, image):
+    """Open Graph and Twitter Card tags, shared by every page.
+
+    Without these, pasting the site into LinkedIn, Slack, or iMessage
+    produces a bare link with no preview: exactly the flat presentation the
+    reel exists to avoid. image is a path relative to the repo root, since
+    that is what every brief and template already carries; it is resolved
+    to a full https URL here, once, since a relative src means nothing to
+    whatever fetches this page to build a card.
+
+    Width and height are read from the file rather than hand-carried,
+    since every image already has an authoritative size on disk and a
+    stale hand-typed number would be wrong the moment the asset changed.
+    """
+    width, height = dimensions(os.path.join(ROOT, image))
+    image_url = f"{SITE_URL}/{image}"
+    return f"""    <meta property="og:type" content="website">
+    <meta property="og:url" content="{attr(url)}">
+    <meta property="og:title" content="{attr(title)}">
+    <meta property="og:description" content="{attr(description)}">
+    <meta property="og:image" content="{attr(image_url)}">
+    <meta property="og:image:width" content="{width}">
+    <meta property="og:image:height" content="{height}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{attr(title)}">
+    <meta name="twitter:description" content="{attr(description)}">
+    <meta name="twitter:image" content="{attr(image_url)}">
+"""
+
+
 def cmd_scaffold(slug, force=False):
     path = brief_path(slug)
     if not os.path.exists(path):
@@ -540,6 +575,13 @@ def render(brief):
     # than fixed per section. Anything styled per band needs a rule for both.
     bands = itertools.cycle(("paper", "blue"))
 
+    og = og_tags(
+        url=f"{SITE_URL}/project-{brief['slug']}.html",
+        title=title,
+        description=brief["meta_description"],
+        image=brief["reel"]["thumb"],
+    )
+
     parts = [
         f"""<!doctype html>
 <html lang="en">
@@ -551,7 +593,7 @@ def render(brief):
       name="description"
       content="{attr(brief['meta_description'])}"
     >
-    <link rel="stylesheet" href="styles.css">
+{og}    <link rel="stylesheet" href="styles.css">
   </head>
   <body data-page="project">
     <div class="site-shell">
