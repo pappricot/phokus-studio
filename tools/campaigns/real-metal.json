@@ -3,17 +3,17 @@
   "notion_title": "Diesel Jewelry - “Real METAL” Campaign",
   "title": "Real Metal",
   "eyebrow": "Image / fashion campaign",
-  "meta_description": "Real Metal is an AI-generated Diesel jewellery campaign staged inside Diesel-Land and shot entirely through security-camera framing.",
+  "meta_description": "Real Metal is an AI-generated Diesel jewellery campaign staged at the gate of Diesel-Land, arguing that a label cannot certify a person and attitude can.",
   "year": "2026",
   "kind": "Image",
   "frame": "9:16 reel, CCTV-framed stills",
   "role": "Concept, art direction, generative production",
-  "deck": "An AI-generated fashion campaign made for the Runway AI Film Festival, asking whether authenticity survives an artificial system — and answering in the language of a security camera.",
-  "draft": true,
+  "deck": "A Diesel jewellery campaign built against the shortcut branded clothing sells: buy the label, become real. The argument here runs the other way. You do not have to wear Diesel to be real — you are real, so you are Diesel.",
+  "draft": false,
   "proof": {
-    "kicker": "The format problem",
-    "title": "Shot as evidence, not as advertising.",
-    "note": "A jewellery campaign usually shows metal in a lightbox. Here every frame is presented as a recovered camera feed, so the hardware reads as something caught rather than something styled.",
+    "kicker": "The premise",
+    "title": "A gate that can only scan metal.",
+    "note": "Diesel-Land screens everyone at the door, and the detector reads exactly one thing: hardware. It has nothing to say about how a person carries it, which is the only part that decides whether they belong.",
     "shots": [
       {
         "src": "assets/Projects/real-metal/real-metal-01.jpg",
@@ -30,38 +30,38 @@
         "caption": "Cam 84 / gate"
       }
     ],
-    "caption": "Diesel-Land is a checkpoint, and the campaign never leaves it. Chains, hardware, and denim all read as things you would be asked to remove before walking through."
+    "caption": "Nobody in frame is waiting to be approved. They look up at the sign, point back at the lens, and wear the metal as though the gate were the thing being inspected."
   },
   "acts": {
     "kicker": "Structure",
     "title": "Real metal, real attitude.",
-    "note": "The campaign is built on one question and keeps returning to it rather than resolving it.",
+    "note": "Three frames, one argument. The gate measures the metal; the people supply everything the metal cannot.",
     "items": [
       {
         "number": "Frame I",
-        "title": "The checkpoint",
-        "copy": "A gate that scans for metal, standing in a world built to sell it."
+        "title": "Diesel-Land",
+        "copy": "The brand as a theme park, borrowing the toy-shop register Diesel has played in before. Admission looks like something you could buy."
       },
       {
         "number": "Frame II",
-        "title": "The subjects",
-        "copy": "Faces that know they are being recorded and hold the lens anyway."
+        "title": "The gate",
+        "copy": "A metal detector under the sign, counting chains and buckles and learning nothing at all about the person wearing them."
       },
       {
         "number": "Frame III",
         "title": "The verdict",
-        "copy": "The question is not whether the metal is real, but whether the attitude is."
+        "copy": "The question is not whether the metal is real, but whether the attitude is. Only one of the two sets off the machine."
       }
     ]
   },
   "pipeline": {
     "kicker": "How it was built",
     "title": "Pipeline.",
-    "note": "Generated end to end, then graded and framed so the artificial origin becomes part of the argument instead of something to hide.",
+    "note": "Generated end to end for the Runway AI Film Festival 2026. The campaign has no licence and no photographer, and still reads as unmistakably Diesel — which is the same argument the images are making about people.",
     "items": [
       {
         "label": "Board",
-        "copy": "Campaign concept and shot order fixed before a single frame was generated."
+        "copy": "Concept and shot order fixed before a single frame was generated: one camera, one gate, one argument."
       },
       {
         "label": "Generate",
@@ -73,7 +73,7 @@
       },
       {
         "label": "Frame",
-        "copy": "The CCTV overlay applied last: camera number, timestamp, recording state."
+        "copy": "The CCTV overlay applied last — camera number, timestamp, recording state — so the jewellery reads as evidence rather than product."
       }
     ]
   },
