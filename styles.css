@@ -410,45 +410,123 @@ button {
   width: 100%;
 }
 
-/* Home is exactly one viewport, and deliberately cannot scroll.
-   The reel is not a scroll container: it moves its filmstrip by transform in
-   response to a swipe, and its touch listener is passive, so it cannot cancel
-   the browser's own scroll. Any document height left over therefore means one
-   swipe drives the strip and the page together. Removing the scroll rather
-   than fighting for the gesture is what keeps the two from competing.
-   svh, not vh, so the reel is not cropped by mobile browser chrome. */
+/* Home is pinned to the viewport rather than laid out in the document. The reel
+   fills it and the footer floats on top; nothing is in flow.
+
+   The reel is not a scroll container: it moves its filmstrip by transform, and
+   its touch listener is passive, so it cannot cancel the browser's own scroll.
+   Anything that gives the document height therefore hands a single swipe two
+   surfaces to move.
+
+   An earlier attempt sized the page to 100svh, which was wrong in a way only a
+   phone shows: svh is the *small* viewport, measured with the browser's chrome
+   on screen. Swiping retracts that chrome, the visible viewport grows past
+   100svh, and the strip left over renders as blue body background. Fixed
+   positioning sidesteps the whole question, because it resolves against the
+   viewport as it actually is at every moment rather than against a number
+   measured once. */
+   These locks are belt and braces: a fixed reel is out of flow, so the document
+   has no in-flow height to scroll in the first place. :has() is only carrying
+   the html half, and where it is unsupported the page still cannot scroll. */
+html:has(body[data-page="home"]),
 body[data-page="home"] {
-  height: 100svh;
-  overflow: hidden;
-}
-
-body[data-page="home"] .site-shell {
-  display: flex;
-  flex-direction: column;
   height: 100%;
-  min-height: 0;
+  overflow: hidden;
+  /* Kills the rubber-band on iOS, which would otherwise peel the reel away
+     from the top of the screen and show the same blue underneath. */
+  overscroll-behavior: none;
 }
 
-/* The reel takes the room the footer does not, so the split adapts on its own
-   when the footer restacks on narrow screens. */
-body[data-page="home"] main {
-  flex: 1;
-  min-height: 0;
+body[data-page="home"] {
+  /* One source of truth for the overlaid footer's height. The readout and the
+     counter step up by exactly this, so the three can never end up sharing a
+     line no matter what the footer is set to. */
+  --home-footer-h: 2.9rem;
 }
 
+body[data-page="home"] .reel {
+  inset: 0;
+  position: fixed;
+}
+
+/* The footer floats over the reel instead of sitting under it. Transparent, so
+   the still reads through, and legible for the same reason the readout is: the
+   veil darkens the bottom of the frame and the type carries a shadow.
+   Pointer events pass through the bar so a swipe over it still moves the reel;
+   only the link itself takes the cursor back.
+
+   It waits for the end of the reel. visibility carries the hidden state rather
+   than opacity alone, so the contact link is out of the tab order until it is
+   actually on screen; script.js sets reel-at-end from the filtered set. */
 body[data-page="home"] .footer {
-  flex: none;
+  align-items: center;
+  background: none;
+  bottom: 0;
+  flex-direction: row;
+  gap: 1.4rem;
+  inset-inline: 0;
+  min-height: var(--home-footer-h);
+  opacity: 0;
+  padding-block: 0;
+  padding-inline: 7vw;
+  pointer-events: none;
+  position: fixed;
+  text-shadow: 0 1px 12px rgba(6, 0, 24, 0.85), 0 0 3px rgba(6, 0, 24, 0.6);
+  transform: translateY(0.55rem);
+  transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: hidden;
+  z-index: 80;
 }
 
-/* Elsewhere the footer is a destination reached by scrolling, so it can afford
-   its full padding. On home it is permanently on screen and every pixel it
-   takes comes out of the reel, where a stacked column would cost roughly a
-   third of a small phone. It keeps stacking, since the lines will not fit on
-   one row at this width, but loses the generous spacing. */
+body[data-page="home"].reel-at-end .footer {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}
+
+body[data-page="home"] .footer a {
+  pointer-events: auto;
+}
+
+/* The readout and counter only yield the footer's height while the footer is
+   there to use it, so the bottom of the frame is not carrying an empty band for
+   the rest of the reel. They rise on the same curve the footer arrives on, which
+   makes the two read as one movement. */
+body[data-page="home"] .reel-readout,
+body[data-page="home"] .reel-counter {
+  transition: bottom 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body[data-page="home"].reel-at-end .reel-readout,
+body[data-page="home"].reel-at-end .reel-counter {
+  bottom: calc(3.2rem + var(--home-footer-h));
+}
+
 @media (max-width: 860px) {
+  /* The lines will not fit on one row at this width, so the footer keeps
+     stacking and the decorative ratio drops out to buy back a line. Two lines
+     of 0.82rem plus the gap is where 3.4rem comes from. */
+  body[data-page="home"] {
+    --home-footer-h: 3.4rem;
+  }
+
   body[data-page="home"] .footer {
-    gap: 0.45rem;
-    padding-block: 1.2rem;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
+    justify-content: center;
+    padding-inline: 5vw;
+  }
+
+  body[data-page="home"] .footer-ratio {
+    display: none;
+  }
+
+  body[data-page="home"].reel-at-end .reel-readout,
+  body[data-page="home"].reel-at-end .reel-counter {
+    bottom: calc(2.2rem + var(--home-footer-h));
   }
 }
 
@@ -703,13 +781,14 @@ body[data-page="home"] .footer {
 
 /* The focus area is 9:16 because most project stills are vertical. Height is
    the input and width is derived, so the ratio holds at every breakpoint. */
+/* No height here: the reel exists only on home, where it is fixed to the
+   viewport and its inset decides its size. */
 .reel {
   --cell-height: clamp(14rem, 44svh, 24rem);
   --cell-gap: 0.55rem;
   --strip-width: calc(var(--cell-height) * 9 / 16);
   --focus-line: 50%;
   background: var(--main-blue);
-  height: 100%;
   overflow: hidden;
   position: relative;
 }
@@ -825,6 +904,9 @@ body[data-page="home"] .footer {
   z-index: 2;
 }
 
+/* The strip is a surface to be swiped, not text to be selected: a click-drag
+   across it would otherwise leave the project names highlighted in the middle of
+   a full-bleed still. The matching drag guard is in script.js. */
 .reel-strip {
   display: grid;
   gap: var(--cell-gap);
@@ -832,6 +914,7 @@ body[data-page="home"] .footer {
   margin: 0;
   padding: 0;
   opacity: 1;
+  user-select: none;
   transform: translate3d(0, var(--strip-shift, 0px), 0);
   transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
   will-change: transform;
@@ -1703,6 +1786,12 @@ body[data-page="home"] .footer {
   max-width: 38ch;
 }
 
+/* Project names can be one long uppercase word; keep the measure at the
+   content width so a ch cap does not overflow and get clipped by the shell. */
+.project-hero .page-title {
+  max-width: 100%;
+}
+
 .project-spec {
   border-top: 1px solid var(--line);
   display: grid;
@@ -2238,7 +2327,13 @@ body[data-page="home"] .footer {
 
   .page-title {
     font-size: 3.45rem;
-    max-width: 9ch;
+    max-width: 100%;
+  }
+
+  /* Didot uppercase runs wide; size to the hero measure so a single name
+     (Alessandro, Mediterranean) is never cropped by overflow: hidden on the shell. */
+  .project-hero .page-title {
+    font-size: min(3.2rem, calc((100vw - 10vw) / 7));
   }
 
   .page-deck {
@@ -2319,6 +2414,9 @@ body[data-page="home"] .footer {
   .reel-stage-track,
   .reel-strip,
   .reel-link,
+  .reel-readout,
+  .reel-counter,
+  .footer,
   .site-menu,
   .filter-options,
   .menu-toggle-rule {

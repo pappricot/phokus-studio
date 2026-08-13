@@ -579,6 +579,16 @@
           shown().length
         )}`;
       }
+
+      // The footer is withheld until the reel runs out, so the way off the page
+      // is not offered before the work on it has been seen. Measured against the
+      // filtered set for the same reason the counter is: the end is the last
+      // cell that can be reached, not the last one in the markup.
+      const reachable = shown().length;
+      body.classList.toggle(
+        "reel-at-end",
+        reachable > 0 && shownAt(index) === reachable - 1
+      );
     };
 
     const goTo = (target, { focus = false } = {}) => {
@@ -655,11 +665,48 @@
       { passive: false }
     );
 
-    strip.addEventListener("keydown", (event) => {
+    // Bound to the document rather than to the strip. The strip has no tabindex,
+    // so a listener on it only ever fired once a cell had been tabbed into,
+    // which meant arrow keys did nothing at all on a fresh load — and since the
+    // page deliberately has no scroll of its own, there was no fallback either.
+    // Focus follows the reel, so Enter opens whatever is in the frame.
+    const holdsKeys = (node) =>
+      node instanceof Element &&
+      node.closest("input, textarea, select, [contenteditable]");
+
+    document.addEventListener("keydown", (event) => {
+      // Browser and system shortcuts keep their meaning.
+      if (event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      // Anything with its own reading of these keys wins: a text field, the
+      // filter or menu while either is open, and the intro before it clears,
+      // since the reel is behind it and is not the visitor's subject yet.
+      if (
+        holdsKeys(event.target) ||
+        body.classList.contains("intro-loading") ||
+        body.classList.contains("menu-open") ||
+        document.querySelector(".filter.is-open")
+      ) {
+        return;
+      }
+
+      // Space activates a focused button, so it only counts as a step when the
+      // press did not land on one — otherwise it would shadow the filter key.
+      const spaceStep =
+        event.key === " " &&
+        !(event.target instanceof Element && event.target.closest("button"));
+
       const step =
-        event.key === "ArrowDown" || event.key === "ArrowRight"
+        event.key === "ArrowDown" ||
+        event.key === "ArrowRight" ||
+        event.key === "PageDown" ||
+        spaceStep
           ? 1
-          : event.key === "ArrowUp" || event.key === "ArrowLeft"
+          : event.key === "ArrowUp" ||
+            event.key === "ArrowLeft" ||
+            event.key === "PageUp"
           ? -1
           : 0;
 
@@ -734,6 +781,15 @@
       },
       { passive: true }
     );
+
+    // A cell is an <img> inside an <a>, which the browser treats as draggable
+    // content. The reel does not take drag as an input, and without this a
+    // click-drag would not fail quietly: a translucent ghost of the still peels
+    // off and trails the cursor before snapping back, which reads as broken
+    // rather than as "this is not how the reel moves". preventDefault here
+    // rather than -webkit-user-drag in CSS, because the property is unsupported
+    // in Firefox and this covers every browser in one line.
+    reel.addEventListener("dragstart", (event) => event.preventDefault());
 
     reel.addEventListener("mouseenter", stopAutoplay);
     reel.addEventListener("mouseleave", startAutoplay);

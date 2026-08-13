@@ -11,7 +11,13 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body data-page="home">
-    <div class="site-shell">
+      <!-- No site-shell and no wrapper around the reel on this page: the reel is
+           pinned to the viewport, so anything containing it could only contribute
+           height the reel does not fill, and that height shows through as blue
+           body background the moment mobile chrome retracts. The reel is the main
+           element itself rather than sitting inside one, which keeps the landmark
+           without the box. Every other page keeps its shell. -->
+
       <!-- MENU PARKED. Held here rather than deleted, because the key and the
            overlay come back as one piece; the overlay itself is further down.
            The script guards on the toggle being present, so restoring these two
@@ -76,15 +82,23 @@
       </nav>
       -->
 
-      <main>
-        <!-- Focus reel. One index drives two layers: the full-bleed stage and
-             the filmstrip. Whichever cell sits inside the brackets is the
-             project the visitor is about to enter.
+      <!-- Focus reel. One index drives two layers: the full-bleed stage and
+           the filmstrip. Whichever cell sits inside the brackets is the
+           project the visitor is about to enter.
 
-             PLACEHOLDER IMAGES: every data-image currently points at a muse
-             master, matched to the project's declared frame. Replace each one
-             with the real project still; nothing else needs to change. -->
-        <section class="reel" aria-labelledby="reel-title" data-reel>
+           PLACEHOLDER IMAGES: the four Product entries without a project page
+           of their own — Go It, Cove, Cipher, Client Systems — are still
+           standing on artwork rather than on their own stills. They draw from
+           assets/Placeholders/, which holds four different crops of the one
+           muse engraving: the astrolabe, the columns, the figure, and the
+           drapery. Four crops rather than one image because they used to
+           repeat, and two cells carrying the same picture reads as a bug
+           rather than as a house style.
+
+           Replacing one means editing it in two places, the cell image and the
+           matching plate below, which the checker enforces are the same file.
+           When all four are real, delete assets/Placeholders/ entirely. -->
+      <main class="reel" aria-labelledby="reel-title" data-reel>
           <!-- The reel is the whole homepage, so this carries its heading. It is
                hidden because the visible brand line already says it to the eye,
                and it is the id the section has always claimed to be labelled by. -->
@@ -102,7 +116,7 @@
               ></div>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-vertical.webp')"
+                style="background-image: url('assets/Placeholders/placeholder-astrolabe.webp')"
               ></div>
               <div
                 class="reel-plate"
@@ -110,7 +124,7 @@
               ></div>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-vertical.webp')"
+                style="background-image: url('assets/Placeholders/placeholder-columns.webp')"
               ></div>
               <div
                 class="reel-plate"
@@ -118,7 +132,7 @@
               ></div>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-horizontal.webp')"
+                style="background-image: url('assets/Placeholders/placeholder-drapery.webp')"
               ></div>
               <div
                 class="reel-plate"
@@ -126,7 +140,7 @@
               ></div>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-horizontal.webp')"
+                style="background-image: url('assets/Placeholders/placeholder-muse.webp')"
               ></div>
               <div
                 class="reel-plate"
@@ -206,7 +220,7 @@
                   data-year="2025"
                   data-frame="9:16"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-vertical.webp" alt="Go It" loading="lazy" decoding="async">
+                  <img src="assets/Placeholders/placeholder-astrolabe.webp" alt="Go It" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Go It</span>
                 </a>
               </li>
@@ -232,7 +246,7 @@
                   data-year="2024"
                   data-frame="9:16"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-vertical.webp" alt="Cove" loading="lazy" decoding="async">
+                  <img src="assets/Placeholders/placeholder-columns.webp" alt="Cove" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Cove</span>
                 </a>
               </li>
@@ -258,7 +272,7 @@
                   data-year="2025"
                   data-frame="16:9"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-horizontal.webp" alt="Cipher" loading="lazy" decoding="async">
+                  <img src="assets/Placeholders/placeholder-drapery.webp" alt="Cipher" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Cipher</span>
                 </a>
               </li>
@@ -284,7 +298,7 @@
                   data-year="2020 to 2023"
                   data-frame="16:9"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-horizontal.webp" alt="Client Systems" loading="lazy" decoding="async">
+                  <img src="assets/Placeholders/placeholder-muse.webp" alt="Client Systems" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Client Systems</span>
                 </a>
               </li>
@@ -386,21 +400,21 @@
           </div>
 
           <div class="reel-counter utility" data-reel-counter aria-hidden="true">01 / 10</div>
-        </section>
-
-        <!-- The two editorial bands that used to sit here (Two doors, The method)
-             were cut so the homepage fits one viewport exactly. The reel drives
-             itself by transform, so any document scroll left underneath it makes
-             a single swipe move both surfaces at once. That copy now lives only
-             in git history and on work.html and about.html. -->
       </main>
 
+      <!-- Sits over the reel rather than beneath it. Laid out in the document it
+           would add the height the reel cannot cover, which is what was showing
+           through as blue. It floats on the veil's bottom gradient like the
+           readout and counter do, and passes pointer events through so a swipe
+           across it still drives the reel. -->
       <footer class="footer">
         <p>Phokus / Product and image systems</p>
         <p class="footer-ratio utility" data-viewport-ratio aria-hidden="true"></p>
         <a href="contact.html">Get in touch</a>
       </footer>
-    </div>
+
+      <!-- Gone from this page: the two editorial bands (Two doors, The method).
+           Both are in git history and on work.html and about.html. -->
     <script src="script.js"></script>
   </body>
 </html>
