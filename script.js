@@ -503,6 +503,14 @@
     let autoplayTimer = null;
     let engaged = false;
 
+    // How far the strip is currently pulled past the cell it is resting on, and
+    // how much input has been gathered toward the next one. Declared up here
+    // because the strip cannot be drawn without the lean.
+    let lean = 0;
+    let carried = 0;
+    let committedAt = 0;
+    let idleTimer = null;
+
     const pad = (value) => String(value).padStart(2, "0");
 
     // The reel steps over whatever the filter is showing, so every bound below
@@ -551,7 +559,7 @@
         cell.classList.toggle("is-active", position === index);
       });
 
-      strip.style.setProperty("--strip-shift", `${shiftFor(index)}px`);
+      strip.style.setProperty("--strip-shift", `${shiftFor(index) - lean}px`);
 
       if (stage) {
         stage.style.setProperty("--reel-offset", String(index));
@@ -603,6 +611,12 @@
         return;
       }
 
+      // Whatever the reel was leaning toward is settled by arriving somewhere,
+      // so the lean is dropped and the strip is free to animate again.
+      lean = 0;
+      carried = 0;
+      reel.classList.remove("is-leaning");
+
       index = landing;
       render();
       if (focus && links[index]) {
@@ -636,115 +650,143 @@
       stopAutoplay();
     };
 
-    // One cell per gesture, whatever the gesture is made of. A trackpad flick
-    // emits wheel events for as long as its momentum decays, which is longer
-    // than the strip takes to settle, so a cooldown short enough to feel
-    // responsive reopened two or three times inside a single physical flick and
-    // the reel appeared to skip cells. A gesture is instead spent on its first
-    // step and stays spent until the input goes quiet.
-    // How long the strip takes to arrive: the transform transition in CSS, which
-    // reduced motion removes entirely, leaving only enough of a gap to keep one
-    // gesture from reading as several.
-    const settleTime = () => (reducedMotion.matches ? 140 : 620);
-    const gestureGap = 140; // Longer than the gap between momentum events.
-    const wheelThreshold = 24;
+    // ------------------------------------------------------------------
+    // Input. The reel steps between cells, but it must not read as a stepper. A
+    // step that fires the instant an input crosses a threshold and then refuses
+    // everything until it has landed is both abrupt and dead: nothing happens,
+    // then a cell is simply elsewhere. So the strip leans toward the next cell
+    // while the input gathers, and commits only once enough of it has arrived to
+    // ask for a whole step. The cell being left slides out under the reticle
+    // rather than being cut away, and the step is the end of a movement that was
+    // already visibly under way.
+    // ------------------------------------------------------------------
 
-    let gestureSpent = false;
-    let gestureDelta = 0;
-    let gesturePeak = 0;
-    let gestureTimer = null;
-    let steppedAt = 0;
+    // The strip's transition runs 620ms, but its easing spends nearly all of the
+    // travel in the first third, so the next step is allowed once the strip has
+    // visually arrived rather than once the transition has formally finished.
+    const arrivalTime = () => (reducedMotion.matches ? 120 : 340);
+    const idleGap = 140; // Longer than the gap between two momentum events.
+    const wheelReach = 150; // Input pixels that add up to one cell.
+    const touchReach = 120;
+    const notchSize = 90; // A mouse wheel's own idea of one step.
+    const leanRatio = 0.16; // The furthest a lean goes, as a share of one cell.
+    const bleed = 0.85; // What a running total keeps while a step lands.
 
-    const endGesture = () => {
-      if (gestureTimer !== null) {
-        window.clearTimeout(gestureTimer);
-      }
-      gestureTimer = null;
-      gestureSpent = false;
-      gestureDelta = 0;
-      gesturePeak = 0;
+    // Measured, so a change to cell height or gap in CSS needs none here.
+    const pitch = () => {
+      const cell = cells[index] || cells[0];
+      const gap = parseFloat(getComputedStyle(strip).rowGap) || 0;
+      return (cell ? cell.offsetHeight : 0) + gap;
     };
 
-    const holdGesture = () => {
-      if (gestureTimer !== null) {
-        window.clearTimeout(gestureTimer);
-      }
-      gestureTimer = window.setTimeout(endGesture, gestureGap);
+    // A lean has to sit exactly where the input put it, so the transition is
+    // taken off the strip for as long as one is held and given back the moment it
+    // is released — which is what turns letting go into an ease rather than a cut.
+    const setLean = (value) => {
+      lean = value;
+      reel.classList.toggle("is-leaning", value !== 0);
+      strip.style.setProperty("--strip-shift", `${shiftFor(index) - lean}px`);
     };
 
-    const spendGesture = () => {
-      gestureSpent = true;
-      gestureDelta = 0;
-      steppedAt = performance.now();
+    const settling = () => performance.now() - committedAt < arrivalTime();
+
+    const release = () => {
+      idleTimer = null;
+      carried = 0;
+      if (lean !== 0) {
+        setLean(0);
+      }
+    };
+
+    // An input is only over once it has gone quiet, which is the one thing that
+    // separates a flick's momentum from a hand still pushing.
+    const holdInput = () => {
+      if (idleTimer !== null) {
+        window.clearTimeout(idleTimer);
+      }
+      idleTimer = window.setTimeout(release, idleGap);
+    };
+
+    const commit = (heading, fallback) => {
+      const target =
+        heading === fallback.step ? fallback.next : seek(index + heading, heading);
+
+      if (target === null) {
+        release();
+        return;
+      }
+
+      committedAt = performance.now();
+      // goTo drops the lean, so the strip animates from wherever the input left
+      // it to the cell it was leaning toward.
+      goTo(target);
+    };
+
+    // Gathers input toward a step and leans the strip by what has been gathered
+    // so far. Shared by wheel and touch, which differ only in how much input a
+    // cell is worth and in whether the strip tracks the input one to one.
+    const gather = (travel, { reach, track }) => {
+      const step = travel > 0 ? 1 : -1;
+      const next = seek(index + step, step);
+
+      if (next === null) {
+        return false;
+      }
+
+      holdInput();
+
+      if (settling()) {
+        // A momentum tail only ever decays, so a total that leaks can never
+        // reach a step and one flick stays one cell. A hand still pushing holds
+        // its own against the leak and steps again as soon as the strip arrives.
+        carried = carried * bleed + travel;
+        return true;
+      }
+
+      carried += travel;
+
+      const limit = pitch() * leanRatio;
+      const heading = carried > 0 ? 1 : -1;
+
+      if (Math.abs(travel) >= notchSize || Math.abs(carried) >= reach) {
+        commit(heading, { step, next });
+        return true;
+      }
+
+      // Under the finger the strip goes exactly as far as the finger; under a
+      // wheel it fills its allowance as the total approaches a step.
+      setLean(
+        track
+          ? Math.max(-limit, Math.min(limit, carried))
+          : (carried / reach) * limit
+      );
+
+      return true;
     };
 
     reel.addEventListener(
       "wheel",
       (event) => {
         // Wheel deltas arrive in pixels, lines or pages depending on the device,
-        // so they are brought to one scale before being measured against a
-        // threshold.
+        // so they are brought to one scale before being measured.
         const travel =
           event.deltaMode === 1
             ? event.deltaY * 16
             : event.deltaMode === 2
             ? event.deltaY * reel.clientHeight
             : event.deltaY;
-        const reach = Math.abs(travel);
-        const step = travel > 0 ? 1 : -1;
-        const next = seek(index + step, step);
 
         // At either end the page keeps its own scroll, so the reel never traps
-        // the visitor. Checked before the gesture is touched, so the scroll that
-        // carries on into the footer is not swallowed by a spent gesture.
-        if (next === null) {
+        // the visitor.
+        if (!gather(travel, { reach: wheelReach, track: false })) {
           return;
         }
 
         event.preventDefault();
-        holdGesture();
         // Handed over on the first claimed event rather than on the first step,
-        // so the autoplay clock cannot fire a step of its own inside the gesture
+        // so the autoplay clock cannot fire a step of its own inside a gesture
         // and turn one flick into two cells.
         engage();
-
-        if (gestureSpent) {
-          // Momentum only decays. A push that rises above the gesture's own peak
-          // is a fresh one from the hand, and once the strip has arrived it is
-          // allowed its own step rather than being held to the first flick.
-          if (
-            reach > gesturePeak * 1.4 &&
-            performance.now() - steppedAt > settleTime()
-          ) {
-            gestureSpent = false;
-            gestureDelta = 0;
-          } else {
-            gesturePeak = Math.max(gesturePeak, reach);
-            return;
-          }
-        }
-
-        gesturePeak = Math.max(gesturePeak, reach);
-        gestureDelta += travel;
-
-        // Below the threshold nothing moves yet, which keeps a high-resolution
-        // trackpad from stepping on a nudge.
-        if (Math.abs(gestureDelta) < wheelThreshold) {
-          return;
-        }
-
-        // The step is taken in the direction the gesture has travelled overall,
-        // which is not always the direction of the event that crossed the line.
-        const heading = gestureDelta > 0 ? 1 : -1;
-        const landing = heading === step ? next : seek(index + heading, heading);
-
-        if (landing === null) {
-          gestureDelta = 0;
-          return;
-        }
-
-        spendGesture();
-        goTo(landing);
       },
       { passive: false }
     );
@@ -843,7 +885,7 @@
         // There is no pointer to leave the reel on a touch screen, so the reel
         // has to be told by the touch itself to stop moving on its own.
         stopAutoplay();
-        endGesture();
+        release();
       },
       { passive: true }
     );
@@ -854,43 +896,27 @@
         if (touchOrigin === null) {
           return;
         }
-        const delta = touchOrigin - event.touches[0].clientY;
-        if (Math.abs(delta) < 42) {
-          return;
-        }
 
-        // A swipe is one step, for the same reason a flick is. A finger still
-        // travelling once the strip has arrived carries on stepping, so a long
-        // drag is not cut off after its first cell.
-        if (gestureSpent) {
-          if (performance.now() - steppedAt < settleTime()) {
-            return;
-          }
-          gestureSpent = false;
-        }
+        const position = event.touches[0].clientY;
+        const travel = touchOrigin - position;
+        touchOrigin = position;
 
-        const step = delta > 0 ? 1 : -1;
-        const next = seek(index + step, step);
-        touchOrigin = event.touches[0].clientY;
-        if (next === null) {
-          return;
+        if (gather(travel, { reach: touchReach, track: true })) {
+          engage();
         }
-        engage();
-        spendGesture();
-        goTo(next);
       },
       { passive: true }
     );
 
-    reel.addEventListener("touchend", () => {
+    // A finger lifted before it asked for a whole step leaves the strip leaning,
+    // and the lean has to ease back rather than sit there.
+    const endTouch = () => {
       touchOrigin = null;
-      endGesture();
-    });
+      release();
+    };
 
-    reel.addEventListener("touchcancel", () => {
-      touchOrigin = null;
-      endGesture();
-    });
+    reel.addEventListener("touchend", endTouch);
+    reel.addEventListener("touchcancel", endTouch);
 
     // A cell is an <img> inside an <a>, which the browser treats as draggable
     // content. The reel does not take drag as an input, and without this a
@@ -1057,7 +1083,10 @@
     // Their own address rides along with it, which is why this never needed a
     // field asking for one, and why a reply is possible at all.
     const ADDRESS = "anya.p.nguyen@gmail.com";
+    const ENDPOINT = "https://api.web3forms.com/submit";
     const status = form.querySelector("[data-form-status]");
+    const button = form.querySelector('[type="submit"]');
+    const key = form.querySelector('[name="access_key"]');
     const field = (name) =>
       (form.querySelector(`[name="${name}"]`)?.value || "").trim();
 
@@ -1067,19 +1096,26 @@
       }
     };
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
+    // Until the relay key is filled in, posting would fail and the message
+    // would be lost, which is the thing this whole path exists to prevent. So
+    // the form keeps composing mail locally until there is somewhere real to
+    // send it, and switches over on its own once there is. Nothing to remember.
+    const relayed = Boolean(
+      key && key.value && !key.value.startsWith("PASTE_")
+    );
 
-      const name = field("name");
-      const project = field("project");
+    // Subjects are set here rather than left at the hidden field's default so
+    // the project reaches the inbox, which is what makes one submission
+    // findable among others that would otherwise all read the same.
+    const subjectFor = (project) =>
+      project ? `Phokus — ${project}` : "Phokus — signal";
+
+    const sendViaMailClient = () => {
       const message = field("message");
-
-      // The subject carries the project, because that is what makes the mail
-      // findable later in a thread that is otherwise all one word.
-      const subject = project ? `Phokus — ${project}` : "Phokus — signal";
+      const name = field("name");
       const body = name ? `${message}\n\n— ${name}` : message;
       const href = `mailto:${ADDRESS}?subject=${encodeURIComponent(
-        subject
+        subjectFor(field("project"))
       )}&body=${encodeURIComponent(body)}`;
 
       // Mail clients begin truncating or refusing mailto links somewhere above
@@ -1095,6 +1131,59 @@
 
       say("Opening your mail app with this drafted. If nothing happens, use Copy email.");
       window.location.href = href;
+    };
+
+    const sendViaRelay = async () => {
+      const subject = form.querySelector('[name="subject"]');
+      if (subject) {
+        subject.value = subjectFor(field("project"));
+      }
+
+      if (button) {
+        button.disabled = true;
+      }
+      say("Sending…");
+
+      try {
+        const response = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(
+            Object.fromEntries(new FormData(form).entries())
+          ),
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (response.ok && result.success) {
+          form.reset();
+          say("Sent. You will get a reply at the address you gave.");
+          return;
+        }
+        throw new Error(result.message || `relay returned ${response.status}`);
+      } catch (error) {
+        // A failed send is the one case that must not look like a success, so
+        // it says what happened and leaves the typed message in place with a
+        // route out that does not depend on the relay being up.
+        say(
+          "That did not send — the form service did not accept it. Your message is still here; use Copy email and send it directly."
+        );
+      } finally {
+        if (button) {
+          button.disabled = false;
+        }
+      }
+    };
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (relayed) {
+        sendViaRelay();
+      } else {
+        sendViaMailClient();
+      }
     });
   }
 })();

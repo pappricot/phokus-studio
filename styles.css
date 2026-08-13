@@ -920,6 +920,13 @@ body[data-page="home"].reel-at-end .reel-counter {
   will-change: transform;
 }
 
+/* While an input is leading the strip it must sit exactly where the input put it,
+   so the settling transition is out of the way until the step lands. Giving it
+   back is what makes letting go an ease rather than a cut. */
+.reel.is-leaning .reel-strip {
+  transition: none;
+}
+
 /* A filter change relays out the strip, which would otherwise be seen as a jump.
    The strip goes out, the set changes, the strip comes back. */
 .reel.is-refiltering .reel-strip {

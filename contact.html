@@ -81,10 +81,47 @@
               </div>
             </div>
             <div class="contact-panel">
-              <form class="contact-form" data-contact-form>
+              <!-- Posts to Web3Forms, which relays the submission on as email.
+                   action and method are set even though script.js intercepts the
+                   submit, so the form still delivers with JavaScript disabled;
+                   it just lands on the relay's own thank-you page instead of
+                   reporting back in place.
+
+                   access_key is public by design and is not a credential — the
+                   relay's own documentation says so. It identifies the inbox to
+                   forward to; it grants nothing. The address itself never
+                   appears here, which is the point of using a key at all. -->
+              <form
+                class="contact-form"
+                action="https://api.web3forms.com/submit"
+                method="POST"
+                data-contact-form
+              >
+                <input type="hidden" name="access_key" value="PASTE_WEB3FORMS_ACCESS_KEY_HERE">
+                <input type="hidden" name="from_name" value="Phokus site">
+                <input type="hidden" name="subject" value="Phokus — signal">
+
+                <!-- Honeypot. Hidden from sight and from the tab order, so only
+                     something filling every field it finds will tick it, and the
+                     relay drops anything that arrives with it ticked. -->
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  class="sr-only"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+
                 <div class="field">
                   <label for="name">Name</label>
                   <input id="name" name="name" autocomplete="name" placeholder="Your name" required>
+                </div>
+                <!-- The relay sends from its own address, so without this a
+                     submission would arrive with no way to answer it. The
+                     relay uses this field as the reply-to automatically. -->
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="Where a reply should go" required>
                 </div>
                 <div class="field">
                   <label for="project">Project</label>
@@ -95,7 +132,7 @@
                   <textarea id="message" name="message" placeholder="What should the system do, ship, automate, or reveal?" required></textarea>
                 </div>
                 <button class="button" type="submit">Draft signal</button>
-                <p class="contact-note" data-form-status aria-live="polite">Awaiting brief. This opens in your mail app.</p>
+                <p class="contact-note" data-form-status aria-live="polite">Awaiting brief.</p>
               </form>
             </div>
           </div>
