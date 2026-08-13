@@ -1,0 +1,91 @@
+{
+  "slug": "alessandro-taini",
+  "title": "Alessandro Taini",
+  "eyebrow": "Image / film, no AI",
+  "meta_description": "A recap of one artist’s lifetime work, made traditional way. Screened at Comic-Con San Diego 2026.",
+  "year": "2026",
+  "kind": "Image",
+  "frame": "9:16 reel, filmed",
+  "role": "Filming, edit, grade",
+  "deck": "A recap of one artist’s lifetime work, made traditional way. Screened at Comic-Con San Diego 2026.",
+  "draft": true,
+  "source_note": "No Notion page. The film was made outside the campaign pipeline, so stages P, H, and O were skipped and this brief was written by hand. Stills are exported frames from the film, never generated art and never a reproduction of Taini’s artwork, or the page argues against its own premise. Sources live in the ComicCon Premiere project: Videos/Original for the shoot, Videos/Final for the vertical and horizontal cuts.",
+  "proof": {
+    "kicker": "The subject",
+    "title": "Two decades of images, none of them synthetic.",
+    "note": "Alessandro Taini’s work runs from Heavenly Sword and Enslaved through DmC Devil May Cry into animation, including the Star Trek series that won him an Emmy, and the Ghostbusters series coming to Netflix. Filming an artist like this means the camera has to stay out of the way of the art.",
+    "shots": [
+      {
+        "src": "assets/Projects/alessandro-taini/alessandro-taini-01.webp",
+        "width": 1600,
+        "height": 900,
+        "alt": "Alessandro Taini sits at his dining table in a hat and glasses, turning the pages of his own artbook, with his Emmy statuette on the shelf behind him and his dog on the couch.",
+        "caption": "Frame 00:39 / the table"
+      }
+    ],
+    "caption": "The film opens and closes on the man rather than the art, which is also why this page shows him and links to the work instead of reprinting it. He is reading his own book at his own table, and the Emmy is behind him where he left it."
+  },
+  "acts": {
+    "kicker": "Structure",
+    "title": "The games, the screen, the next thing.",
+    "note": "The cut follows a career rather than a plot: where the images came from, where they went, and what is still ahead.",
+    "items": [
+      {
+        "number": "Reel I",
+        "title": "Games",
+        "copy": "Heavenly Sword, Enslaved, and DmC Devil May Cry — worlds that had to be designed down to the material before anyone could play inside them."
+      },
+      {
+        "number": "Reel II",
+        "title": "Animation",
+        "copy": "The move to the screen, including the Star Trek series that won an Emmy, where the same eye had to carry a whole production rather than a single frame."
+      },
+      {
+        "number": "Reel III",
+        "title": "Ahead",
+        "copy": "The Ghostbusters animated series arriving on Netflix, held back to the end so the film closes forward rather than on a retrospective."
+      }
+    ]
+  },
+  "pipeline": {
+    "kicker": "How it was made",
+    "title": "Camera, timeline, nothing else.",
+    "note": "This page is the one place on the site where the pipeline is the argument. The studio works generatively by choice, not by necessity, and this is the proof: the same eye, without a single model in the chain. It was cut in Premiere for two frames, a horizontal screening version and a vertical one, and shown at Comic-Con San Diego 2026.",
+    "items": [
+      {
+        "label": "Shoot",
+        "copy": "Filmed on a camera, lit and framed on the day, with the artwork treated as the subject rather than as a texture to move over."
+      },
+      {
+        "label": "Cut",
+        "copy": "Assembled on a timeline and paced by hand, so the rhythm comes from the edit rather than from a template."
+      },
+      {
+        "label": "Grade",
+        "copy": "Colour held to the art. The grade serves work that already has its own palette, so it corrects rather than reinterprets."
+      },
+      {
+        "label": "Sound",
+        "copy": "Cut to picture, carrying the transitions the visuals deliberately leave unmarked."
+      }
+    ]
+  },
+  "links": {
+    "kicker": "Open the work",
+    "title": "Primary sources.",
+    "items": [
+      {
+        "href": "https://www.instagram.com/p/DbUCS6aSgU_/",
+        "label": "The film",
+        "meta": "Instagram / posted"
+      }
+    ],
+    "note": "Every artwork in the film is by Alessandro Taini and remains his, alongside the studios that commissioned it. The filming, edit, and grade are Phokus."
+  },
+  "links_withheld": [],
+  "reel": {
+    "name": "Alessandro Taini / a body of work",
+    "label": "Taini",
+    "thumb": "assets/Projects/alessandro-taini/alessandro-taini-thumb.webp"
+  }
+}

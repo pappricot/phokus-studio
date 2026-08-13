@@ -673,6 +673,21 @@ def render(brief):
 """
             for item in links["items"]
         )
+
+        # A note about the links cannot live inside one, because an anchor
+        # nested in an anchor is invalid and browsers drop the outer link. It is
+        # the last child of the set instead, with its own destination named in a
+        # separate field so the copy never carries raw markup.
+        note = ""
+        if links.get("note"):
+            target = links.get("note_link") or {}
+            anchor = (
+                f"""<a href="{attr(target['href'])}">{esc(target['label'])}</a>"""
+                if target
+                else ""
+            )
+            note = f"""            <p class="link-note">{esc(links['note'])}{' ' + anchor if anchor else ''}</p>
+"""
         parts.append(
             f"""
         <section class="section-band {next(bands)}" aria-labelledby="links-title">
@@ -683,7 +698,7 @@ def render(brief):
             </div>
           </div>
           <div class="project-links">
-{items}          </div>
+{items}{note}          </div>
         </section>
 """
         )

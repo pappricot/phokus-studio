@@ -6,7 +6,7 @@
     <title>Dark Mediterranean | Phokus</title>
     <meta
       name="description"
-      content="Dark Mediterranean is an in-progress hospitality image study: one lime-washed blue resort held at dusk, sequenced from establishing shot to occupied room."
+      content="Dark Mediterranean is an in-progress hospitality image study for a real estate agency: a 3D massing model of a hypothetical resort, turned into a sequence of blue-hour frames that all agree with it."
     >
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -54,9 +54,9 @@
           <h1 class="page-title" id="project-title">Dark Mediterranean</h1>
           <!-- DRAFT -->
           <p class="page-deck">
-            An in-progress hospitality study that takes a single blue building and holds
-            it at one moment of dusk, testing how far a grid can travel from establishing
-            shot to occupied room without the light ever changing.
+            An in-progress hospitality study for a real estate agency, where the resort is
+            hypothetical but its geometry is not: the building is modelled first, and
+            every generated frame has to agree with the model it came from.
           </p>
           <dl class="project-spec">
             <div>
@@ -82,13 +82,14 @@
           <div class="section-header">
             <div>
               <p class="section-kicker">The constraint</p>
-              <h2 class="section-title" id="proof-title">One colour, one hour, nine distances.</h2>
+              <h2 class="section-title" id="proof-title">The same building in every frame.</h2>
             </div>
             <!-- DRAFT -->
             <p class="section-note">
-              Everything in the set is the same lime-washed blue at the same blue hour.
-              The only variable allowed to move is how close the camera stands, so the
-              sequence reads as one evening rather than a collection of renders.
+              The set is generated from one 3D massing model, so the roofline, the step of
+              the terraces and the position of the pool are settled before a prompt is
+              written. Distance and light are free to move. Geometry is not, because an
+              agency is selling something that has to be buildable.
             </p>
           </div>
 
@@ -103,7 +104,7 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <figcaption class="utility">Establishing / the approach</figcaption>
+                <figcaption class="utility">Camera 01 / the approach, from outside the boundary</figcaption>
               </div>
               <div class="proof-shot">
                 <img
@@ -114,7 +115,7 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <figcaption class="utility">Interior / the arrival</figcaption>
+                <figcaption class="utility">Camera 05 / the entrance corridor, held on axis</figcaption>
               </div>
               <div class="proof-shot">
                 <img
@@ -125,7 +126,7 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <figcaption class="utility">Curated grid / establishing to intimate</figcaption>
+                <figcaption class="utility">Curated grid / nine camera positions, in order of approach</figcaption>
               </div>
               <div class="proof-shot">
                 <img
@@ -136,18 +137,41 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <figcaption class="utility">Superset / the frames that did not make the cut</figcaption>
+                <figcaption class="utility">Superset / positions that broke continuity and were cut</figcaption>
               </div>
             </div>
             <!-- DRAFT -->
             <figcaption class="proof-note">
-              The building is never explained, only walked toward. Warm light is rationed
-              to one window at a time so the eye has somewhere to land in all that blue.
+              A frame that flatters the site but moves a wall is worth nothing to an
+              agency, so every image here traces back to a camera position on the model.
+              The set is meant to be read as a document of one building, not as a mood
+              board about blue.
             </figcaption>
           </figure>
         </section>
 
-        <section class="section-band blue" aria-labelledby="acts-title">
+        <section class="section-band blue" aria-labelledby="links-title">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Open the work</p>
+              <h2 class="section-title" id="links-title">Primary sources.</h2>
+            </div>
+          </div>
+          <div class="project-links">
+            <a
+              class="project-link"
+              href="https://app.runwayml.com/workflows/d5c9f2c6-07bb-4805-b912-6be0bf1dfd76/edit"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="link-label">Workflow</span>
+              <span class="link-meta">Runway / team access required</span>
+            </a>
+            <p class="link-note">Request a live demo via <a href="contact.html">Contact Me</a></p>
+          </div>
+        </section>
+
+        <section class="section-band paper" aria-labelledby="acts-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">Structure</p>
@@ -155,31 +179,34 @@
             </div>
             <!-- DRAFT -->
             <p class="section-note">
-              The grid is ordered as a walk, not as a portfolio. Each row moves the viewer
-              one distance closer to a person who is never shown.
+              The nine positions are set on the model as a walk a buyer could actually
+              take, which is also the order an agency needs: the site first, then the
+              building, then the room being sold.
             </p>
           </div>
           <ol class="project-acts">
             <li>
               <span class="act-number">Row I</span>
               <h3>The hillside</h3>
-              <p>The resort seen whole, through trees, from outside its own boundary.</p>
+              <p>The resort seen whole, through trees, from outside its own boundary. The row
+              that has to prove the site.</p>
             </li>
             <li>
               <span class="act-number">Row II</span>
               <h3>The threshold</h3>
               <p>Windows and doorways, each one a lit interior read from the cold side of the
-              wall.</p>
+              wall. The row where the elevations have to hold.</p>
             </li>
             <li>
               <span class="act-number">Row III</span>
               <h3>The table</h3>
-              <p>Dinner laid, loungers turned out, a lantern left on. Occupied, and empty.</p>
+              <p>Dinner laid, loungers turned out, a lantern left on. Occupied, and empty.
+              The row that sells the room.</p>
             </li>
           </ol>
         </section>
 
-        <section class="section-band paper" aria-labelledby="pipeline-title">
+        <section class="section-band blue" aria-labelledby="pipeline-title">
           <div class="section-header">
             <div>
               <p class="section-kicker">How it is being built</p>
@@ -187,22 +214,31 @@
             </div>
             <!-- DRAFT -->
             <p class="section-note">
-              Built as a Runway workflow so the palette and hour stay locked while the
-              camera distance is the only prompt that changes.
+              Built as a Runway workflow so the model does the deciding. The massing
+              render conditions every generation, which leaves the prompt responsible for
+              light and mood and nothing structural.
             </p>
           </div>
           <div class="project-stack">
             <div class="stack-item">
-              <span class="utility">Lock</span>
-              <p>One blue, one blue hour, one material vocabulary fixed before generation.</p>
+              <span class="utility">Model</span>
+              <p>The resort built as 3D massing first, with site, levels and sightlines
+              resolved before any frame exists.</p>
             </div>
             <div class="stack-item">
-              <span class="utility">Generate</span>
-              <p>A superset of frames at every distance, far more than the final nine.</p>
+              <span class="utility">Position</span>
+              <p>Camera positions set on the model and numbered, so each final frame has a
+              coordinate rather than a description.</p>
             </div>
             <div class="stack-item">
-              <span class="utility">Curate</span>
-              <p>The set cut down to a nine-frame walk that only ever moves inward.</p>
+              <span class="utility">Condition</span>
+              <p>Each position rendered out and passed into the workflow as the reference the
+              generation has to agree with.</p>
+            </div>
+            <div class="stack-item">
+              <span class="utility">Verify</span>
+              <p>Frames read back against the model and cut when a wall, a level or a
+              sightline has moved.</p>
             </div>
             <div class="stack-item">
               <span class="utility">Grade</span>

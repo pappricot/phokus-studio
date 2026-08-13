@@ -126,7 +126,7 @@ the finished work.
 
 ## Editing by Hand
 
-One rule governs everything else: for the eight projects that have a brief, the
+One rule governs everything else: for the nine projects that have a brief, the
 `project-<slug>.html` file is **generated output**. Edit the brief, not the page.
 `project-shes-back.html` is the single exception — it was hand-written as the
 original template and has no brief, so it is edited directly and forever.
@@ -194,6 +194,37 @@ Two doors, one substrate:
 The rule for edge cases: if the deliverable has an audience it is Image or
 Product; if it only has an operator it is a Pipeline. A campaign microsite is
 Image, a product marketing site is Product.
+
+### Filmed work
+
+Image says "campaigns, film, stills, generative production", so a piece shot on
+a camera is Image by the same rule as a generated one and does **not** get a
+third door — the filter is a two-way switch and the intro briefing is two cards.
+It is separated in copy instead, the way the unfinished campaigns are: `eyebrow`
+reads `Image / film, no AI`, the deck says so in its first two sentences, and the
+pipeline section is titled for a camera rather than a prompt.
+
+The marking is the whole point of carrying the piece. Every other Image entry is
+generated, so an unmarked filmed one is read as more of the same and the credit
+for the craft is lost. **Alessandro Taini** is the entry this applies to, and it
+follows that no still on that page may ever be generated art, including its reel
+thumbnail: the frames must be exported from the film. A muse master there argues
+against the only claim the page makes.
+
+Work that shows another artist's output carries the split in the links block —
+whose the artwork is, whose the filming and edit are — because the page is
+otherwise a portfolio claim over someone else's images. The same rule chooses the
+stills: the reel cell and the proof shot are both the **portrait** of Taini at his
+table rather than a page of his art, so what is on display is the filming. His
+artwork stays in the film, where he is credited and where it belongs.
+
+Frames are grabbed out of the Premiere project rather than the posted video, since
+`Videos/Final` holds the exports and `Videos/Original` the shoot. With no `ffmpeg`
+installed, `avconvert --start T --duration 0.3` cuts a fragment and `qlmanage -t`
+takes its poster frame; both need to run outside the agent sandbox, which blocks
+AVFoundation. The vertical export is letterboxed for Instagram, so a reel cell
+should be cut from the horizontal footage and cropped with `phokus.py thumb`
+instead — this one is `--focus=44,50`, which keeps the Emmy in frame beside him.
 
 ## Intro Briefing
 
@@ -332,10 +363,10 @@ plus the link in `work.html`.
 `data-kind` must read exactly `Image` or `Product`, because the filter matches on
 it. There is no combined view, so a cell with any other kind is unreachable.
 
-**PLACEHOLDER IMAGES:** the eight Image projects and Phokus itself carry real
-stills. The four remaining Product projects (Go It, Cove, Cipher, Client
-Systems) still point at a muse master chosen to match their declared frame.
-Replace each with the real project still; no other change is needed.
+**PLACEHOLDER IMAGES:** every Image project and Phokus itself carry real stills.
+The four Product projects (Go It, Cove, Cipher, Client Systems) still point at a
+muse master chosen to match their declared frame. Replace each with the real
+project still; no other change is needed.
 
 The filter is a switch between the two doors rather than a way to narrow a
 combined list, so one kind is always held. `DEFAULT_KIND` in `script.js` decides

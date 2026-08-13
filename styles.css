@@ -1979,6 +1979,32 @@ body[data-page="home"] .footer {
   text-transform: uppercase;
 }
 
+/* The row above a note keeps no rule, so the note reads as part of that link
+   rather than as a second entry in the list. */
+.project-link:has(+ .link-note) {
+  border-bottom: 0;
+  padding-bottom: 0.4rem;
+}
+
+.link-note {
+  font-family: var(--utility);
+  font-size: 0.82rem;
+  opacity: 0.76;
+  padding-bottom: 1.4rem;
+  text-transform: uppercase;
+}
+
+.link-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.link-note a:hover,
+.link-note a:focus-visible {
+  opacity: 0.62;
+}
+
 .project-next {
   border-top: 1px solid var(--line);
   padding: 2.6rem 7vw;
