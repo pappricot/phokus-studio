@@ -5,6 +5,8 @@ dist/
 build/
 .env
 .env.*
+__pycache__/
+*.pyc
 assets/*resume*.pdf
 .review/
 .shots/
