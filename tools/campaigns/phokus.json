@@ -1,0 +1,152 @@
+{
+  "slug": "phokus",
+  "notion_title": "",
+  "source_note": "No Notion page. This case is the site itself, so the brief was written by hand and the stills are screenshots of the running build. Stages P, H and O do not apply; scaffold reads this file directly.",
+  "title": "Phokus",
+  "eyebrow": "Product / studio site",
+  "meta_description": "The Phokus studio site is its own first case: an index built as a viewfinder, a briefing that teaches the rule before showing the work, and a tool that turns Notion pages into case pages.",
+  "year": "2026",
+  "kind": "Product",
+  "frame": "Responsive, 9:16 focus area",
+  "role": "Design, front-end, tooling",
+  "deck": "The studio site is the first case in it. It has to argue its own method before it is trusted to argue anyone else's, so it teaches the rule first and makes the index a viewfinder rather than a grid.",
+  "draft": true,
+  "proof": {
+    "kicker": "The format problem",
+    "title": "An index that focuses instead of listing.",
+    "note": "A portfolio grid asks a visitor to compare thumbnails. This one asks them to look at one project at a time, so the index behaves like a viewfinder: whatever sits inside the brackets is the thing about to be entered.",
+    "shots": [
+      {
+        "src": "assets/Projects/phokus/phokus-01.jpg",
+        "width": 1440,
+        "height": 1400,
+        "alt": "The intro briefing on a royal blue field, teaching one rule at a time: if it has an audience, Image, with campaigns, film, stills and generative production listed beneath.",
+        "caption": "The briefing"
+      },
+      {
+        "src": "assets/Projects/phokus/phokus-02.jpg",
+        "width": 1440,
+        "height": 1000,
+        "alt": "The homepage reel with a campaign still held inside gold reticle brackets, a blurred plate of the same still filling the background, and a readout naming the project, kind, year and frame.",
+        "caption": "The viewfinder"
+      }
+    ],
+    "caption": "Nothing advances on its own. The briefing holds until it is dismissed, and the reel stops running the moment the visitor takes over."
+  },
+  "acts": {
+    "kicker": "Structure",
+    "title": "Two doors, one substrate.",
+    "note": "The whole site rests on a single distinction, so it is taught once at the door and never explained again.",
+    "items": [
+      {
+        "number": "Act I",
+        "title": "The rule",
+        "copy": "If it has an audience it is Image. If it has a user it is Product. Pipelines are not a third door; they run underneath both."
+      },
+      {
+        "number": "Act II",
+        "title": "The focus",
+        "copy": "One project inside the brackets at a time, with its kind, year, and native frame printed beside it."
+      },
+      {
+        "number": "Act III",
+        "title": "The case",
+        "copy": "Every project opens into the same six blocks, so two campaigns can actually be compared."
+      }
+    ]
+  },
+  "plates": {
+    "kicker": "The muse",
+    "title": "One composition, every frame.",
+    "note": "The artwork is a single engraved scene — an astrolabe whose centre is a camera iris, held up out of the clouds past ruined columns. It is re-framed rather than redrawn, which is what lets any project declare a native frame and still sit inside the same world.",
+    "items": [
+      {
+        "src": "assets/Projects/phokus/phokus-frame-16x9.jpg",
+        "width": 720,
+        "height": 405,
+        "alt": "Landscape engraving in electric blue of a robed goddess holding an astrolabe whose centre is a camera aperture, with ruined Corinthian columns and clouds beneath a star field.",
+        "caption": "16:9 master"
+      },
+      {
+        "src": "assets/Projects/phokus/phokus-frame-9x16.jpg",
+        "width": 405,
+        "height": 720,
+        "alt": "The same engraving composed vertically, the astrolabe high in the frame and the goddess rising from the clouds below it.",
+        "caption": "9:16 master"
+      },
+      {
+        "src": "assets/Projects/phokus/phokus-frame-1x1.jpg",
+        "width": 720,
+        "height": 720,
+        "alt": "The same engraving in a square frame, cropped close on the astrolabe and the goddess reaching up to it.",
+        "caption": "1:1 master — interim crop"
+      }
+    ]
+  },
+  "type": {
+    "kicker": "Type",
+    "title": "Three voices, no webfonts.",
+    "note": "Every family is a system stack, so nothing is downloaded and nothing shifts on load. Each does one job and never borrows another's: titles are set, data is printed, and prose is read. The palette is as tight — electric royal blue, porcelain paper, and gold used only to mark focus.",
+    "items": [
+      {
+        "class": "is-display",
+        "specimen": "Didot",
+        "role": "Display / titles",
+        "stack": "Didot, Bodoni 72, Baskerville, Times New Roman, serif"
+      },
+      {
+        "class": "is-utility",
+        "specimen": "Courier New",
+        "role": "Utility / labels, specs, readouts",
+        "stack": "Courier New, Courier, ui-monospace, monospace"
+      },
+      {
+        "class": "is-body",
+        "specimen": "Inter",
+        "role": "Body / running copy",
+        "stack": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif"
+      }
+    ]
+  },
+  "pipeline": {
+    "kicker": "How it was built",
+    "title": "Pipeline.",
+    "note": "Hand-written and dependency-free, with one small tool so that adding a campaign never becomes copy-paste work.",
+    "items": [
+      {
+        "label": "Hand",
+        "copy": "Plain HTML, one stylesheet, one script. No framework, no bundler, nothing to run before deploying."
+      },
+      {
+        "label": "System",
+        "copy": "Three type families, three colours, and a set of section bands reused across every page."
+      },
+      {
+        "label": "Tooling",
+        "copy": "PHOKUS pulls a campaign out of Notion, converts its stills, and scaffolds the case page once."
+      },
+      {
+        "label": "Own",
+        "copy": "Generated pages are edited by hand afterwards, so the tool never turns into a dependency."
+      }
+    ]
+  },
+  "links": {
+    "kicker": "Open the work",
+    "title": "Primary sources.",
+    "items": [
+      {
+        "href": "https://github.com/pappricot/phokus-studio",
+        "label": "Source",
+        "meta": "GitHub / phokus-studio"
+      }
+    ]
+  },
+  "links_withheld": [],
+  "reel": {
+    "name": "Phokus",
+    "label": "Phokus",
+    "thumb": "assets/Projects/phokus/phokus-muse-gate.jpg",
+    "thumb_note": "The muse master rather than a screenshot of the site. A screenshot of the reel inside the reel read as a glitch at cell size, and the other vertical master is already the placeholder for Go It and Cove."
+  }
+}

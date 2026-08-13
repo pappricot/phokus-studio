@@ -8,3 +8,7 @@ build/
 assets/*resume*.pdf
 .review/
 .shots/
+
+# Cached Notion page dumps from `phokus.py pull`. Regenerable, and they hold the
+# private editor URLs the briefs deliberately withhold from the site.
+tools/campaigns/_raw/

@@ -1,0 +1,114 @@
+{
+  "slug": "adidas-tokyo",
+  "notion_title": "Shoe campaign - Adidas TOKYO",
+  "title": "Adidas Tokyo",
+  "eyebrow": "Image / concept film",
+  "meta_description": "Adidas Tokyo is a concept film cut into three stripes and released as three separate posts, each a night on the same street.",
+  "year": "2026",
+  "kind": "Image",
+  "frame": "9:16 reel, three-part release",
+  "role": "Concept, art direction, generative production",
+  "deck": "A concept film cut into three stripes and released as three, so the campaign arrives the way the mark does: one line at a time.",
+  "draft": true,
+  "proof": {
+    "kicker": "The format problem",
+    "title": "Three stripes, three drops.",
+    "note": "This is not one film chopped into parts. Each stripe is a complete night on the same street, and the three only resolve into a campaign once they have all been posted.",
+    "shots": [
+      {
+        "src": "assets/Projects/adidas-tokyo/adidas-tokyo-01.jpg",
+        "width": 1200,
+        "height": 896,
+        "alt": "Night street seen from behind a figure in a navy adidas jacket, the trefoil across the back, facing a lit corner building with parked cars.",
+        "caption": "Stripe 1 / away"
+      },
+      {
+        "src": "assets/Projects/adidas-tokyo/adidas-tokyo-02.jpg",
+        "width": 1200,
+        "height": 896,
+        "alt": "The same figure turning back toward the camera on the same street, a plaster on one cheek, the three stripes running down the sleeve.",
+        "caption": "Stripe 3 / turn"
+      }
+    ],
+    "caption": "The camera holds one position across the release. Only the figure turns, so three separate posts build a single gesture over a week of feed."
+  },
+  "acts": {
+    "kicker": "Structure",
+    "title": "Stripes.",
+    "note": "Numbered like the mark itself, and released out of order on purpose.",
+    "items": [
+      {
+        "number": "Stripe 1",
+        "title": "Walk",
+        "copy": "A point-of-view ending on an empty street, shot to feel carried rather than composed."
+      },
+      {
+        "number": "Stripe 2",
+        "title": "Street",
+        "copy": "The city closes in. Neon, parked cars, and nothing else moving."
+      },
+      {
+        "number": "Stripe 3",
+        "title": "Turn",
+        "copy": "The last shoe you will see, and the only moment the face is given."
+      }
+    ]
+  },
+  "pipeline": {
+    "kicker": "How it was built",
+    "title": "Pipeline.",
+    "note": "Boarded in Figma, generated through Higgsfield for continuity, then held to one camera position so the location reads as real.",
+    "items": [
+      {
+        "label": "Board",
+        "copy": "Three-stripe structure and shot order fixed on one Figma board before generation."
+      },
+      {
+        "label": "Generate",
+        "copy": "Higgsfield carrying character and wardrobe continuity across all three nights."
+      },
+      {
+        "label": "Compose",
+        "copy": "One camera position held across the set, so the street reads as a place rather than a backdrop."
+      },
+      {
+        "label": "Export",
+        "copy": "Vertical masters cut for feed and released as separate posts rather than one film."
+      }
+    ]
+  },
+  "links": {
+    "kicker": "Open the work",
+    "title": "Primary sources.",
+    "items": [
+      {
+        "href": "https://www.figma.com/board/5lABPcO7EVNVkaSAx8zI2k/Tokyo",
+        "label": "Case study board",
+        "meta": "Figma / mood and storyboard"
+      },
+      {
+        "href": "https://www.instagram.com/reel/DW9mCFzicGM/",
+        "label": "Stripe 1",
+        "meta": "Instagram / 9:16"
+      },
+      {
+        "href": "https://www.instagram.com/reel/DW4d3K-Abv3/",
+        "label": "Stripe 3",
+        "meta": "Instagram / 9:16"
+      }
+    ]
+  },
+  "links_withheld": [
+    {
+      "href": "https://app.runwayml.com/workflows/6b3aefb9-1f6d-44bd-8f83-bf5c358a42c6/edit",
+      "label": "Workflow",
+      "meta": "Runway",
+      "why": "private team editor URL, will not open for a visitor"
+    }
+  ],
+  "reel": {
+    "name": "Adidas Tokyo",
+    "label": "Adidas Tokyo",
+    "thumb": "assets/Projects/adidas-tokyo/adidas-tokyo-thumb.jpg"
+  }
+}

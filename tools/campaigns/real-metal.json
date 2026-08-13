@@ -1,0 +1,102 @@
+{
+  "slug": "real-metal",
+  "notion_title": "Diesel Jewelry - “Real METAL” Campaign",
+  "title": "Real Metal",
+  "eyebrow": "Image / fashion campaign",
+  "meta_description": "Real Metal is an AI-generated Diesel jewellery campaign staged inside Diesel-Land and shot entirely through security-camera framing.",
+  "year": "2026",
+  "kind": "Image",
+  "frame": "9:16 reel, CCTV-framed stills",
+  "role": "Concept, art direction, generative production",
+  "deck": "An AI-generated fashion campaign made for the Runway AI Film Festival, asking whether authenticity survives an artificial system — and answering in the language of a security camera.",
+  "draft": true,
+  "proof": {
+    "kicker": "The format problem",
+    "title": "Shot as evidence, not as advertising.",
+    "note": "A jewellery campaign usually shows metal in a lightbox. Here every frame is presented as a recovered camera feed, so the hardware reads as something caught rather than something styled.",
+    "shots": [
+      {
+        "src": "assets/Projects/real-metal/real-metal-01.jpg",
+        "width": 700,
+        "height": 990,
+        "alt": "Overhead security-camera frame of a woman in denim looking up at an illuminated DIESEL-LAND sign above a metal detector, with REC and CAM 84 overlaid on the image.",
+        "caption": "Cam 84 / entry"
+      },
+      {
+        "src": "assets/Projects/real-metal/real-metal-02.jpg",
+        "width": 714,
+        "height": 990,
+        "alt": "The same overhead camera angle as two men pass through the DIESEL-LAND gate, one pointing at the lens, the frame timestamped 2026-04-27.",
+        "caption": "Cam 84 / gate"
+      }
+    ],
+    "caption": "Diesel-Land is a checkpoint, and the campaign never leaves it. Chains, hardware, and denim all read as things you would be asked to remove before walking through."
+  },
+  "acts": {
+    "kicker": "Structure",
+    "title": "Real metal, real attitude.",
+    "note": "The campaign is built on one question and keeps returning to it rather than resolving it.",
+    "items": [
+      {
+        "number": "Frame I",
+        "title": "The checkpoint",
+        "copy": "A gate that scans for metal, standing in a world built to sell it."
+      },
+      {
+        "number": "Frame II",
+        "title": "The subjects",
+        "copy": "Faces that know they are being recorded and hold the lens anyway."
+      },
+      {
+        "number": "Frame III",
+        "title": "The verdict",
+        "copy": "The question is not whether the metal is real, but whether the attitude is."
+      }
+    ]
+  },
+  "pipeline": {
+    "kicker": "How it was built",
+    "title": "Pipeline.",
+    "note": "Generated end to end, then graded and framed so the artificial origin becomes part of the argument instead of something to hide.",
+    "items": [
+      {
+        "label": "Board",
+        "copy": "Campaign concept and shot order fixed before a single frame was generated."
+      },
+      {
+        "label": "Generate",
+        "copy": "Character, wardrobe, and set continuity carried across every camera position."
+      },
+      {
+        "label": "Grade",
+        "copy": "A desaturated concrete palette, so the red sign and the chrome are the only colour left."
+      },
+      {
+        "label": "Frame",
+        "copy": "The CCTV overlay applied last: camera number, timestamp, recording state."
+      }
+    ]
+  },
+  "links": {
+    "kicker": "Open the work",
+    "title": "Primary sources.",
+    "items": [
+      {
+        "href": "https://www.behance.net/gallery/248355407/AI-Fashion-Campaign-REAL-METAL-REAL-ATTITUDE",
+        "label": "Case study",
+        "meta": "Behance / Real Metal, Real Attitude"
+      },
+      {
+        "href": "https://www.instagram.com/p/DXpi1ynDNWb/",
+        "label": "Published campaign",
+        "meta": "Instagram / concept campaign"
+      }
+    ]
+  },
+  "links_withheld": [],
+  "reel": {
+    "name": "Real Metal / Diesel-Land",
+    "label": "Real Metal",
+    "thumb": "assets/Projects/real-metal/real-metal-01.jpg"
+  }
+}

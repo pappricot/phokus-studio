@@ -1,0 +1,130 @@
+{
+  "slug": "muck-everyday-wash",
+  "notion_title": "MUCK Everyday Wash - “DOG’S are NOT..”",
+  "title": "Muck Everyday Wash",
+  "eyebrow": "Image / advertisement",
+  "meta_description": "Muck Everyday Wash is a dog-shampoo advertisement built on a refusal: dogs are dogs, and they are allowed to smell like it.",
+  "year": "2025",
+  "kind": "Image",
+  "frame": "16:9 film, product stills",
+  "role": "Concept, art direction, generative production, edit",
+  "deck": "A wash that argues against the entire category it sits in. Submitted to Filmsupply EditFest as an advertisement, and written as a manifesto.",
+  "draft": true,
+  "proof": {
+    "kicker": "The format problem",
+    "title": "For dirty-free dogs.",
+    "note": "Every product in this category sells a dog that smells like dessert. Muck sells the mud instead, which means the packaging has to survive being photographed inside it.",
+    "shots": [
+      {
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-03.jpg",
+        "width": 864,
+        "height": 1184,
+        "alt": "The Muck Everyday Wash bottle photographed head-on inside a symmetrical crown of brown mud splashing outward against a black background.",
+        "caption": "Hero / impact"
+      },
+      {
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-06.jpg",
+        "width": 864,
+        "height": 1184,
+        "alt": "The same bottle half-buried at an angle in a shallow pool of mud, lit from above against black.",
+        "caption": "Hero / landing"
+      },
+      {
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-02.jpg",
+        "width": 864,
+        "height": 1184,
+        "alt": "A muddy dog's paw pressed against the mud-covered bottle as it tips over into a puddle.",
+        "caption": "Paw / endorsement"
+      },
+      {
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-05.jpg",
+        "width": 864,
+        "height": 1184,
+        "alt": "The bottle standing in mud with a set of wet paw prints running down the front label.",
+        "caption": "Label / paw prints"
+      },
+      {
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-01.jpg",
+        "width": 864,
+        "height": 1184,
+        "alt": "Front label of the bottle under thick mud, reading Everyday Wash, muck, and For dirty-free dogs with dirty-free struck through.",
+        "caption": "Front label"
+      },
+      {
+        "src": "assets/Projects/muck-everyday-wash/muck-everyday-wash-04.jpg",
+        "width": 864,
+        "height": 1184,
+        "alt": "Back label of the bottle, mud-flecked, carrying the product copy and the line Tested on animals. They love it.",
+        "caption": "Back label"
+      }
+    ],
+    "caption": "The bottle is never clean in a single frame, because a clean bottle would be selling the opposite product. Even the strikethrough is on the label: dirty-free is crossed out before the customer can ask for it."
+  },
+  "acts": {
+    "kicker": "Structure",
+    "title": "Dogs are dogs.",
+    "note": "The film is a list. It spends four lines naming what a dog is not, then gives the rest of its length to what a dog is.",
+    "items": [
+      {
+        "number": "Act I",
+        "title": "Dogs are not",
+        "copy": "Toys. Princes and princesses. Handbag dolls."
+      },
+      {
+        "number": "Act II",
+        "title": "Dogs are not",
+        "copy": "Lavender, chamomile, vanilla, blueberry muffins."
+      },
+      {
+        "number": "Act III",
+        "title": "Dogs are dogs",
+        "copy": "Let them roll in muck. Let them smell like true dogs."
+      }
+    ]
+  },
+  "pipeline": {
+    "kicker": "How it was built",
+    "title": "Pipeline.",
+    "note": "The manifesto was written first and everything else was cut to it, including the packaging.",
+    "items": [
+      {
+        "label": "Write",
+        "copy": "The copy came first; the film was cut to the list rather than the other way round."
+      },
+      {
+        "label": "Generate",
+        "copy": "Bottle, label, and mud states generated as one consistent product set."
+      },
+      {
+        "label": "Edit",
+        "copy": "Cut for Filmsupply EditFest under the advertisement category."
+      },
+      {
+        "label": "Export",
+        "copy": "Landscape master for the festival, packaging stills for the campaign board."
+      }
+    ]
+  },
+  "links": {
+    "kicker": "Open the work",
+    "title": "Primary sources.",
+    "items": [
+      {
+        "href": "https://www.youtube.com/watch?v=M1EYn_Q_VBI",
+        "label": "Published film",
+        "meta": "YouTube / Dogs Are Not.."
+      },
+      {
+        "href": "https://filmsupply.com/editfest",
+        "label": "EditFest submission",
+        "meta": "Filmsupply / advertisement"
+      }
+    ]
+  },
+  "links_withheld": [],
+  "reel": {
+    "name": "Muck Everyday Wash",
+    "label": "Muck",
+    "thumb": "assets/Projects/muck-everyday-wash/muck-everyday-wash-03.jpg"
+  }
+}

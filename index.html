@@ -24,8 +24,9 @@
       </button>
 
       <!-- Sits under Menu and shares its type, because both are the same kind of
-           control: a way to narrow what the page is showing. Homepage only, since
-           it drives the reel. -->
+           control: a way to choose what the page is showing. There is no "all",
+           so the reel always holds one of the two doors and opens on Image.
+           Homepage only, since it drives the reel. -->
       <div class="filter" data-filter>
         <button
           class="menu-toggle filter-toggle utility"
@@ -34,7 +35,7 @@
           aria-expanded="false"
           aria-controls="filter-options"
         >
-          <span data-filter-label>Filter</span>
+          <span data-filter-label>Filter / Image</span>
           <span class="menu-toggle-rule" aria-hidden="true"></span>
         </button>
 
@@ -45,10 +46,7 @@
           aria-label="Show projects by kind"
           data-filter-options
         >
-          <button class="filter-option" type="button" data-kind="all" aria-pressed="true">
-            All
-          </button>
-          <button class="filter-option" type="button" data-kind="Image" aria-pressed="false">
+          <button class="filter-option" type="button" data-kind="Image" aria-pressed="true">
             Image
           </button>
           <button class="filter-option" type="button" data-kind="Product" aria-pressed="false">
@@ -80,7 +78,11 @@
             <div class="reel-stage-track" data-reel-stage>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-horizontal.png')"
+                style="background-image: url('assets/Projects/phokus/phokus-muse-gate.jpg')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/Projects/real-metal/real-metal-01.jpg')"
               ></div>
               <div
                 class="reel-plate"
@@ -88,7 +90,7 @@
               ></div>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-vertical.png')"
+                style="background-image: url('assets/Projects/adidas-tokyo/adidas-tokyo-thumb.jpg')"
               ></div>
               <div
                 class="reel-plate"
@@ -96,7 +98,7 @@
               ></div>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-square.png')"
+                style="background-image: url('assets/Projects/gentle-monster-jojo/gentle-monster-jojo-thumb.jpg')"
               ></div>
               <div
                 class="reel-plate"
@@ -112,7 +114,19 @@
               ></div>
               <div
                 class="reel-plate"
-                style="background-image: url('assets/HeroImage/phokus-muse-main-blue-square.png')"
+                style="background-image: url('assets/Projects/muck-everyday-wash/muck-everyday-wash-03.jpg')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/Projects/dark-mediterranean/dark-mediterranean-01.jpg')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/Projects/airport-checkpoint/airport-checkpoint-thumb.jpg')"
+              ></div>
+              <div
+                class="reel-plate"
+                style="background-image: url('assets/Projects/horror-quest/horror-quest-05.jpg')"
               ></div>
             </div>
           </div>
@@ -131,13 +145,26 @@
               <li class="reel-cell">
                 <a
                   class="reel-link"
-                  href="work.html#campaign-worlds"
+                  href="project-phokus.html"
+                  data-name="Phokus"
+                  data-kind="Product"
+                  data-year="2026"
+                  data-frame="9:16"
+                >
+                  <img src="assets/Projects/phokus/phokus-muse-gate.jpg" alt="Phokus" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Phokus</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="project-real-metal.html"
                   data-name="Real Metal / Diesel-Land"
                   data-kind="Image"
-                  data-year="2025"
-                  data-frame="16:9"
+                  data-year="2026"
+                  data-frame="9:16"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-horizontal.png" alt="Real Metal, Diesel-Land" loading="lazy" decoding="async">
+                  <img src="assets/Projects/real-metal/real-metal-01.jpg" alt="Real Metal, Diesel-Land" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Real Metal</span>
                 </a>
               </li>
@@ -157,13 +184,13 @@
               <li class="reel-cell">
                 <a
                   class="reel-link"
-                  href="work.html#campaign-worlds"
+                  href="project-adidas-tokyo.html"
                   data-name="Adidas Tokyo"
                   data-kind="Image"
-                  data-year="2025"
+                  data-year="2026"
                   data-frame="9:16"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-vertical.png" alt="Adidas Tokyo" loading="lazy" decoding="async">
+                  <img src="assets/Projects/adidas-tokyo/adidas-tokyo-thumb.jpg" alt="Adidas Tokyo" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Adidas Tokyo</span>
                 </a>
               </li>
@@ -183,13 +210,13 @@
               <li class="reel-cell">
                 <a
                   class="reel-link"
-                  href="work.html#campaign-worlds"
+                  href="project-gentle-monster-jojo.html"
                   data-name="Gentle Monster x JoJo"
                   data-kind="Image"
-                  data-year="2025"
-                  data-frame="1:1"
+                  data-year="2026"
+                  data-frame="9:16"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-square.png" alt="Gentle Monster x JoJo" loading="lazy" decoding="async">
+                  <img src="assets/Projects/gentle-monster-jojo/gentle-monster-jojo-thumb.jpg" alt="Gentle Monster x JoJo" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Gentle Monster</span>
                 </a>
               </li>
@@ -235,14 +262,53 @@
               <li class="reel-cell">
                 <a
                   class="reel-link"
-                  href="work.html#campaign-worlds"
+                  href="project-muck-everyday-wash.html"
                   data-name="Muck Everyday Wash"
                   data-kind="Image"
                   data-year="2025"
-                  data-frame="1:1"
+                  data-frame="16:9"
                 >
-                  <img src="assets/HeroImage/phokus-muse-main-blue-square.png" alt="Muck Everyday Wash" loading="lazy" decoding="async">
+                  <img src="assets/Projects/muck-everyday-wash/muck-everyday-wash-03.jpg" alt="Muck Everyday Wash" loading="lazy" decoding="async">
                   <span class="reel-cell-name">Muck</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="project-dark-mediterranean.html"
+                  data-name="Dark Mediterranean / blue hour"
+                  data-kind="Image"
+                  data-year="2026"
+                  data-frame="9:16"
+                >
+                  <img src="assets/Projects/dark-mediterranean/dark-mediterranean-01.jpg" alt="Dark Mediterranean" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Dark Mediterranean</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="project-airport-checkpoint.html"
+                  data-name="Airport Checkpoint / security theatre"
+                  data-kind="Image"
+                  data-year="2026"
+                  data-frame="9:16"
+                >
+                  <img src="assets/Projects/airport-checkpoint/airport-checkpoint-thumb.jpg" alt="Airport Checkpoint" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">Airport Checkpoint</span>
+                </a>
+              </li>
+              <li class="reel-cell">
+                <a
+                  class="reel-link"
+                  href="project-horror-quest.html"
+                  data-name="You&rsquo;re Late, Rabbit / horror quest"
+                  data-kind="Image"
+                  data-year="2026"
+                  data-frame="9:16"
+                >
+                  <img src="assets/Projects/horror-quest/horror-quest-05.jpg" alt="You&rsquo;re Late, Rabbit" loading="lazy" decoding="async">
+                  <span class="reel-cell-name">You&rsquo;re Late, Rabbit</span>
                 </a>
               </li>
             </ol>
@@ -258,13 +324,13 @@
             <p class="readout-name" data-readout-name>Real Metal / Diesel-Land</p>
             <p class="readout-meta">
               <span data-readout-kind>Image</span>
-              <span data-readout-year>2025</span>
-              <span data-readout-frame>16:9</span>
+              <span data-readout-year>2026</span>
+              <span data-readout-frame>9:16</span>
             </p>
             <p class="readout-hint">Scroll to focus / click to enter</p>
           </div>
 
-          <div class="reel-counter utility" data-reel-counter aria-hidden="true">01 / 09</div>
+          <div class="reel-counter utility" data-reel-counter aria-hidden="true">01 / 08</div>
         </section>
 
         <section class="section-band paper" aria-labelledby="index-title">

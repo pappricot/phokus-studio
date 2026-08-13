@@ -1,0 +1,102 @@
+{
+  "slug": "gentle-monster-jojo",
+  "notion_title": "Gentle Monster x JoJo Bizarre’s Adventures Campaign",
+  "title": "Gentle Monster x JoJo",
+  "eyebrow": "Image / concept campaign",
+  "meta_description": "A concept campaign collapsing Gentle Monster's sculptural eyewear into the world of JoJo's Bizarre Adventure, Steel Ball Run.",
+  "year": "2026",
+  "kind": "Image",
+  "frame": "9:16 reel, 4:3 product stills",
+  "role": "Concept, art direction, generative production",
+  "deck": "Two universes that already share a language — extreme silhouette, absolute confidence — put in one frame to see which of them blinks.",
+  "draft": true,
+  "proof": {
+    "kicker": "The format problem",
+    "title": "A look assembled one element at a time.",
+    "note": "The campaign argues that the eyewear is not an accessory but the last piece of a character. So the reveal is staged as a build: same face, same light, one addition per frame.",
+    "shots": [
+      {
+        "src": "assets/Projects/gentle-monster-jojo/gentle-monster-jojo-01.jpg",
+        "width": 1600,
+        "height": 441,
+        "alt": "Five portraits of the same model in sequence, each adding one element: a track top, a patterned shirt, a horseshoe headband, star-spiked chrome eyewear, and finally the completed illustrated look.",
+        "caption": "Build / five states"
+      },
+      {
+        "src": "assets/Projects/gentle-monster-jojo/gentle-monster-jojo-02.jpg",
+        "width": 1232,
+        "height": 928,
+        "alt": "Product shot of sculptural chrome eyewear with pale blue lenses and star-shaped spikes at each temple, resting on a white surface.",
+        "caption": "Product / It Man"
+      }
+    ],
+    "caption": "The horseshoe is Steel Ball Run, the stars are the eyewear, and the final frame is drawn rather than rendered — the exact point where the model stops being a model and becomes a character."
+  },
+  "acts": {
+    "kicker": "Structure",
+    "title": "What if these two collide?",
+    "note": "The crossover is argued in three moves, each one pushing further from photography and closer to the page.",
+    "items": [
+      {
+        "number": "Act I",
+        "title": "The object",
+        "copy": "Chrome, star-spiked, and already closer to a Stand than to a product."
+      },
+      {
+        "number": "Act II",
+        "title": "The wearer",
+        "copy": "A figure built element by element until the eyewear is the only thing left to add."
+      },
+      {
+        "number": "Act III",
+        "title": "The panel",
+        "copy": "The photograph gives way to ink, and the campaign lands inside its source material."
+      }
+    ]
+  },
+  "pipeline": {
+    "kicker": "How it was built",
+    "title": "Pipeline.",
+    "note": "Boarded as a crossover, generated as a continuous character, and finished with an illustrated pass so the last frame reads as a panel.",
+    "items": [
+      {
+        "label": "Board",
+        "copy": "Reference, wardrobe, and the order of the build held on one Figma board."
+      },
+      {
+        "label": "Generate",
+        "copy": "Midjourney for the sculptural eyewear and for each state of the character build."
+      },
+      {
+        "label": "Style",
+        "copy": "A final illustrated pass, so the closing frame lands as a comic panel rather than a photograph."
+      },
+      {
+        "label": "Export",
+        "copy": "Vertical cut for feed, with the product still carried at full width."
+      }
+    ]
+  },
+  "links": {
+    "kicker": "Open the work",
+    "title": "Primary sources.",
+    "items": [
+      {
+        "href": "https://www.figma.com/board/byWJbeDyYaqzUYU2iQeBCP/Gentle-Monster---It-Man",
+        "label": "Case study board",
+        "meta": "Figma / mood and storyboard"
+      },
+      {
+        "href": "https://www.instagram.com/reel/DXUzZP6kgQi/",
+        "label": "Published reel",
+        "meta": "Instagram / 9:16"
+      }
+    ]
+  },
+  "links_withheld": [],
+  "reel": {
+    "name": "Gentle Monster x JoJo",
+    "label": "Gentle Monster",
+    "thumb": "assets/Projects/gentle-monster-jojo/gentle-monster-jojo-thumb.jpg"
+  }
+}

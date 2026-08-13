@@ -1,0 +1,91 @@
+{
+  "slug": "airport-checkpoint",
+  "notion_title": "Airport Checkpoint",
+  "title": "Airport Checkpoint",
+  "eyebrow": "Image / in progress",
+  "meta_description": "Airport Checkpoint is an in-progress Diesel security-theatre scene, boarded as a six-camera CCTV sheet and a body-cam beat sheet built around one refused instruction.",
+  "year": "2026",
+  "kind": "Image",
+  "frame": "6-camera CCTV sheet, 12-beat body-cam board",
+  "role": "Concept, art direction, generative production",
+  "deck": "An in-progress extension of the Diesel security-theatre world, where a screening line becomes a runway and the campaign turns on a model refusing to take off her rings.",
+  "draft": true,
+  "proof": {
+    "kicker": "The premise",
+    "title": "Security theatre, staged as a campaign.",
+    "note": "A checkpoint asks you to remove your metal and hand over anything that identifies you. The scene keeps that instruction and answers it with the one line the whole idea rests on: no, it is part of me.",
+    "shots": [
+      {
+        "src": "assets/Projects/airport-checkpoint/airport-checkpoint-01.jpg",
+        "width": 1536,
+        "height": 1024,
+        "alt": "Six-panel CCTV contact sheet timestamped 23/02/2026 showing two models stripped to Diesel underwear passing a metal detector, their clothes in a screening tray.",
+        "caption": "Cam 01–06 / the screening line"
+      },
+      {
+        "src": "assets/Projects/airport-checkpoint/airport-checkpoint-02.jpg",
+        "width": 1536,
+        "height": 1024,
+        "alt": "Twelve-frame body-cam storyboard headed Diesel Security Theatre, Scene 1 Take Off The Ring, each beat carrying timecode, dialogue and camera notes.",
+        "caption": "Scene 1 board / \u201cTake off the ring\u201d"
+      }
+    ],
+    "caption": "Two boards, two cameras. The CCTV sheet establishes the world from the ceiling; the body cam gets close enough that the hardware on her hand becomes the subject."
+  },
+  "acts": {
+    "kicker": "Structure",
+    "title": "One instruction, refused.",
+    "note": "The beat sheet is a loop rather than an escalation. The guard repeats the procedure, the model repeats the same answer, and the tension comes from neither of them moving.",
+    "items": [
+      {
+        "number": "Beat I",
+        "title": "The instruction",
+        "copy": "\u201cMa\u2019am, take off the ring.\u201d Body cam steady, model steps up to the tray."
+      },
+      {
+        "number": "Beat II",
+        "title": "The question",
+        "copy": "\u201cWhy?\u201d Asked twice, unbothered, while the guard gestures at the detector."
+      },
+      {
+        "number": "Beat III",
+        "title": "The refusal",
+        "copy": "\u201cNo, it\u2019s part of me.\u201d Close on the hand, then the gaze held until the clip runs out."
+      }
+    ]
+  },
+  "pipeline": {
+    "kicker": "How it is being built",
+    "title": "Pipeline.",
+    "note": "Boarded before it is generated, so the dialogue and the camera position are fixed while the footage is still being tested.",
+    "items": [
+      {
+        "label": "Board",
+        "copy": "Twelve beats at two-second intervals, each with dialogue and a camera note."
+      },
+      {
+        "label": "Cameras",
+        "copy": "Two rigs only: ceiling CCTV for the world, chest-mounted body cam for the face."
+      },
+      {
+        "label": "Generate",
+        "copy": "Wardrobe, cast and terminal continuity carried across all six camera positions."
+      },
+      {
+        "label": "Frame",
+        "copy": "Surveillance furniture applied last: date, timecode, camera number, record state."
+      }
+    ]
+  },
+  "links": {
+    "kicker": "Open the work",
+    "title": "Primary sources.",
+    "items": []
+  },
+  "links_withheld": [],
+  "reel": {
+    "name": "Airport Checkpoint / security theatre",
+    "label": "Airport Checkpoint",
+    "thumb": "assets/Projects/airport-checkpoint/airport-checkpoint-thumb.jpg"
+  }
+}

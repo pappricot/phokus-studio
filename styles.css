@@ -1714,6 +1714,107 @@ button {
   text-transform: uppercase;
 }
 
+/* The muse masters shown as a set. Each plate keeps its true aspect ratio,
+   because the ragged heights are the point: one composition re-framed is what
+   lets the reel declare a native frame for every project. Sat on a common
+   bottom edge so the three captions share a baseline; centring them instead
+   leaves the row looking scattered once the heights diverge. */
+.project-plates {
+  align-items: end;
+  display: grid;
+  gap: 1.4rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 50rem;
+}
+
+.plate-item {
+  margin: 0;
+  min-inline-size: 0;
+}
+
+.plate-item img {
+  border: 1px solid var(--paper-line);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.blue .plate-item img {
+  border-color: var(--line);
+}
+
+.plate-item figcaption {
+  font-family: var(--utility);
+  font-size: 0.72rem;
+  margin-top: 0.6rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+/* Type specimens. Each line is set in the family it names, so the block
+   demonstrates the stack rather than describing it. */
+.project-type {
+  border-top: 1px solid currentColor;
+  max-width: 50rem;
+}
+
+.type-row {
+  align-items: baseline;
+  border-bottom: 1px solid currentColor;
+  display: grid;
+  gap: 0.6rem 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding: 1.4rem 0;
+}
+
+.type-specimen {
+  font-size: 2.2rem;
+  line-height: 1;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* Deliberately not the global .utility / .display names, which carry weight and
+   uppercasing a specimen must not inherit. */
+.type-specimen.is-display {
+  font-family: var(--display);
+}
+
+.type-specimen.is-utility {
+  font-family: var(--utility);
+  font-size: 1.5rem;
+}
+
+.type-specimen.is-body {
+  font-family: var(--body);
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+}
+
+.type-note {
+  min-inline-size: 0;
+}
+
+.type-role {
+  color: var(--blue);
+  display: block;
+  font-family: var(--utility);
+  font-size: 0.78rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.blue .type-role {
+  color: var(--gold);
+}
+
+.type-stack {
+  font-family: var(--utility);
+  font-size: 0.78rem;
+  margin: 0;
+  opacity: 0.72;
+}
+
 .project-stack {
   border-top: 1px solid currentColor;
   display: grid;
@@ -1918,6 +2019,10 @@ button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .type-row {
+    grid-template-columns: 1fr;
+  }
+
   .stack-item:nth-child(2n) {
     border-right: 0;
   }
@@ -1931,6 +2036,14 @@ button {
   .manifest-grid,
   .service-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Three frames still read as a set at this width; below it they stack, since
+     a 9:16 plate in a third of a phone screen shows nothing. */
+  .project-plates {
+    gap: 1.8rem;
+    grid-template-columns: 1fr;
+    max-width: 22rem;
   }
 
   .page-hero::after {

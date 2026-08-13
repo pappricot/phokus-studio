@@ -9,6 +9,113 @@ A standalone static website concept with a regal editorial direction inspired by
 - `archive.html`
 - `about.html`
 - `contact.html`
+- `project-<slug>.html` — one per campaign, built with PHOKUS (below)
+
+## PHOKUS — adding a campaign
+
+Campaign source material lives in a published Notion workspace that the Notion
+API integration cannot see, so `tools/phokus.py` reads the **public** page API
+of the published site instead. Six stages, one per letter.
+
+| Stage | Command | What it does |
+| --- | --- | --- |
+| **P** — Pull | `phokus.py pull <slug> <notion-id>` | Caches the Notion page to `tools/campaigns/_raw/` and prints its outline |
+| **H** — Harvest | folded into `outline` | Downloads attachments, converts to JPG, caps the long edge at 1600px |
+| **O** — Outline | `phokus.py outline <slug>` | Writes `tools/campaigns/<slug>.json`: assets, links, and empty copy slots |
+| **K** — Key in the copy | *by hand* | Fill the brief. This is the only stage that needs judgement |
+| **U** — Unify | `phokus.py scaffold <slug>` | Renders `project-<slug>.html`, then wire the homepage by hand |
+| **S** — Ship check | `phokus.py check` | Verifies the whole site |
+
+The Notion page id is the 32-character hex string in its URL, with or without
+dashes. `PHOKUS_NOTION_HOST` overrides the published host.
+
+### Why scaffold rather than build
+
+`scaffold` generates a page **once** and then refuses to touch it again unless
+`--force` is passed, because the generated HTML is meant to be owned by hand
+afterwards — the same way `project-shes-back.html` was written. There is no
+build step, no dependency, and nothing to run before deploying. The tool
+removes the boring 80%; it does not own the result.
+
+Re-running `outline` is always safe: it merges into an existing brief and never
+overwrites copy that has already been written.
+
+### What the Notion pages do and do not give you
+
+They are link hubs, not case studies: a Figma board, a workflow link, video
+links, and a handful of stills. **There is no prose in Notion.** Every deck,
+act, and pipeline line has to be written, which is why generated pages carry
+`<!-- DRAFT -->` above any copy that was inferred from artifacts rather than
+taken from a brief. The marker is invisible to visitors; `check` reports the
+remaining count as a warning so nothing quietly ships unreviewed.
+
+Private URLs (a Runway team `/edit` link, for example) are withheld from the
+markup and recorded under `links_withheld` in the brief with the reason, so the
+decision stays visible.
+
+### Wiring the homepage
+
+`scaffold` deliberately does not edit `index.html`. After generating a page,
+make the three edits described in **Adding or changing a project** below, then
+run `phokus.py check`, which will fail if the stage plate and the strip cell
+have fallen out of step.
+
+Reel cells are a fixed 9:16 box using `object-fit: cover`, so a landscape or
+panoramic still gets centre-cropped to the wrong slice. `phokus.py thumb <slug>
+<still> --focus=X,Y --zoom=F` cuts a proper 9:16 thumbnail: `X,Y` are
+percentages naming the centre of the crop, and `F` takes a fraction of the
+frame rather than all of it, which is how an unwanted edge gets excluded.
+
+Percentages are of the file's real pixel dimensions, not of a preview.
+
+### Optional blocks
+
+A campaign page is six blocks. A website case study needs two more, so the
+renderer emits them only when the brief carries them, between the acts and the
+pipeline — which keeps the paper/blue banding alternating.
+
+| Key | Block | Use |
+| --- | --- | --- |
+| `plates` | `.project-plates` | An image set with per-item captions. Each plate keeps its true aspect ratio and the row sits on a common bottom edge, so the captions share a baseline |
+| `type` | `.project-type` | Type specimens. Each row is set in the family it names via `is-display`, `is-utility`, or `is-body` |
+
+The specimen modifiers are deliberately **not** the global `.display` and
+`.utility` class names, which carry a weight and an uppercase transform that a
+specimen must not inherit.
+
+Anything shown in `plates` needs a web-weight derivative first. The muse masters
+are 1.4–3.3MB PNGs; three of them straight onto a page would cost ~7MB, so they
+are resized to a 720px long edge as JPEGs.
+
+### A campaign with no Notion page
+
+`scaffold` reads the brief and nothing else, so a case that did not come from
+Notion — `project-phokus.html`, whose stills are screenshots of this build —
+just needs `tools/campaigns/<slug>.json` written by hand. Stages P, H, and O
+are skipped. Record why in a `source_note` field so the gap is explained rather
+than looking like an oversight.
+
+### Adding a future project, end to end
+
+```sh
+python3 tools/phokus.py pull   my-campaign 356b4c8a0b0a80088246f31f49e9543c
+python3 tools/phokus.py outline my-campaign
+# write the copy in tools/campaigns/my-campaign.json
+python3 tools/phokus.py thumb  my-campaign assets/Projects/my-campaign/my-campaign-02.jpg --focus=50,40
+python3 tools/phokus.py scaffold my-campaign
+# wire index.html: one .reel-plate, one .reel-cell, and the work.html link
+python3 tools/phokus.py check
+```
+
+### Unfinished work
+
+A campaign that is still being made goes on the site the same way a finished one
+does; there is no separate WIP state to maintain. It is marked in copy only:
+`eyebrow` reads `Image / in progress`, the deck opens by saying so, and the
+`pipeline` section is titled "How it is being built" rather than "How it was
+built". Dark Mediterranean, Airport Checkpoint, and You're Late, Rabbit are the
+three currently carrying that marking, and they sit at the tail of the reel after
+the finished work.
 
 ## Visual System
 
@@ -150,11 +257,19 @@ The reel reads cell positions from the DOM, so cell height and gap can change in
 CSS without touching the script.
 
 `data-kind` must read exactly `Image` or `Product`, because the filter matches on
-it. A cell with any other kind is reachable under **All** and nowhere else.
+it. There is no combined view, so a cell with any other kind is unreachable.
 
-**PLACEHOLDER IMAGES:** every stage plate and thumbnail currently points at a
-muse master, chosen to match the project's declared frame. Replace each with the
-real project still; no other change is needed.
+**PLACEHOLDER IMAGES:** the eight Image projects and Phokus itself carry real
+stills. The four remaining Product projects (Go It, Cove, Cipher, Client
+Systems) still point at a muse master chosen to match their declared frame.
+Replace each with the real project still; no other change is needed.
+
+The filter is a switch between the two doors rather than a way to narrow a
+combined list, so one kind is always held. `DEFAULT_KIND` in `script.js` decides
+which, and it is `Image`, so the reel opens on **Real Metal** and the strip is
+filtered on load rather than starting wide open. **Phokus** stands as the first
+case under **Product**, where the studio site introduces the visual system
+before any client work is shown.
 
 ### Behaviour
 

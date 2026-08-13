@@ -741,11 +741,13 @@
     window.addEventListener("resize", render);
 
     // ------------------------------------------------------------------
-    // Filter. Narrows the reel to one kind of work without leaving the page,
-    // so a visitor who only came for one of the two doors is not made to
-    // scroll past the other.
+    // Filter. Switches the reel between the two kinds of work without leaving
+    // the page, so a visitor is never made to scroll past the door they did not
+    // come for. There is no combined state: one kind is always held, which is
+    // why the reel is filtered on load rather than starting wide open.
     // ------------------------------------------------------------------
     const filter = document.querySelector("[data-filter]");
+    const DEFAULT_KIND = "Image";
 
     if (filter) {
       const filterToggle = filter.querySelector("[data-filter-toggle]");
@@ -762,7 +764,7 @@
       const applyKind = (kind) => {
         cells.forEach((cell, position) => {
           const link = links[position];
-          cell.hidden = kind !== "all" && link?.dataset.kind !== kind;
+          cell.hidden = link?.dataset.kind !== kind;
         });
 
         options.forEach((option) => {
@@ -773,7 +775,7 @@
         });
 
         if (filterLabel) {
-          filterLabel.textContent = kind === "all" ? "Filter" : `Filter / ${kind}`;
+          filterLabel.textContent = `Filter / ${kind}`;
         }
 
         // Keep the visitor on the project they were looking at when it survives
@@ -783,7 +785,7 @@
 
       options.forEach((option) => {
         option.addEventListener("click", () => {
-          const kind = option.dataset.kind || "all";
+          const kind = option.dataset.kind || DEFAULT_KIND;
 
           if (option.getAttribute("aria-pressed") === "true") {
             setFilterOpen(false);
@@ -829,6 +831,10 @@
           setFilterOpen(false);
         }
       });
+
+      // The strip is authored with both kinds interleaved, so the opening state
+      // has to be filtered here rather than left to the markup.
+      applyKind(DEFAULT_KIND);
     }
 
     render();
