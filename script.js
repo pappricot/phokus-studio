@@ -3,7 +3,7 @@
   const toggle = document.querySelector("[data-menu-toggle]");
   const scriptSource = document.currentScript?.src || window.location.href;
   const loaderImagePath = new URL(
-    "assets/metis-astrolabe-loader.png",
+    "assets/metis-astrolabe-loader.webp",
     scriptSource
   ).href;
   const introStorageKey = "phokus-intro-loaded";

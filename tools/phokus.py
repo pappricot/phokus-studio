@@ -6,6 +6,7 @@
     thumb    <slug> <still> [--focus=X,Y] [--zoom=F]   cut a 9:16 reel thumbnail
     outline  <slug>               write tools/campaigns/<slug>.json with empty copy slots
     scaffold <slug>               render project-<slug>.html from the brief
+    webp     <still>...           re-encode as WebP and repoint every reference
     check                         verify the built site
 
 Stage K (writing the copy) happens by hand in the brief between outline and
@@ -16,6 +17,7 @@ The CAMPAIGNS workspace is not reachable through the Notion API integration,
 so this reads the public page API of the published site instead.
 """
 
+import glob
 import itertools
 import json
 import os
@@ -36,6 +38,18 @@ RAW = os.path.join(BRIEFS, "_raw")
 # Long edge for harvested stills. The reel thumbnails and proof shots never
 # render larger than this, and the muse masters at 2-3MB are already too heavy.
 MAX_EDGE = 1600
+
+# WebP quality. 82 is where the size curve flattens: 90 costs roughly half again
+# as many bytes for a difference that does not survive being looked at, and 75
+# starts to soften edges on the muse artwork. -m 6 is the densest, slowest
+# search, which is the right trade when a file is encoded once and served
+# forever.
+WEBP_QUALITY = 82
+
+# Everything that can name an image: markup, the stylesheet, the loader's
+# preload list, and the briefs. A rewrite that skipped any one of these would
+# leave a dead reference behind.
+REFERRERS = ("*.html", "styles.css", "script.js", os.path.join("tools", "campaigns", "*.json"))
 
 
 # --------------------------------------------------------------------------
@@ -145,6 +159,15 @@ def sips(*args):
     return subprocess.run(["sips", *args], capture_output=True, text=True)
 
 
+def cwebp(*args):
+    """sips cannot write WebP on any macOS version, so this shells out to the
+    reference encoder instead. Install it with `brew install webp`."""
+    try:
+        return subprocess.run(["cwebp", *args], capture_output=True, text=True)
+    except FileNotFoundError:
+        die("cwebp not found — install it with: brew install webp")
+
+
 def dimensions(path):
     out = sips("-g", "pixelWidth", "-g", "pixelHeight", path).stdout
     width = re.search(r"pixelWidth:\s*(\d+)", out)
@@ -240,6 +263,50 @@ def cmd_thumb(slug, source, focus="50,50", zoom=1.0):
     rel = os.path.relpath(out, ROOT)
     print(f"  {rel}  {final_w}x{final_h}  (9:16 from {source} @ {focus}, zoom {zoom})")
     return {"src": rel, "width": final_w, "height": final_h}
+
+
+def cmd_webp(*sources):
+    """Re-encode stills as WebP and repoint every reference at the new file.
+
+    The muse masters are PNGs carrying photographic artwork, which is the worst
+    case a lossless format can be handed: at q82 they land near a tenth of their
+    original size with nothing visible lost. Alpha survives the conversion, so
+    the cutouts keep their transparency and do not need a JPG's flat matte.
+
+    Dimensions are untouched, so the width and height already recorded in a
+    brief stay correct and the pages do not need re-scaffolding.
+
+    The original is left on disk rather than deleted, so the swap can be read as
+    an ordinary diff and reverted before anything is actually removed.
+    """
+    converted = []
+    for source in sources:
+        src = os.path.join(ROOT, source) if not os.path.isabs(source) else source
+        if not os.path.exists(src):
+            die(f"no such still: {source}")
+        out = f"{os.path.splitext(src)[0]}.webp"
+        result = cwebp("-q", str(WEBP_QUALITY), "-m", "6", "-quiet", src, "-o", out)
+        if result.returncode != 0:
+            die(f"cwebp could not convert {source}: {result.stderr.strip()}")
+        before, after = os.path.getsize(src), os.path.getsize(out)
+        print(
+            f"  {os.path.relpath(out, ROOT)}  "
+            f"{before / 1048576:.2f}MB -> {after / 1024:.0f}KB"
+            f"  ({after / before * 100:.0f}% of original)"
+        )
+        converted.append((os.path.basename(src), os.path.basename(out)))
+
+    for pattern in REFERRERS:
+        for path in sorted(glob.glob(os.path.join(ROOT, pattern))):
+            with open(path) as fh:
+                original = fh.read()
+            text = original
+            for old, new in converted:
+                text = text.replace(old, new)
+            if text != original:
+                with open(path, "w") as fh:
+                    fh.write(text)
+                print(f"  repointed {os.path.relpath(path, ROOT)}")
 
 
 def dashed_root(blocks):
@@ -857,6 +924,8 @@ def main():
         cmd_outline(*rest)
     elif command == "scaffold" and len(rest) == 1:
         cmd_scaffold(rest[0], force=force)
+    elif command == "webp" and rest:
+        cmd_webp(*rest)
     elif command == "check" and not rest:
         cmd_check()
     else:

@@ -1099,7 +1099,7 @@ button {
   aspect-ratio: 9 / 16;
   background:
     linear-gradient(rgba(0, 9, 204, 0.1), rgba(0, 9, 204, 0.1)),
-    url("assets/HeroImage/phokus-muse-main-blue-vertical.png") center / cover no-repeat;
+    url("assets/HeroImage/phokus-muse-main-blue-vertical.webp") center / cover no-repeat;
   border: 1px solid currentColor;
   max-height: 40rem;
   min-height: 26rem;
